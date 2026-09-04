@@ -11,10 +11,17 @@ const router = require('./routes')
 
 const app = express()
 
+// new coros
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: ["http://localhost:3000", "https://snapkart-mern.vercel.app"],
     credentials: true
-}))
+}));
+
+// old coros
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true
+// }))
 
 // ✅ Increase body size limit
 app.use(express.json({ limit: '5mb' }))
