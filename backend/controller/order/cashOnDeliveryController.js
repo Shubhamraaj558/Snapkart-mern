@@ -21,7 +21,7 @@ const cashOnDeliveryController = async (request, response) => {
             shippingDetails: shippingDetails,
             totalAmount: totalAmount,
             paymentDetails: {
-                payment_method_type: ['Cash'],
+                payment_method_type: ['Cash on Delivery (COD)'],
                 payment_status: 'Pending'
             },
             paymentMethod: paymentMethod,
