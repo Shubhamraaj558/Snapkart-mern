@@ -9,7 +9,7 @@ const cashOnDeliveryController = async (request, response) => {
         const newOrder = new orderModel({
             userId: currentUserId,
             productDetails: cartItems,
-            shippingDetails: shippingDetails,
+            shippingDetails: ['Cash on Delivery (COD)'],
             totalAmount: totalAmount,
             paymentDetails: {
                 payment_method_type: ['Cash'],
