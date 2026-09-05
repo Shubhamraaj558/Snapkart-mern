@@ -9,12 +9,12 @@ const cashOnDeliveryController = async (req, res) => {
         const orderData = {
             userId: currentUserId,
             productDetails: cartItems,
-            shippingDetails: shippingDetails,
+            shipping_options: shippingDetails, // schema ke hisaab se shipping_options name use kiya
             totalAmount: totalAmount,
             paymentDetails: {
                 paymentId: "COD-" + Date.now(),
-                payment_method_type: "Cash on Delivery",
-                payment_status: "Unpaid / Cash on Delivery"
+                payment_method_type: ["Cash on Delivery"],
+                payment_status: "Cash on Delivery"
             }
         };
 
