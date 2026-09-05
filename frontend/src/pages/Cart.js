@@ -156,6 +156,7 @@ const Cart = () => {
         alert('Error initiating payment. Please try again later.');
       }
     } catch (err) {
+      console.log("Stripe Key:", import.meta.env.VITE_STRIPE_PUBLIC_KEY);
       console.error('Payment failed:', err);
       alert('Payment failed. Please try again.');
     } finally {
