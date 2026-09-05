@@ -1,5 +1,5 @@
 const orderModel = require("../../models/orderProductModel");
-const cartModel = require("../../models/cartModel"); // Ensure kar ki cart model imported ho
+const cartModel = require("../../models/cartProduct");
 
 const cashOnDeliveryController = async (request, response) => {
     try {
@@ -12,8 +12,8 @@ const cashOnDeliveryController = async (request, response) => {
             shippingDetails: shippingDetails,
             totalAmount: totalAmount,
             paymentDetails: {
-                payment_method_type: ['cash'],
-                payment_status: 'completed'
+                payment_method_type: ['Cash'],
+                payment_status: 'Pending'
             },
             paymentMethod: paymentMethod,
         });
