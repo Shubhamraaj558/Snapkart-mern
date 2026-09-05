@@ -94,7 +94,11 @@ const OrderPage = () => {
                       >
                         <div className="w-full sm:w-24 h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-2">
                           <img
-                            src={product.image?.[0]}
+                            src={
+                              Array.isArray(product.image)
+                                ? product.image[0]
+                                : product.image || product.productImage?.[0] || product.productImage || product.productId?.productImage?.[0] || product.productId?.productImage
+                            }
                             alt={product.name}
                             className="w-full h-full object-contain"
                           />

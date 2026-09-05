@@ -6,10 +6,19 @@ const cashOnDeliveryController = async (request, response) => {
         const currentUserId = request.userId;
         const { cartItems, shippingDetails, totalAmount, paymentMethod } = request.body;
 
+        // FIX: Map cart items to explicitly grab image, name, and price from various possible fields
+        const formattedProductDetails = cartItems.map((item) => ({
+            productId: item.productId?._id || item.productId,
+            name: item.productId?.productName || item.name,
+            image: item.image || item.productImage || item.productId?.productImage || [],
+            price: item.productId?.sellingPrice || item.price,
+            quantity: item.quantity
+        }));
+
         const newOrder = new orderModel({
             userId: currentUserId,
-            productDetails: cartItems,
-            shippingDetails: ['Cash on Delivery (COD)'],
+            productDetails: formattedProductDetails, // Pass the formatted items here
+            shippingDetails: shippingDetails,
             totalAmount: totalAmount,
             paymentDetails: {
                 payment_method_type: ['Cash'],
@@ -20,7 +29,7 @@ const cashOnDeliveryController = async (request, response) => {
 
         const savedOrder = await newOrder.save();
 
-        // FIX: Order successful hote hi user ka cart database se delete kar do taaki cart empty ho jaye
+        // Clear user's cart after successful order placement
         await cartModel.deleteMany({ userId: currentUserId });
 
         return response.status(200).json({
