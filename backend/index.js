@@ -11,13 +11,13 @@ const router = require('./routes')
 
 const app = express()
 
-// new coros
+// ## new coros
 app.use(cors({
     origin: ["http://localhost:3000", "https://snapkart-mern.vercel.app"],
     credentials: true
 }));
 
-// old coros
+// ## old coros
 // app.use(cors({
 //     origin: process.env.FRONTEND_URL,
 //     credentials: true
