@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-// const axios = require("axios");
+const axios = require("axios");
 
 // ================= Controllers =================
 const userSignUpController = require("../controller/user/userSignUp");
 const userSignInController = require('../controller/user/userSignIn');
 const userDetailsController = require('../controller/user/userDetails');
-const authToken = require('../middleware/authToken');
 const userLogout = require('../controller/user/userLogout');
 const allUsers = require('../controller/user/allUsers');
 const updateUser = require('../controller/user/updateUser');
@@ -33,6 +32,8 @@ const addToWishlist = require("../controller/product/addToWishlist");
 const getWishlist = require("../controller/product/getWishlist");
 const removeWishlist = require("../controller/product/removeWishlist");
 const updateProfilePic = require("../controller/user/updateProfilePic");
+const authToken = require('../middleware/authToken');
+const cashOnDeliveryController = require('../controller/order/cashOnDeliveryController');
 
 
 // ================= ROUTES =================
@@ -63,9 +64,6 @@ router.post("/add-wishlist", authToken, addToWishlist);
 router.get("/get-wishlist", authToken, getWishlist);
 router.delete("/delete-wishlist/:id", authToken, removeWishlist);
 
-
-
-
 // CART
 router.post("/addtocart", authToken, addToCartController);
 router.get("/countAddToCartProduct", authToken, countAddToCartProduct);
@@ -75,7 +73,7 @@ router.post("/delete-cart-product", authToken, deleteAddToCartProduct);
 
 // PAYMENT & ORDER
 router.post('/checkout', authToken, paymentController);
-router.post("/cash-on-delivery", authMiddleware, cashOnDeliveryController);
+router.post("/cash-on-delivery", authToken, cashOnDeliveryController); // Fixed middleware name here
 router.post('/webhook', webhooks);
 router.get("/order-list", authToken, orderController);
 router.get("/all-order", authToken, allOrderController);
@@ -95,7 +93,7 @@ router.post("/chat", async (req, res) => {
         const response = await axios.post(
             "https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium",
             {
-                inputs: message   // ✅ IMPORTANT FIX
+                inputs: message
             },
             {
                 headers: {
@@ -107,7 +105,6 @@ router.post("/chat", async (req, res) => {
 
         let reply = "No response";
 
-        // ✅ HuggingFace response safe handling
         if (Array.isArray(response.data)) {
             reply = response.data[0]?.generated_text;
         } else if (response.data?.generated_text) {
