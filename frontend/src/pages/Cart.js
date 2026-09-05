@@ -138,7 +138,7 @@ const Cart = () => {
 
     try {
       setPaymentLoading(true);
-      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+      const stripe = await loadStripe("pk_test_51RRbfU2U2I4MR0dMIW79g0v5d65LOCDSxfdEOxkM6wmk43PxKNeeeBA2EywW1p6cm2XQg0KvLdpa5KOIJFZBEc9Z007rnWvbNV");
       // const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
       const response = await fetch(SummaryApi.payment.url, {
