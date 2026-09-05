@@ -1,4 +1,5 @@
 import React from 'react';
+import React, { useEffect } from 'react';
 import SUCCESSIMAGE from '../assest/success.gif';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCheckCircle, FaShoppingBag } from 'react-icons/fa';
