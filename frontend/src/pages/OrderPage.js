@@ -87,24 +87,42 @@ const OrderPage = () => {
               <div className="p-3 sm:p-4 lg:p-5">
                 <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6">
                   <div className="space-y-3">
-                    {item?.productDetails?.map((product, index) => (
+                    {item?.productDetails?.map((product, pIndex) => (
                       <div
-                        key={product.productId + index}
-                        className="flex flex-col xs:flex-row sm:flex-row gap-3 bg-slate-50 border rounded-xl p-3"
+                        key={product.productId + pIndex}
+                        className="flex flex-col sm:flex-row gap-3 bg-slate-50 border rounded-xl p-3"
                       >
-                        <div className="w-full sm:w-24 h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-2">
-                          <img
-                            src={
-                              Array.isArray(product.image)
-                                ? product.image[0]
-                                : product.image || product.productImage?.[0] || product.productImage || product.productId?.productImage?.[0] || product.productId?.productImage
-                            }
-                            alt={product.name}
-                            className="w-full h-full object-contain"
-                          />
+                        {/* Left side: Image + User Name & Address just below it */}
+                        <div className="flex flex-col gap-2 w-full sm:w-48 flex-shrink-0">
+                          <div className="w-full h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-2">
+                            <img
+                              src={
+                                Array.isArray(product.image)
+                                  ? product.image[0]
+                                  : product.image || product.productImage?.[0] || product.productImage || product.productId?.productImage?.[0] || product.productId?.productImage
+                              }
+                              alt={product.name}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+
+                          {/* Customer Name and Address below image for both Stripe & COD */}
+                          <div className="bg-white border border-purple-100 rounded-lg p-2 text-[11px] text-gray-700 space-y-0.5 shadow-sm">
+                            <p className="font-bold text-gray-900 truncate">
+                              {item.shippingDetails?.name || 'Customer'}
+                            </p>
+                            <p className="line-clamp-2 text-gray-600">
+                              {item.shippingDetails?.address || item.shippingDetails?.street || (typeof item.shippingDetails === 'string' ? item.shippingDetails : 'N/A')}
+                              {item.shippingDetails?.city ? `, ${item.shippingDetails.city}` : ''}
+                              {item.shippingDetails?.pincode ? ` - ${item.shippingDetails.pincode}` : ''}
+                            </p>
+                            {item.shippingDetails?.phone && (
+                              <p className="text-gray-500 font-medium">Ph: {item.shippingDetails.phone}</p>
+                            )}
+                          </div>
                         </div>
 
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 flex flex-col justify-between">
                           <h3 className="font-semibold text-sm sm:text-base text-gray-800 line-clamp-2">
                             {product.name}
                           </h3>
@@ -142,9 +160,9 @@ const OrderPage = () => {
                         Shipping Details
                       </h3>
 
-                      {item.shipping_options?.map((shipping, index) => (
+                      {item.shipping_options?.map((shipping, sIndex) => (
                         <p
-                          key={shipping.shipping_rate || index}
+                          key={shipping.shipping_rate || sIndex}
                           className="text-sm text-gray-700"
                         >
                           <span className="font-semibold">Shipping Amount:</span>{' '}
