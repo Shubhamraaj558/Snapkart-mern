@@ -1,41 +1,34 @@
-const orderModel = require('../../models/orderProductModel');
-const cartModel = require('../../models/cartProduct');
+const orderModel = require("../../models/orderProductModel");
 
-const cashOnDeliveryController = async (req, res) => {
+const cashOnDeliveryController = async (request, response) => {
     try {
-        const currentUserId = req.userId;
-        const { cartItems, shippingDetails, totalAmount } = req.body;
+        const currentUserId = request.userId;
+        const { cartItems, shippingDetails, totalAmount, paymentMethod } = request.body;
 
-        const orderData = {
+        const newOrder = new orderModel({
             userId: currentUserId,
             productDetails: cartItems,
-            shipping_options: shippingDetails, // schema ke hisaab se shipping_options name use kiya
-            totalAmount: totalAmount,
+            shippingDetails: shippingDetails,
+            totalAmount: totalAmount, // <--- Yeh line ensure kar ki yahan totalAmount save ho raha hai
             paymentDetails: {
-                paymentId: "COD-" + Date.now(),
-                payment_method_type: ["Cash on Delivery"],
-                payment_status: "Cash on Delivery"
-            }
-        };
+                payment_method_type: ['cash'],
+                payment_status: 'completed'
+            },
+            paymentMethod: paymentMethod,
+        });
 
-        const newOrder = new orderModel(orderData);
         const savedOrder = await newOrder.save();
 
-        // Clear cart after order is placed
-        await cartModel.deleteMany({ userId: currentUserId });
-
-        return res.json({
+        return response.status(200).json({
             success: true,
-            error: false,
-            message: "Order placed successfully with Cash on Delivery",
+            message: "Order placed successfully",
             data: savedOrder
         });
 
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            error: true,
-            message: err.message || err
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message || error,
+            error: true
         });
     }
 };

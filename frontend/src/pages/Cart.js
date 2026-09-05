@@ -195,12 +195,12 @@ const Cart = () => {
 
       const responseData = await response.json();
 
-      if (responseData.success) {
-        alert('Order placed successfully with Cash on Delivery!');
+      if (responseDta.success || responseData.success) {
+        toast.success("Order placed successfully with Cash on Delivery!"); // <-- Ye browser alert ki jagah toast use kar
         context.fetchUserAddToCart();
-        navigate('/success'); // Change to your success route or page
+        navigate('/success');
       } else {
-        alert(responseData.message || 'Failed to place order. Try again.');
+        toast.error(responseData.message || 'Failed to place order. Try again.');
       }
     } catch (error) {
       console.error('COD Order failed:', error);
