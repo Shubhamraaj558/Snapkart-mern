@@ -13,6 +13,8 @@ import {
   FaMoneyBillWave,
 } from 'react-icons/fa';
 import { loadStripe } from '@stripe/stripe-js';
+import { toast } from 'react-toastify';
+
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -195,7 +197,7 @@ const Cart = () => {
 
       const responseData = await response.json();
 
-      if (responseDta.success || responseData.success) {
+      if (responseData.success || responseData.success) {
         toast.success("Order placed successfully with Cash on Delivery!"); // <-- Ye browser alert ki jagah toast use kar
         context.fetchUserAddToCart();
         navigate('/success');
