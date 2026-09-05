@@ -138,8 +138,9 @@ const Cart = () => {
 
     try {
       setPaymentLoading(true);
-      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
-      // const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+
+      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+      //  const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
       const response = await fetch(SummaryApi.payment.url, {
         method: SummaryApi.payment.method,
@@ -156,7 +157,7 @@ const Cart = () => {
         alert('Error initiating payment. Please try again later.');
       }
     } catch (err) {
-      console.log("Stripe Key:", import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+      console.log("Stripe Key:", process.env.VITE_STRIPE_PUBLIC_KEY);
       console.error('Payment failed:', err);
       alert('Payment failed. Please try again.');
     } finally {
