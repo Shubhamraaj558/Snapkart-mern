@@ -75,6 +75,7 @@ router.post("/delete-cart-product", authToken, deleteAddToCartProduct);
 
 // PAYMENT & ORDER
 router.post('/checkout', authToken, paymentController);
+router.post("/cash-on-delivery", authMiddleware, cashOnDeliveryController);
 router.post('/webhook', webhooks);
 router.get("/order-list", authToken, orderController);
 router.get("/all-order", authToken, allOrderController);

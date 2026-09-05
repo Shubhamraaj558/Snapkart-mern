@@ -91,6 +91,10 @@ const SummaryApi = {
         url: `${backendDomin}/api/checkout`,
         method: 'post'
     },
+    cashOnDelivery: {
+    url: `${backendDomin}/api/cash-on-delivery`, // apne backend URL ke hisaab se
+    method: 'POST'
+    },
     getOrder: {
         url: `${backendDomin}/api/order-list`,
         method: 'get'
