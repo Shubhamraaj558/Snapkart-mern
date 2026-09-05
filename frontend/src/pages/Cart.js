@@ -138,7 +138,8 @@ const Cart = () => {
 
     try {
       setPaymentLoading(true);
-      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+      // const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
       const response = await fetch(SummaryApi.payment.url, {
         method: SummaryApi.payment.method,
@@ -331,8 +332,8 @@ const Cart = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.name
-                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
-                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
+                      ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                      : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                       }`}
                     required
                   />
@@ -344,8 +345,8 @@ const Cart = () => {
                     value={formData.address}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.address
-                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
-                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
+                      ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                      : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                       }`}
                     required
                   />
@@ -358,8 +359,8 @@ const Cart = () => {
                       value={formData.pincode}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.pincode
-                          ? 'border-red-400 focus:ring-4 focus:ring-red-100'
-                          : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
+                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                         }`}
                       required
                     />
@@ -371,8 +372,8 @@ const Cart = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.phone
-                          ? 'border-red-400 focus:ring-4 focus:ring-red-100'
-                          : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
+                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                         }`}
                       required
                     />
@@ -404,8 +405,8 @@ const Cart = () => {
                   <button
                     onClick={handlePayment}
                     className={`w-full flex items-center justify-center gap-3 font-bold py-3.5 sm:py-4 px-5 rounded-xl sm:rounded-2xl shadow-lg text-sm sm:text-base transition-all duration-300 ${paymentLoading
-                        ? 'bg-gray-400 cursor-not-allowed opacity-60'
-                        : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:scale-[1.02]'
+                      ? 'bg-gray-400 cursor-not-allowed opacity-60'
+                      : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:scale-[1.02]'
                       } text-white`}
                   >
                     {paymentLoading ? (
