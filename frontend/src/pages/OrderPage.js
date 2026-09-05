@@ -107,7 +107,7 @@ const OrderPage = () => {
 
                           <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
                             <p className="text-base font-bold text-red-500">
-                              {displayINRCurrency(product.price)}
+                              {displayINRCurrency(product.price || product.productId?.sellingPrice || product.sellingPrice || 0)}
                             </p>
                             <p className="text-sm text-gray-600">
                               Quantity: {product.quantity}

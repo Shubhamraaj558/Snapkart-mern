@@ -1,4 +1,5 @@
 const orderModel = require("../../models/orderProductModel");
+const cartModel = require("../../models/cartModel"); // Ensure kar ki cart model imported ho
 
 const cashOnDeliveryController = async (request, response) => {
     try {
@@ -9,7 +10,7 @@ const cashOnDeliveryController = async (request, response) => {
             userId: currentUserId,
             productDetails: cartItems,
             shippingDetails: shippingDetails,
-            totalAmount: totalAmount, // <--- Yeh line ensure kar ki yahan totalAmount save ho raha hai
+            totalAmount: totalAmount,
             paymentDetails: {
                 payment_method_type: ['cash'],
                 payment_status: 'completed'
@@ -18,6 +19,9 @@ const cashOnDeliveryController = async (request, response) => {
         });
 
         const savedOrder = await newOrder.save();
+
+        // FIX: Order successful hote hi user ka cart database se delete kar do taaki cart empty ho jaye
+        await cartModel.deleteMany({ userId: currentUserId });
 
         return response.status(200).json({
             success: true,
