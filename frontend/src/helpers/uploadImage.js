@@ -5,6 +5,7 @@ const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME_C
 
 
 const uploadImage = async (image) => {
+    console.log("Cloud Name Check:", import.meta.env.VITE_CLOUD_NAME_CLOUDINARY);
     const formData = new FormData()
     formData.append("file", image)
     formData.append("upload_preset", "mern_product")
