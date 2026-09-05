@@ -165,7 +165,7 @@ const privacySections = [
               <FaTruck className="text-sky-500" />
             </div>
             <strong>Shipping</strong>
-            <p className="text-xs text-slate-500">Delhivery, BlueDart</p>
+            <p className="text-xs text-slate-500">Delivery, BlueDart</p>
           </div>
           <div className="text-center">
             <div className="mx-auto mb-2 h-12 w-12 rounded-2xl bg-indigo-50 flex items-center justify-center">
@@ -332,8 +332,8 @@ const PrivacyPolicy = () => {
                   <div
                     key={id}
                     className={`overflow-hidden rounded-3xl border transition-all duration-300 ${isOpen
-                        ? 'border-indigo-200/70 bg-gradient-to-br from-indigo-50 to-white shadow-lg'
-                        : 'border-slate-200/50 bg-white/80 hover:border-purple-200 hover:shadow-md'
+                      ? 'border-indigo-200/70 bg-gradient-to-br from-indigo-50 to-white shadow-lg'
+                      : 'border-slate-200/50 bg-white/80 hover:border-purple-200 hover:shadow-md'
                       }`}
                   >
                     <button
@@ -346,8 +346,8 @@ const PrivacyPolicy = () => {
                         <span className="text-2xl shrink-0">{emoji}</span>
                         <div
                           className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-all duration-300 ${isOpen
-                              ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white shadow-lg'
-                              : 'bg-slate-100 text-slate-600'
+                            ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white shadow-lg'
+                            : 'bg-slate-100 text-slate-600'
                             }`}
                         >
                           {icon}
@@ -364,8 +364,8 @@ const PrivacyPolicy = () => {
 
                       <div
                         className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl transition-all duration-300 ${isOpen
-                            ? 'rotate-180 bg-indigo-500 text-white'
-                            : 'bg-slate-100 text-slate-600'
+                          ? 'rotate-180 bg-indigo-500 text-white'
+                          : 'bg-slate-100 text-slate-600'
                           }`}
                       >
                         <FaChevronDown />
