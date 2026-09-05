@@ -1,12 +1,11 @@
-const orderModel = require('../../models/orderModel');
-const cartModel = require('../../models/cartModel');
+const orderModel = require('../../models/orderModel'); // Apne models folder ke hisaab se filename check kar lein
+const cartModel = require('../../models/cartProductModel'); // Agar cart model ka naam alag hai toh wo likhein
 
 const cashOnDeliveryController = async (req, res) => {
     try {
-        const currentUserId = req.userId; // auth middleware se aayega
+        const currentUserId = req.userId;
         const { cartItems, shippingDetails, totalAmount } = req.body;
 
-        // Order data prepare karo
         const orderData = {
             userId: currentUserId,
             productDetails: cartItems,
@@ -22,7 +21,7 @@ const cashOnDeliveryController = async (req, res) => {
         const newOrder = new orderModel(orderData);
         const savedOrder = await newOrder.save();
 
-        // Order place hone ke baad cart ko khali (empty) kar do
+        // Order place hone ke baad cart clear kar dein
         await cartModel.deleteMany({ userId: currentUserId });
 
         return res.json({
@@ -32,7 +31,7 @@ const cashOnDeliveryController = async (req, res) => {
             data: savedOrder
         });
 
-    } catch (err) {
+    } catch (err) { // <-- Yahan catch(err) aayega
         return res.status(500).json({
             success: false,
             error: true,
