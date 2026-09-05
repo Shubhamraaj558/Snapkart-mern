@@ -4,7 +4,6 @@ const addToCartModel = require('../../models/cartProduct')
 
 const endpointSecret = process.env.STRIPE_ENPOINT_WEBHOOK_SECRET_KEY
 
-
 async function getLIneItems(lineItems){
     let ProductItems = []
 
@@ -27,67 +26,63 @@ async function getLIneItems(lineItems){
     return ProductItems
 }
 
-const webhooks = async(request,response) => {
+const webhooks = async(request, response) => {
     const sig = request.headers['stripe-signature'];
-
-    const payloadString = JSON.stringify(request.body)
-
-    const header = stripe.webhooks.generateTestHeaderString({
-        payload: payloadString,
-        secret : endpointSecret,
-    });
 
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(payloadString, header, endpointSecret);
+        // ✅ Stripe signature verification using raw request body
+        event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
     } catch (err) {
-        response.status(400).send(`Webhook Error: ${err.message}`);
-        return;
+        console.log(`Webhook signature verification failed:`, err.message);
+        return response.status(400).send(`Webhook Error: ${err.message}`);
     }
-
 
     // Handle the event
-  switch (event.type) {
-    case 'checkout.session.completed':
-      const session = event.data.object;
+    switch (event.type) {
+        case 'checkout.session.completed':
+            const session = event.data.object;
 
-      const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
+            const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
 
-      const productDetails = await getLIneItems(lineItems)
+            const productDetails = await getLIneItems(lineItems)
 
-      const orderDetails = {
-         productDetails : productDetails,
-         email : session.customer_email,
-         userId : session.metadata.userId,
-         paymentDetails : {
-            paymentId : session.payment_intent,
-            payment_method_type : session.payment_method_types,
-            payment_status : session.payment_status,
-        },
-        shipping_options : session.shipping_options.map(s => {
-            return{  
-                ...s,
-                shipping_amount : s.shipping_amount / 100
+            const orderDetails = {
+                productDetails : productDetails,
+                email : session.customer_email,
+                userId : session.metadata.userId,
+                paymentDetails : {
+                    paymentId : session.payment_intent,
+                    payment_method_type : session.payment_method_types,
+                    payment_status : session.payment_status,
+                },
+                shipping_options : session.shipping_options.map(s => {
+                    return{  
+                        ...s,
+                        shipping_amount : s.shipping_amount / 100
+                    }
+                }),
+                totalAmount : session.amount_total / 100
             }
-        }),
-        totalAmount : session.amount_total / 100
-      }
 
-    const order = new orderModel(orderDetails)
-    const saveOrder = await order.save()
+            const order = new orderModel(orderDetails)
+            const saveOrder = await order.save()
 
-    if(saveOrder?._id){
-        const deleteCartItem = await addToCartModel.deleteMany({ userId : session.metadata.userId })
+            // ✅ Clear cart after successful order save
+            if(saveOrder?._id){
+                await addToCartModel.deleteMany({ userId : session.metadata.userId })
+            }
+            break;
+
+        default:
+            console.log(`Unhandled event type ${event.type}`);
     }
-    break;
 
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-
-    response.status(200).send();
+    response.status(200).json({ received: true });
 }
 
 module.exports = webhooks
+
+
+// 93
