@@ -295,13 +295,12 @@ const Cart = () => {
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto">
             {loading && (
               <div className="flex flex-col items-center justify-center py-20 bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/40 max-w-2xl mx-auto my-6">
-                <div className="flex space-x-2 mb-3">
-                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce"></div>
+                <div className="relative w-16 h-16 mb-4">
+                  <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 animate-pulse"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-indigo-600 border-r-indigo-600 animate-spin"></div>
                 </div>
-                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider animate-pulse">
-                  Loading your cart items...
+                <p className="text-sm font-semibold text-gray-600 tracking-wide animate-pulse">
+                  Fetching cart details...
                 </p>
               </div>
             )}
