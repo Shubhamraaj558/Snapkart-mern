@@ -39,7 +39,7 @@ const Cart = () => {
   });
 
   const loadingSkeleton = Array(3).fill(null);
-  const upiId = "merchant@upi"; // Apni actual UPI ID yahan daal sakte ho
+  const upiId = "snapKart@upi"; // Apni actual UPI ID yahan daal sakte ho
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -293,25 +293,18 @@ const Cart = () => {
 
         {loading && (
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto">
-            {loadingSkeleton.map((_, i) => (
-              <div
-                key={i}
-                className="bg-white/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border border-white/50 animate-pulse"
-              >
-                <div className="flex gap-4 sm:gap-5">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-2xl"></div>
-                  <div className="flex-1 space-y-3">
-                    <div className="h-4 sm:h-5 bg-gray-200 rounded-xl w-3/4"></div>
-                    <div className="h-3 sm:h-4 bg-gray-200 rounded-full w-1/2"></div>
-                    <div className="flex items-center gap-3 mt-4">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-200 rounded-full"></div>
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-200 rounded-full"></div>
-                      <div className="h-8 w-16 bg-gray-200 rounded-xl ml-auto"></div>
-                    </div>
-                  </div>
+            {loading && (
+              <div className="flex flex-col items-center justify-center py-20 bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/40 max-w-2xl mx-auto my-6">
+                <div className="flex space-x-2 mb-3">
+                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-3.5 h-3.5 bg-indigo-600 rounded-full animate-bounce"></div>
                 </div>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider animate-pulse">
+                  Loading your cart items...
+                </p>
               </div>
-            ))}
+            )}
           </div>
         )}
 
