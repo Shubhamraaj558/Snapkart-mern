@@ -294,14 +294,13 @@ const Cart = () => {
         {loading && (
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto">
             {loading && (
-              <div className="flex flex-col items-center justify-center py-20 bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/40 max-w-2xl mx-auto my-6">
-                <div className="relative w-16 h-16 mb-4">
-                  <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 animate-pulse"></div>
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-indigo-600 border-r-indigo-600 animate-spin"></div>
+              <div className="flex items-center justify-center p-8">
+                <div className="relative w-10 h-10 animate-spin">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-indigo-600 rounded-full shadow-md shadow-indigo-500/50"></div>
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-cyan-500 rounded-full shadow-md shadow-cyan-500/50"></div>
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-purple-600 rounded-full shadow-md shadow-purple-500/50"></div>
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-pink-500 rounded-full shadow-md shadow-pink-500/50"></div>
                 </div>
-                <p className="text-sm font-semibold text-gray-600 tracking-wide animate-pulse">
-                  Fetching cart details...
-                </p>
               </div>
             )}
           </div>
