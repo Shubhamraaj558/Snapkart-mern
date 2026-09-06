@@ -47,6 +47,7 @@ const Header = () => {
   }, [searchQuery])
 
   const handleLogout = async () => {
+    setMenuDisplay(false)
     try {
       const fetchData = await fetch(SummaryApi.logout_user.url, {
         method: SummaryApi.logout_user.method,
@@ -239,7 +240,17 @@ const Header = () => {
                       Profile
                     </Link>
 
+                    {/* ✅ YAHAN "MY ORDERS" OPTION ADD KAR DIYA HAI */}
+                    <Link
+                      to="/order"
+                      className="block px-4 py-3 hover:bg-slate-800 text-white"
+                      onClick={() => setMenuDisplay(false)}
+                    >
+                      My Orders
+                    </Link>
+
                     <button
+                      handleLogout
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 font-semibold"
                     >
