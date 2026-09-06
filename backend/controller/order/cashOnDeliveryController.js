@@ -1,12 +1,12 @@
-const orderModel = require("../../models/orderProductModel");
-const cartModel = require("../../models/cartProduct");
+const orderModel = require("../../models/orderProductModel")
+const cartModel = require("../../models/cartProduct")
 
 const cashOnDeliveryController = async (request, response) => {
     try {
-        const currentUserId = request.userId;
+        const currentUserId = request.userId
         const { cartItems, shippingDetails, totalAmount, paymentMethod } = request.body;
 
-        // FIX: Map cart items to explicitly grab image, name, and price from various possible fields
+        // Map cart items to explicitly grab image, name, and price from various possible fields
         const formattedProductDetails = cartItems.map((item) => ({
             productId: item.productId?._id || item.productId,
             name: item.productId?.productName || item.name,
@@ -15,16 +15,20 @@ const cashOnDeliveryController = async (request, response) => {
             quantity: item.quantity
         }));
 
+        // Dynamic check for UPI vs COD
+        const isUpi = paymentMethod && (paymentMethod.toUpperCase() === "UPI" || paymentMethod.toUpperCase().includes("UPI"));
+
         const newOrder = new orderModel({
             userId: currentUserId,
-            productDetails: formattedProductDetails, // Pass the formatted items here
+            productDetails: formattedProductDetails,
             shippingDetails: shippingDetails,
             totalAmount: totalAmount,
             paymentDetails: {
-                payment_method_type: ['Cash on Delivery (COD)'],
-                payment_status: 'Pending'
+                paymentId: (isUpi ? "UPI_" : "COD_") + Date.now(),
+                payment_method_type: [isUpi ? "UPI QR" : "Cash on Delivery (COD)"],
+                payment_status: isUpi ? "Paid via UPI" : "Pending"
             },
-            paymentMethod: paymentMethod,
+            paymentMethod: paymentMethod || "COD",
         });
 
         const savedOrder = await newOrder.save();

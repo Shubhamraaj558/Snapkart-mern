@@ -11,10 +11,13 @@ import {
   FaSpinner,
   FaArrowLeft,
   FaMoneyBillWave,
+  FaQrcode,
+  FaCopy,
+  FaCheck,
+  FaShieldAlt,
 } from 'react-icons/fa';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
-
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -22,7 +25,8 @@ const Cart = () => {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [warning, setWarning] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('online'); // 'online' or 'cod'
+  const [paymentMethod, setPaymentMethod] = useState('online');
+  const [copied, setCopied] = useState(false);
 
   const context = useContext(Context);
   const navigate = useNavigate();
@@ -35,6 +39,14 @@ const Cart = () => {
   });
 
   const loadingSkeleton = Array(3).fill(null);
+  const upiId = "merchant@upi"; // Apni actual UPI ID yahan daal sakte ho
+
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText(upiId);
+    setCopied(true);
+    toast.success("UPI ID Copied!");
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -142,8 +154,10 @@ const Cart = () => {
 
     if (paymentMethod === 'cod') {
       await handleCashOnDelivery();
-    } else {
+    } else if (paymentMethod === 'online') {
       await handleStripePayment();
+    } else if (paymentMethod === 'UPI') {
+      await handleUpiPayment();
     }
   };
 
@@ -159,7 +173,7 @@ const Cart = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cartItems: data,
-          shippingDetails: formData, // Pass shipping details if your backend needs it
+          shippingDetails: formData,
         }),
       });
 
@@ -182,7 +196,6 @@ const Cart = () => {
     try {
       setPaymentLoading(true);
 
-      // Create an endpoint in your SummaryApi for COD (e.g., SummaryApi.cashOnDelivery)
       const response = await fetch(SummaryApi.cashOnDelivery?.url || '/api/cash-on-delivery', {
         method: SummaryApi.cashOnDelivery?.method || 'POST',
         credentials: 'include',
@@ -197,8 +210,8 @@ const Cart = () => {
 
       const responseData = await response.json();
 
-      if (responseData.success || responseData.success) {
-        toast.success("Order placed successfully with Cash on Delivery!"); // <-- Ye browser alert ki jagah toast use kar
+      if (responseData.success) {
+        toast.success("Order placed successfully with Cash on Delivery!");
         context.fetchUserAddToCart();
         navigate('/success');
       } else {
@@ -212,11 +225,54 @@ const Cart = () => {
     }
   };
 
+  const handleUpiPayment = async () => {
+    try {
+      setPaymentLoading(true);
+      const response = await fetch(`${SummaryApi.cashOnDelivery.url}`, {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          cartItems: data,
+          shippingDetails: formData,
+          totalAmount: totalPrice,
+          paymentMethod: "Mock UPI"
+        })
+      });
+      const resData = await response.json();
+
+      if (resData.success) {
+        toast.success("Payment Successful (Simulated)!");
+        context.fetchUserAddToCart();
+        navigate("/order");
+      } else {
+        toast.error(resData.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error('UPI Payment failed:', error);
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
+
   const totalQty = data.reduce((acc, item) => acc + (item.quantity || 0), 0);
   const totalPrice = data.reduce(
     (acc, item) => acc + (item.quantity || 0) * (item.productId?.sellingPrice || 0),
     0
   );
+
+  // Dynamic UPI String jo QR code ke andar encode hogi (Testing/Dummy purpose)
+  // const upiString = `upi://pay?pa=${upiId}&pn=E-Commerce Store&am=${totalPrice}&cu=INR`;
+  // const dynamicQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiString)}`;
+
+  // Sirf plain text string jo koi payment trigger nahi karegi, bas amount aur details dikhayegi
+  const dummyTextString = `--- SIMULATED TEST PAYMENT ---\nStore: SnapKart Online-Shopping\nAmount: ${displayINRCurrency(totalPrice)}\nUPI ID: ${upiId}\nStatus: For Testing Only (No Real Payment)`;
+
+  const dynamicQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(dummyTextString)}`;
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-6 sm:py-8 lg:py-10 px-3 sm:px-4 relative overflow-hidden">
@@ -247,6 +303,11 @@ const Cart = () => {
                   <div className="flex-1 space-y-3">
                     <div className="h-4 sm:h-5 bg-gray-200 rounded-xl w-3/4"></div>
                     <div className="h-3 sm:h-4 bg-gray-200 rounded-full w-1/2"></div>
+                    <div className="flex items-center gap-3 mt-4">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-200 rounded-full"></div>
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-200 rounded-full"></div>
+                      <div className="h-8 w-16 bg-gray-200 rounded-xl ml-auto"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -262,6 +323,7 @@ const Cart = () => {
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 mb-6">
               Looks like you haven't added anything to your cart yet.
             </p>
+
             <Link
               to="/"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-5 sm:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:scale-105 transition-all duration-300"
@@ -274,6 +336,7 @@ const Cart = () => {
 
         {!loading && data.length > 0 && (
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {/* Left Side: Cart Products List + Dynamic UPI QR Section */}
             <div className="xl:col-span-2 space-y-4 sm:space-y-5">
               {data.map((product) => {
                 const safeProduct = product.productId || {};
@@ -285,19 +348,22 @@ const Cart = () => {
                     className="group relative bg-white/75 backdrop-blur-sm border border-white/50 rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-6 shadow-xl hover:shadow-2xl transition-all duration-300"
                   >
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-3 shadow-md overflow-hidden">
-                        <img
-                          src={safeProduct.productImage?.[0]}
-                          alt={safeProduct.productName || 'Product'}
-                          className="w-full h-full object-contain"
-                          loading="lazy"
-                        />
+                      <div className="w-full sm:w-auto flex justify-center sm:block">
+                        <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-3 shadow-md overflow-hidden">
+                          <img
+                            src={safeProduct.productImage?.[0]}
+                            alt={safeProduct.productName || 'Product'}
+                            className="w-full h-full object-contain"
+                            loading="lazy"
+                          />
+                        </div>
                       </div>
 
                       <div className="flex-1 min-w-0 w-full">
                         <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 line-clamp-2 mb-2">
                           {safeProduct.productName || 'Unknown Product'}
                         </h3>
+
                         <p className="text-xs sm:text-sm text-purple-600 font-semibold capitalize mb-3 bg-purple-50/70 px-3 py-1 rounded-full inline-block">
                           {safeProduct.category || 'Uncategorized'}
                         </p>
@@ -312,21 +378,23 @@ const Cart = () => {
                             </p>
                           </div>
 
-                          <div className="flex items-center justify-between sm:justify-start bg-white/70 backdrop-blur-sm rounded-2xl p-2 shadow-md border border-purple-100">
+                          <div className="flex items-center justify-between sm:justify-start bg-white/70 backdrop-blur-sm rounded-2xl p-2 shadow-md border border-purple-100 w-full sm:w-auto">
                             <button
                               aria-label="Decrease quantity"
                               onClick={() => decreaseQty(product._id, product.quantity)}
-                              className="w-10 h-10 flex items-center justify-center text-lg font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl"
+                              className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-lg font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200"
                             >
                               <MdRemove />
                             </button>
-                            <span className="min-w-[2.5rem] text-center text-base sm:text-lg font-bold text-gray-900 px-2">
+
+                            <span className="min-w-[2.5rem] text-center text-base sm:text-lg font-bold text-gray-900 px-2 sm:px-3">
                               {product.quantity}
                             </span>
+
                             <button
                               aria-label="Increase quantity"
                               onClick={() => increaseQty(product._id, product.quantity)}
-                              className="w-10 h-10 flex items-center justify-center text-lg font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl"
+                              className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-lg font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200"
                             >
                               <MdAdd />
                             </button>
@@ -337,20 +405,93 @@ const Cart = () => {
                       <button
                         title="Remove from cart"
                         onClick={() => deleteCartProduct(product._id)}
-                        className="absolute top-3 right-3 w-9 h-9 bg-white/90 rounded-xl shadow-md hover:bg-red-50 flex items-center justify-center transition-all"
+                        className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-md border border-white/60 hover:bg-red-50 hover:border-red-200 flex items-center justify-center transition-all duration-300"
                       >
-                        <MdDelete className="text-lg text-red-500" />
+                        <MdDelete className="text-lg sm:text-xl text-red-500" />
                       </button>
                     </div>
                   </div>
                 );
               })}
+
+              {/* Fully Dynamic UPI QR Section */}
+              {paymentMethod === 'UPI' && (
+                <div className="mt-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-indigo-500/30 p-6 rounded-3xl shadow-2xl text-white relative overflow-hidden">
+                  <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                        <FaQrcode className="text-white text-lg" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-base sm:text-lg tracking-wide text-white">Dynamic UPI QR (Testing)</h4>
+                        <p className="text-xs text-slate-400">Updates automatically with cart total</p>
+                      </div>
+                    </div>
+                    <span className="hidden sm:inline-flex items-center gap-1.5 text-xs bg-cyan-500/10 text-cyan-400 font-semibold px-3 py-1 rounded-full border border-cyan-500/20">
+                      <FaShieldAlt className="text-xs" /> Sandbox Mode
+                    </span>
+                  </div>
+
+                  <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div className="md:col-span-5 flex flex-col items-center justify-center bg-white p-4 rounded-2xl shadow-inner border border-slate-200">
+                      {/* Dynamic QR Code Image generated based on totalPrice */}
+                      <img
+                        src={dynamicQrUrl}
+                        alt="Dynamic UPI QR Code"
+                        className="w-40 h-40 object-contain hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className="mt-2 text-[11px] font-bold text-purple-700 tracking-wide uppercase">
+                        Amount: {displayINRCurrency(totalPrice)}
+                      </span>
+                    </div>
+
+                    <div className="md:col-span-7 space-y-4">
+                      <div>
+                        <p className="text-xs text-slate-400 font-medium mb-1">Target UPI ID:</p>
+                        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/80 px-3.5 py-2.5 rounded-xl">
+                          <span className="font-mono text-cyan-300 text-sm font-semibold tracking-wide">{upiId}</span>
+                          <button
+                            onClick={handleCopyUpi}
+                            className="flex items-center gap-1.5 text-xs bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition-colors font-medium shadow"
+                          >
+                            {copied ? <FaCheck className="text-green-400" /> : <FaCopy />}
+                            {copied ? "Copied" : "Copy"}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* <div className="space-y-1.5">
+                        <p className="text-xs text-slate-400 font-medium">Encoded String Payload:</p>
+                        <p className="text-[11px] font-mono text-slate-300 bg-slate-800/50 p-2 rounded-lg border border-slate-700/40 break-all">
+                          {upiString}
+                        </p>
+                      </div> */}
+                      <div className="space-y-1.5">
+                        <p className="text-xs text-slate-400 font-medium">Scanned Text Preview:</p>
+                        <p className="text-[11px] font-mono text-slate-300 bg-slate-800/50 p-2 rounded-lg border border-slate-700/40 whitespace-pre-line">
+                          {dummyTextString}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={handleUpiPayment}
+                        className="w-full mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-700 transition-all text-sm flex items-center justify-center gap-2"
+                      >
+                        <FaCheckCircle className="text-base" />
+                        Simulate Payment Complete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
+            {/* Right Side: Delivery Details & Payment Selection & Summary */}
             <div className="space-y-5 sm:space-y-6 xl:sticky xl:top-24 xl:self-start">
-              {/* Delivery Details Form */}
               <div className="bg-white/75 backdrop-blur-sm border border-white/50 rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-6 shadow-xl">
-                <div className="bg-gradient-to-r from-purple-700 to-pink-600 text-white p-4 rounded-2xl mb-5 shadow-lg">
+                <div className="bg-gradient-to-r from-purple-700 to-pink-600 text-white p-4 sm:p-5 rounded-2xl mb-5 sm:mb-6 shadow-lg">
                   <h3 className="text-lg sm:text-xl font-black flex items-center gap-3">
                     <FaTruck className="text-yellow-400" />
                     Delivery Details
@@ -359,7 +500,7 @@ const Cart = () => {
 
                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                   {warning && (
-                    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
+                    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm sm:text-base font-medium text-red-600">
                       {warning}
                     </div>
                   )}
@@ -370,7 +511,9 @@ const Cart = () => {
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border outline-none bg-white/70 text-sm ${submitted && !formData.name ? 'border-red-400' : 'border-gray-200'
+                    className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.name
+                      ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                      : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                       }`}
                     required
                   />
@@ -381,7 +524,9 @@ const Cart = () => {
                     placeholder="House no, street, locality"
                     value={formData.address}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border outline-none bg-white/70 text-sm ${submitted && !formData.address ? 'border-red-400' : 'border-gray-200'
+                    className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.address
+                      ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                      : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                       }`}
                     required
                   />
@@ -393,7 +538,9 @@ const Cart = () => {
                       placeholder="Pincode"
                       value={formData.pincode}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border outline-none bg-white/70 text-sm ${submitted && !formData.pincode ? 'border-red-400' : 'border-gray-200'
+                      className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.pincode
+                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                         }`}
                       required
                     />
@@ -404,7 +551,9 @@ const Cart = () => {
                       placeholder="Phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border outline-none bg-white/70 text-sm ${submitted && !formData.phone ? 'border-red-400' : 'border-gray-200'
+                      className={`w-full px-4 py-3 rounded-xl sm:rounded-2xl border shadow-sm outline-none bg-white/70 text-sm sm:text-base ${submitted && !formData.phone
+                        ? 'border-red-400 focus:ring-4 focus:ring-red-100'
+                        : 'border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100/50'
                         }`}
                       required
                     />
@@ -452,6 +601,21 @@ const Cart = () => {
                     </div>
                     <FaMoneyBillWave className="text-emerald-600 text-lg" />
                   </label>
+
+                  <label className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${paymentMethod === 'UPI' ? 'border-purple-600 bg-purple-50/50' : 'border-gray-200'}`}>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="UPI"
+                        checked={paymentMethod === 'UPI'}
+                        onChange={() => setPaymentMethod('UPI')}
+                        className="accent-purple-600"
+                      />
+                      <span className="font-semibold text-gray-800 text-sm sm:text-base">Dynamic UPI QR (Testing)</span>
+                    </div>
+                    <FaQrcode className="text-cyan-600 text-lg" />
+                  </label>
                 </div>
 
                 <div className="space-y-3 mb-5 border-t pt-4">
@@ -481,7 +645,11 @@ const Cart = () => {
                     ) : (
                       <>
                         <FaCheckCircle className="text-lg" />
-                        {paymentMethod === 'cod' ? 'Place COD Order' : 'Proceed to Checkout'}
+                        {paymentMethod === 'cod'
+                          ? 'Place COD Order'
+                          : paymentMethod === 'UPI'
+                            ? 'Proceed with UPI Sim'
+                            : 'Proceed to Checkout'}
                       </>
                     )}
                   </button>

@@ -92,7 +92,7 @@ const SummaryApi = {
         method: 'post'
     },
     cashOnDelivery: {
-    url: `${backendDomin}/api/cash-on-delivery`, // apne backend URL ke hisaab se
+    url: `${backendDomin}/api/cash-on-delivery`,
     method: 'POST'
     },
     getOrder: {
