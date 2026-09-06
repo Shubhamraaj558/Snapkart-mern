@@ -294,13 +294,16 @@ const Cart = () => {
         {loading && (
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto">
             {loading && (
-              <div className="flex items-center justify-center p-8">
-                <div className="relative w-10 h-10 animate-spin">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-indigo-600 rounded-full shadow-md shadow-indigo-500/50"></div>
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-cyan-500 rounded-full shadow-md shadow-cyan-500/50"></div>
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-purple-600 rounded-full shadow-md shadow-purple-500/50"></div>
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-pink-500 rounded-full shadow-md shadow-pink-500/50"></div>
+              <div className="flex flex-col items-center justify-center py-16 gap-4">
+                <div className="relative w-14 h-14">
+                  {/* Outer Ring */}
+                  <div className="absolute inset-0 border-4 border-dashed border-indigo-500/40 rounded-full animate-spin"></div>
+                  {/* Inner Solid Ring */}
+                  <div className="absolute inset-2 border-4 border-transparent border-t-cyan-400 border-b-indigo-600 rounded-full animate-spin [animation-direction:reverse]"></div>
                 </div>
+                <span className="text-xs font-bold text-indigo-400 tracking-widest uppercase animate-pulse">
+                  Securing Connection...
+                </span>
               </div>
             )}
           </div>
