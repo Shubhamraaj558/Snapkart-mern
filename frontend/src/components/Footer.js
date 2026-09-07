@@ -40,8 +40,8 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="mt-16 border-t border-white/10 bg-slate-950 text-slate-200">
-      <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
+    <footer className="mt-4 border-t border-white/10 bg-slate-950 text-slate-200">
+      <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           
           {/* Brand */}

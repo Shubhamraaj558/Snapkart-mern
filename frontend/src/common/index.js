@@ -92,8 +92,8 @@ const SummaryApi = {
         method: 'post'
     },
     cashOnDelivery: {
-    url: `${backendDomin}/api/cash-on-delivery`,
-    method: 'POST'
+        url: `${backendDomin}/api/cash-on-delivery`,
+        method: 'POST'
     },
     getOrder: {
         url: `${backendDomin}/api/order-list`,
