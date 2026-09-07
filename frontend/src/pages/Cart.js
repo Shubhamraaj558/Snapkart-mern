@@ -539,7 +539,7 @@ const Cart = () => {
                           <FaQrcode className="text-white text-sm" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-sm tracking-wide text-white">Scan UPI QR for Payment</h4>
+                          <h4 className="font-bold text-sm tracking-wide text-white">Scan UPI_QR for Payment</h4>
                           <p className="text-[11px] text-slate-400">Updates with cart total</p>
                         </div>
                       </div>
@@ -622,7 +622,7 @@ const Cart = () => {
                         {paymentMethod === 'cod'
                           ? 'Place COD Order'
                           : paymentMethod === 'UPI'
-                            ? 'Proceed with UPI Sim'
+                            ? 'Proceed with UPI'
                             : 'Proceed to Checkout'}
                       </>
                     )}
