@@ -522,7 +522,7 @@ const Cart = () => {
                         onChange={() => setPaymentMethod('UPI')}
                         className="accent-purple-600"
                       />
-                      <span className="font-semibold text-gray-800 text-sm sm:text-base">Dynamic UPI QR (Testing)</span>
+                      <span className="font-semibold text-gray-800 text-sm sm:text-base">Pay through UPI QR</span>
                     </div>
                     <FaQrcode className="text-cyan-600 text-lg" />
                   </label>
@@ -539,7 +539,7 @@ const Cart = () => {
                           <FaQrcode className="text-white text-sm" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-sm tracking-wide text-white">Dynamic UPI QR (Testing)</h4>
+                          <h4 className="font-bold text-sm tracking-wide text-white">Scanned UPI QR</h4>
                           <p className="text-[11px] text-slate-400">Updates with cart total</p>
                         </div>
                       </div>
