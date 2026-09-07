@@ -539,7 +539,7 @@ const Cart = () => {
                           <FaQrcode className="text-white text-sm" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-sm tracking-wide text-white">Scanned UPI QR</h4>
+                          <h4 className="font-bold text-sm tracking-wide text-white">Scan UPI QR for Payment</h4>
                           <p className="text-[11px] text-slate-400">Updates with cart total</p>
                         </div>
                       </div>
