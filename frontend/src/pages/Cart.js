@@ -263,16 +263,9 @@ const Cart = () => {
     0
   );
 
-  // Dynamic UPI String jo QR code ke andar encode hogi (Testing/Dummy purpose)
-  // const upiString = `upi://pay?pa=${upiId}&pn=E-Commerce Store&am=${totalPrice}&cu=INR`;
-  // const dynamicQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiString)}`;
-
-  // Sirf plain text string jo koi payment trigger nahi karegi, bas amount aur details dikhayegi
   const dummyTextString = `--- SIMULATED TEST PAYMENT ---\nStore: SnapKart Online-Shopping\nAmount: ${displayINRCurrency(totalPrice)}\nUPI ID: ${upiId}\nStatus: For Testing Only (No Real Payment)`;
 
   const dynamicQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(dummyTextString)}`;
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-6 sm:py-8 lg:py-10 px-3 sm:px-4 relative overflow-hidden">
@@ -293,19 +286,15 @@ const Cart = () => {
 
         {loading && (
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto">
-            {loading && (
-              <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <div className="relative w-14 h-14">
-                  {/* Outer Ring */}
-                  <div className="absolute inset-0 border-4 border-dashed border-indigo-500/40 rounded-full animate-spin"></div>
-                  {/* Inner Solid Ring */}
-                  <div className="absolute inset-2 border-4 border-transparent border-t-cyan-400 border-b-indigo-600 rounded-full animate-spin [animation-direction:reverse]"></div>
-                </div>
-                <span className="text-xs font-bold text-indigo-400 tracking-widest uppercase animate-pulse">
-                  Securing Connection...
-                </span>
+            <div className="flex flex-col items-center justify-center py-16 gap-4">
+              <div className="relative w-14 h-14">
+                <div className="absolute inset-0 border-4 border-dashed border-indigo-500/40 rounded-full animate-spin"></div>
+                <div className="absolute inset-2 border-4 border-transparent border-t-cyan-400 border-b-indigo-600 rounded-full animate-spin [animation-direction:reverse]"></div>
               </div>
-            )}
+              <span className="text-xs font-bold text-indigo-400 tracking-widest uppercase animate-pulse">
+                Securing Connection...
+              </span>
+            </div>
           </div>
         )}
 
@@ -330,7 +319,7 @@ const Cart = () => {
 
         {!loading && data.length > 0 && (
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-            {/* Left Side: Cart Products List + Dynamic UPI QR Section */}
+            {/* Left Side: Cart Products List */}
             <div className="xl:col-span-2 space-y-4 sm:space-y-5">
               {data.map((product) => {
                 const safeProduct = product.productId || {};
@@ -407,79 +396,6 @@ const Cart = () => {
                   </div>
                 );
               })}
-
-              {/* Fully Dynamic UPI QR Section */}
-              {paymentMethod === 'UPI' && (
-                <div className="mt-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-indigo-500/30 p-6 rounded-3xl shadow-2xl text-white relative overflow-hidden">
-                  <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
-
-                  <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                        <FaQrcode className="text-white text-lg" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-base sm:text-lg tracking-wide text-white">Dynamic UPI QR (Testing)</h4>
-                        <p className="text-xs text-slate-400">Updates automatically with cart total</p>
-                      </div>
-                    </div>
-                    <span className="hidden sm:inline-flex items-center gap-1.5 text-xs bg-cyan-500/10 text-cyan-400 font-semibold px-3 py-1 rounded-full border border-cyan-500/20">
-                      <FaShieldAlt className="text-xs" /> Sandbox Mode
-                    </span>
-                  </div>
-
-                  <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div className="md:col-span-5 flex flex-col items-center justify-center bg-white p-4 rounded-2xl shadow-inner border border-slate-200">
-                      {/* Dynamic QR Code Image generated based on totalPrice */}
-                      <img
-                        src={dynamicQrUrl}
-                        alt="Dynamic UPI QR Code"
-                        className="w-40 h-40 object-contain hover:scale-105 transition-transform duration-300"
-                      />
-                      <span className="mt-2 text-[11px] font-bold text-purple-700 tracking-wide uppercase">
-                        Amount: {displayINRCurrency(totalPrice)}
-                      </span>
-                    </div>
-
-                    <div className="md:col-span-7 space-y-4">
-                      <div>
-                        <p className="text-xs text-slate-400 font-medium mb-1">Target UPI ID:</p>
-                        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/80 px-3.5 py-2.5 rounded-xl">
-                          <span className="font-mono text-cyan-300 text-sm font-semibold tracking-wide">{upiId}</span>
-                          <button
-                            onClick={handleCopyUpi}
-                            className="flex items-center gap-1.5 text-xs bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition-colors font-medium shadow"
-                          >
-                            {copied ? <FaCheck className="text-green-400" /> : <FaCopy />}
-                            {copied ? "Copied" : "Copy"}
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* <div className="space-y-1.5">
-                        <p className="text-xs text-slate-400 font-medium">Encoded String Payload:</p>
-                        <p className="text-[11px] font-mono text-slate-300 bg-slate-800/50 p-2 rounded-lg border border-slate-700/40 break-all">
-                          {upiString}
-                        </p>
-                      </div> */}
-                      <div className="space-y-1.5">
-                        <p className="text-xs text-slate-400 font-medium">Scanned Text Preview:</p>
-                        <p className="text-[11px] font-mono text-slate-300 bg-slate-800/50 p-2 rounded-lg border border-slate-700/40 whitespace-pre-line">
-                          {dummyTextString}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={handleUpiPayment}
-                        className="w-full mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-700 transition-all text-sm flex items-center justify-center gap-2"
-                      >
-                        <FaCheckCircle className="text-base" />
-                        Simulate Payment Complete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Right Side: Delivery Details & Payment Selection & Summary */}
@@ -611,6 +527,70 @@ const Cart = () => {
                     <FaQrcode className="text-cyan-600 text-lg" />
                   </label>
                 </div>
+
+                {/* Fully Dynamic UPI QR Section (Placed right below Payment Method) */}
+                {paymentMethod === 'UPI' && (
+                  <div className="mb-5 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-indigo-500/30 p-5 rounded-2xl shadow-xl text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                    <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-500/20">
+                          <FaQrcode className="text-white text-sm" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm tracking-wide text-white">Dynamic UPI QR (Testing)</h4>
+                          <p className="text-[11px] text-slate-400">Updates with cart total</p>
+                        </div>
+                      </div>
+                      <span className="inline-flex items-center gap-1 text-[10px] bg-cyan-500/10 text-cyan-400 font-semibold px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                        <FaShieldAlt className="text-[10px]" /> Sandbox
+                      </span>
+                    </div>
+
+                    <div className="mt-4 flex flex-col items-center justify-center bg-white p-3 rounded-xl shadow-inner border border-slate-200">
+                      <img
+                        src={dynamicQrUrl}
+                        alt="Dynamic UPI QR Code"
+                        className="w-36 h-36 object-contain hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className="mt-2 text-[11px] font-bold text-purple-700 tracking-wide uppercase">
+                        Amount: {displayINRCurrency(totalPrice)}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 space-y-3">
+                      <div>
+                        <p className="text-[11px] text-slate-400 font-medium mb-1">Target UPI ID:</p>
+                        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/80 px-3 py-2 rounded-xl">
+                          <span className="font-mono text-cyan-300 text-xs font-semibold tracking-wide">{upiId}</span>
+                          <button
+                            onClick={handleCopyUpi}
+                            className="flex items-center gap-1 text-[11px] bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded-lg transition-colors font-medium shadow"
+                          >
+                            {copied ? <FaCheck className="text-green-400" /> : <FaCopy />}
+                            {copied ? "Copied" : "Copy"}
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <p className="text-[11px] text-slate-400 font-medium">Scanned Text Preview:</p>
+                        <p className="text-[10px] font-mono text-slate-300 bg-slate-800/50 p-2 rounded-lg border border-slate-700/40 whitespace-pre-line">
+                          {dummyTextString}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={handleUpiPayment}
+                        className="w-full mt-1 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-700 transition-all text-xs flex items-center justify-center gap-2"
+                      >
+                        <FaCheckCircle className="text-sm" />
+                        Simulate Payment Complete
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 <div className="space-y-3 mb-5 border-t pt-4">
                   <div className="flex justify-between text-sm sm:text-base font-semibold text-gray-700">
