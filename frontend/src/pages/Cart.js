@@ -246,7 +246,7 @@ const Cart = () => {
       if (resData.success) {
         toast.success("Payment Successful (Simulated)!");
         context.fetchUserAddToCart();
-        navigate("/order");
+        navigate("/success");
       } else {
         toast.error(resData.message || "Something went wrong");
       }
