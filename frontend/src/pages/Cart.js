@@ -582,7 +582,8 @@ const Cart = () => {
                       </div>
 
                       <button
-                        onClick={handleUpiPayment}
+                        // onClick={handleUpiPayment}
+                        onClick={handleCheckout}
                         className="w-full mt-1 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-700 transition-all text-xs flex items-center justify-center gap-2"
                       >
                         <FaCheckCircle className="text-sm" />
