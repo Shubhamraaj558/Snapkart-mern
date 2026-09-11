@@ -29,6 +29,10 @@ const orderSchema = new mongoose.Schema({
     totalAmount : {
         type : Number,
         default : 0
+    },
+    orderStatus : {
+        type : String,
+        default : "CONFIRMED"
     }
 },{
     timestamps : true
