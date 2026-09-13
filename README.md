@@ -1,9 +1,9 @@
 
-# MERN Full Stack Project: Build a Complex Full Stack E-Commerce Application | Payment Integration, Admin Dashboard
+# SnapKart MERN Full Stack Project: Build a Complex Full Stack E-Commerce Application | Payment Integration, Admin Dashboard
 
 Some Features:
 
--   🌟 Tech stack: MERN + Material UI + SCSS/Bootstrap + Razorpay + Cloudinary
+-   🌟 Tech stack: MERN + Material UI + SCSS/Bootstrap + StripPayment + Cloudinary
 -   🎃 Authentication && Authorization with JWT
 -   👾 Payment Inegration and Admin Dashboard
 -   🚀 Listing Page (Filter products)
@@ -28,8 +28,8 @@ CLOUDINARY_API_SECRET=...
 ### Setup .env file for client
 
 ```js
-VITE_RAZORPAY_KEY_ID=...
-VITE_RAZORPAY_KEY_SECRET=...
+STRIPE_SECRET_KEY=...
+STRIPE_SECRET_KEY=...
 ```
 
 ### install the dependencies
