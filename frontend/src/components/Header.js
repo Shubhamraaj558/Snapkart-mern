@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import Logo from './Logo'
-import { FaSearchengin, FaUserTie, FaCartArrowDown ,FaHeart} from 'react-icons/fa'
+import { FaSearchengin, FaUserTie, FaCartArrowDown, FaHeart } from 'react-icons/fa'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import SummaryApi from '../common'
@@ -22,6 +22,46 @@ const Header = () => {
   const URLSearch = new URLSearchParams(location?.search)
   const searchQuery = URLSearch.get("q") || ""
   const [search, setSearch] = useState(searchQuery)
+
+  // --- Typing Placeholder Effect Logic ---
+  const placeholders = [
+    "Search products, brands, categories...",
+    "Search for Smartphones...",
+    "Search for Laptops & Electronics...",
+    "Search top fashion trends...",
+    "Search daily essentials..."
+  ]
+  const [currentPlaceholder, setCurrentPlaceholder] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [loopNum, setLoopNum] = useState(0)
+  const [typingSpeed, setTypingSpeed] = useState(100)
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const i = loopNum % placeholders.length
+      const fullText = placeholders[i]
+
+      if (isDeleting) {
+        setCurrentPlaceholder(fullText.substring(0, currentPlaceholder.length - 1))
+        setTypingSpeed(50) // Erase speed
+      } else {
+        setCurrentPlaceholder(fullText.substring(0, currentPlaceholder.length + 1))
+        setTypingSpeed(100) // Type speed
+      }
+
+      if (!isDeleting && currentPlaceholder === fullText) {
+        setTimeout(() => setIsDeleting(true), 1500) // Pause at full text
+      } else if (isDeleting && currentPlaceholder === '') {
+        setIsDeleting(false)
+        setLoopNum(loopNum + 1)
+        setTypingSpeed(500) // Pause before typing next
+      }
+    }
+
+    const timer = setTimeout(handleTyping, typingSpeed)
+    return () => clearTimeout(timer)
+  }, [currentPlaceholder, isDeleting, loopNum, typingSpeed])
+  // ----------------------------------------
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,8 +130,8 @@ const Header = () => {
     <>
       <header
         className={`fixed top-0 left-0 w-full py-3 z-50 transition-all duration-300 ${isScrolled
-            ? 'bg-slate-950/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)] border-b border-slate-800'
-            : 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/70'
+          ? 'bg-slate-950/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)] border-b border-slate-800'
+          : 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/70'
           }`}
       >
         <div className="mx-auto max-w-9xl px-4 sm:px-6 lg:px-11">
@@ -116,12 +156,12 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Search Box */}
+            {/* Search Box with Animated Placeholder */}
             <div className="hidden lg:flex flex-1 justify-center">
               <div className="w-full max-w-2xl flex items-center rounded-full border border-indigo-400 bg-slate-900 shadow-inner focus-within:border-cyan-400 transition-all duration-300">
                 <input
                   type="text"
-                  placeholder="Search products, brands, categories..."
+                  placeholder={currentPlaceholder}
                   className="w-full bg-transparent text-white placeholder:text-slate-400 px-5 py-3 outline-none"
                   onChange={handleSearch}
                   value={search}
@@ -151,7 +191,7 @@ const Header = () => {
                 <FaSearchengin size={18} />
               </button>
 
-              {/* Cart */}
+              {/* Wishlist */}
               {user?._id && (
                 <Link
                   to="/wishlist"
@@ -159,11 +199,11 @@ const Header = () => {
                 >
                   <button className="wishlist-btn">
                     <FaHeart size={20} style={{ color: "red", marginRight: "0px" }} />
-                    {/* Wishlist */}
                   </button>
                 </Link>
               )}
-  
+
+              {/* Cart */}
               {user?._id && (
                 <Link
                   to="/cart"
@@ -240,7 +280,6 @@ const Header = () => {
                       Profile
                     </Link>
 
-                    {/* ✅ YAHAN "MY ORDERS" OPTION ADD KAR DIYA HAI */}
                     <Link
                       to="/order"
                       className="block px-4 py-3 hover:bg-slate-800 text-white"
@@ -250,7 +289,6 @@ const Header = () => {
                     </Link>
 
                     <button
-                      handleLogout
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 font-semibold"
                     >
