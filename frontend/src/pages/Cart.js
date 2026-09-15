@@ -630,17 +630,10 @@ const Cart = () => {
                   </button>
 
                   <Link
-                    to="/"
-                    className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 px-5 rounded-xl border border-purple-200 bg-white/80 text-purple-700 hover:bg-purple-50 transition-all text-sm sm:text-base"
-                  >
-                    <FaArrowLeft />
-                    Continue Shopping
-                  </Link>
-                  <Link
                     to="/cancel"
                     className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 px-5 rounded-xl border border-purple-200 bg-white/80 text-purple-700 hover:bg-purple-50 transition-all text-sm sm:text-base"
                   >
-                    {/* <FaArrowLeft /> */}
+                    <FaArrowLeft />
                     Cancel Payment
                   </Link>
                 </div>
