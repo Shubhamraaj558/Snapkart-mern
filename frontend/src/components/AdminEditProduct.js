@@ -90,14 +90,14 @@ const AdminEditProduct = ({
   }
 
   return (
-    <div className='fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-xl overflow-y-auto'>
+    <div className='fixed inset-0 z-[99999] bg-slate-950/95 backdrop-blur-2xl overflow-y-auto flex flex-col'>
       {/* Full Page Container */}
-      <div className='min-h-screen w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-32 lg:pb-8'>
+      <div className='flex-1 w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-32 lg:pb-12'>
         
         {/* Left - Main Form */}
         <div className='overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
           {/* Header */}
-          <div className='sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
+          <div className='sticky top-0 z-20 flex items-center justify-between border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
             <div>
               <h2 className='text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent'>
                 Edit Product
@@ -210,7 +210,7 @@ const AdminEditProduct = ({
           </form>
         </div>
 
-        {/* Right - Image Management (Visible on all screens now, optimized for mobile) */}
+        {/* Right - Image Management */}
         <div className='block'>
           <div className='h-fit overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
             
@@ -260,7 +260,7 @@ const AdminEditProduct = ({
                       <button
                         type='button'
                         onClick={() => handleDeleteProductImage(index)}
-                        className='absolute right-2 top-2 sm:-right-3 sm:-top-3 grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-full bg-red-500/90 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:scale-110 sm:opacity-0 group-hover:opacity-100'
+                        className='absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full bg-red-500/90 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:scale-110'
                       >
                         <MdDelete className='text-sm' />
                       </button>
@@ -301,13 +301,13 @@ const AdminEditProduct = ({
         </div>
       </div>
 
-      {/* Sticky Bottom Submit Button for Mobile Screens */}
-      <div className='lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-slate-950/95 px-4 py-4 backdrop-blur-xl'>
+      {/* Sticky Bottom Floating Submit Button for Mobile Screens */}
+      <div className='lg:hidden fixed bottom-3 left-3 right-3 z-[999999] bg-slate-950/90 border border-white/15 p-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-2xl'>
         <button
           type='submit'
           form='productForm'
           disabled={uploading || data.productImage?.length === 0}
-          className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-base font-semibold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
+          className='w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
         >
           {uploading ? 'Updating...' : 'Update Product'}
         </button>
