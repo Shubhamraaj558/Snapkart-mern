@@ -91,222 +91,241 @@ const AdminEditProduct = ({
   }
 
   return ReactDOM.createPortal(
-    <div className='fixed inset-0 z-[999999] h-screen w-screen bg-slate-950/95 backdrop-blur-2xl overflow-y-auto'>
-      {/* Full Page Container */}
-      <div className='w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-20'>
-        
-        {/* Left - Main Form */}
-        <div className='overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
-          {/* Header */}
-          <div className='sticky top-0 z-20 flex items-center justify-between border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
-            <div>
-              <h2 className='text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent'>
-                Edit Product
-              </h2>
-              <p className='mt-1 text-xs sm:text-sm text-slate-400'>
-                Update product details and pricing
-              </p>
-            </div>
-            <button
-              type='button'
-              onClick={onClose}
-              className='grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/5 text-xl text-slate-300 transition-all hover:bg-red-500/20 hover:text-red-300 hover:scale-105'
-            >
-              <CgClose />
-            </button>
+    <div className='fixed inset-0 z-[999999] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md'>
+      <div className='w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-950 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
+
+        {/* Header */}
+        <div className='flex items-center justify-between border-b border-white/10 bg-white/[0.04] px-6 py-5 backdrop-blur-xl'>
+          <div>
+            <h2 className='text-xl font-bold text-white'>Edit Product</h2>
+            <p className='mt-1 text-sm text-slate-400'>
+              Update product details, pricing and images
+            </p>
           </div>
 
-          {/* Form Content */}
-          <form id="productForm" className='p-4 sm:p-6 lg:p-8' onSubmit={handleSubmit}>
-            <div className='grid gap-6'>
-              
-              {/* Product Basic Info */}
-              <div className='grid gap-6 md:grid-cols-2'>
-                <div className='space-y-3'>
-                  <label className='text-sm font-semibold text-slate-200'>Product Name</label>
-                  <input
-                    type='text'
-                    name='productName'
-                    value={data.productName || ''}
-                    onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                    placeholder='Enter product name'
-                    required
-                  />
-                </div>
-
-                <div className='space-y-3'>
-                  <label className='text-sm font-semibold text-slate-200'>Brand Name</label>
-                  <input
-                    type='text'
-                    name='brandName'
-                    value={data.brandName || ''}
-                    onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                    placeholder='Enter brand name'
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Category & Pricing */}
-              <div className='grid gap-6 md:grid-cols-2'>
-                <div className='space-y-3'>
-                  <label className='text-sm font-semibold text-slate-200'>Category</label>
-                  <select
-                    name='category'
-                    value={data.category || ''}
-                    onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-slate-900 px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                    required
-                  >
-                    <option value={""} className='text-black bg-white'>Select Category</option>
-                    {productCategory.map((el, index) => (
-                      <option value={el.value} key={el.value + index} className='text-black bg-white'>
-                        {el.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className='space-y-3'>
-                  <label className='text-sm font-semibold text-slate-200'>Original Price</label>
-                  <input
-                    type='number'
-                    name='price'
-                    value={data.price || ''}
-                    onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                    placeholder='₹ 0'
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className='space-y-3'>
-                <label className='text-sm font-semibold text-slate-200'>Selling Price</label>
-                <input
-                  type='number'
-                  name='sellingPrice'
-                  value={data.sellingPrice || ''}
-                  onChange={handleOnChange}
-                  className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                  placeholder='₹ 0'
-                  required
-                />
-              </div>
-
-              <div className='space-y-3'>
-                <label className='text-sm font-semibold text-slate-200'>Product Description</label>
-                <textarea
-                  name='description'
-                  value={data.description || ''}
-                  onChange={handleOnChange}
-                  rows={4}
-                  className='w-full resize-vertical rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
-                  placeholder='Enter detailed product description...'
-                />
-              </div>
-            </div>
-          </form>
+          <button
+            type='button'
+            onClick={onClose}
+            className='grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/5 text-xl text-slate-300 transition hover:bg-red-500/15 hover:text-red-300'
+          >
+            <CgClose />
+          </button>
         </div>
 
-        {/* Right - Image Management & Update Button right below it */}
-        <div className='block'>
-          <div className='h-fit overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
-            
-            {/* Images Header */}
-            <div className='border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
-              <div className='flex items-center justify-between'>
-                <div>
-                  <h3 className='text-lg font-bold text-white'>Product Images</h3>
-                  <p className='mt-1 text-sm text-slate-400'>
-                    {data.productImage?.length || 0} images • Max 8
-                  </p>
-                </div>
-                
-                <label htmlFor='uploadImageInput'>
-                  <div className={`grid h-12 w-12 place-items-center rounded-2xl border-2 border-dashed border-cyan-400/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 text-cyan-300 transition-all hover:border-cyan-400/50 hover:bg-cyan-500/15 hover:scale-105 ${uploading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>
+        {/* Form */}
+        <form
+          className='grid max-h-[82vh] gap-5 overflow-y-auto p-6'
+          onSubmit={handleSubmit}
+        >
+          <div className='grid gap-5 md:grid-cols-2'>
+            <div className='space-y-2'>
+              <label htmlFor='productName' className='text-sm font-medium text-slate-200'>
+                Product Name
+              </label>
+              <input
+                type='text'
+                id='productName'
+                placeholder='Enter product name'
+                name='productName'
+                value={data.productName || ''}
+                onChange={handleOnChange}
+                className='w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-white/[0.07]'
+                required
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <label htmlFor='brandName' className='text-sm font-medium text-slate-200'>
+                Brand Name
+              </label>
+              <input
+                type='text'
+                id='brandName'
+                placeholder='Enter brand name'
+                value={data.brandName || ''}
+                name='brandName'
+                onChange={handleOnChange}
+                className='w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-white/[0.07]'
+                required
+              />
+            </div>
+          </div>
+
+          <div className='grid gap-5 md:grid-cols-2'>
+            <div className='space-y-2'>
+              <label htmlFor='category' className='text-sm font-medium text-slate-200'>
+                Category
+              </label>
+              <select
+                required
+                value={data.category || ''}
+                name='category'
+                onChange={handleOnChange}
+                className='w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none transition focus:border-cyan-400/40 focus:bg-white/[0.07]'
+              >
+                <option value={""} className='text-black'>Select Category</option>
+                {
+                  productCategory.map((el, index) => {
+                    return (
+                      <option value={el.value} key={el.value + index} className='text-black'>
+                        {el.label}
+                      </option>
+                    )
+                  })
+                }
+              </select>
+            </div>
+
+            <div className='space-y-2'>
+              <label htmlFor='price' className='text-sm font-medium text-slate-200'>
+                Price
+              </label>
+              <input
+                type='number'
+                id='price'
+                placeholder='Enter original price'
+                value={data.price || ''}
+                name='price'
+                onChange={handleOnChange}
+                className='w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-white/[0.07]'
+                required
+              />
+            </div>
+          </div>
+
+          <div className='grid gap-5 md:grid-cols-2'>
+            <div className='space-y-2'>
+              <label htmlFor='sellingPrice' className='text-sm font-medium text-slate-200'>
+                Selling Price
+              </label>
+              <input
+                type='number'
+                id='sellingPrice'
+                placeholder='Enter selling price'
+                value={data.sellingPrice || ''}
+                name='sellingPrice'
+                onChange={handleOnChange}
+                className='w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-white/[0.07]'
+                required
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-sm font-medium text-slate-200'>
+                Upload Images
+              </label>
+
+              <label htmlFor='uploadImageInput'>
+                <div className={`group flex h-[116px] w-full flex-col items-center justify-center rounded-2xl border border-dashed border-cyan-400/25 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 transition ${uploading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-cyan-300/40 hover:bg-cyan-500/10'}`}>
+                  <span className='text-4xl text-cyan-300 transition group-hover:scale-110'>
                     <FaCloudUploadAlt />
-                  </div>
+                  </span>
+                  <p className='mt-2 text-sm font-medium text-slate-200'>
+                    {uploading ? 'Uploading...' : 'Upload Product Images'}
+                  </p>
+                  <p className='mt-1 text-xs text-slate-400'>
+                    You can select multiple images at once
+                  </p>
                   <input
-                    id='uploadImageInput'
                     type='file'
+                    id='uploadImageInput'
                     className='hidden'
                     onChange={handleUploadProduct}
                     multiple
                     accept='image/*'
                     disabled={uploading}
                   />
-                </label>
-              </div>
+                </div>
+              </label>
             </div>
-
-            {/* Images Grid */}
-            <div className='p-4 sm:p-6'>
-              <div className='grid grid-cols-2 gap-4'>
-                {data?.productImage?.length > 0 ? (
-                  data.productImage.slice(0, 8).map((el, index) => (
-                    <div key={el + index} className='group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]'>
-                      <img
-                        src={el}
-                        alt={`Product image ${index + 1}`}
-                        className='h-32 w-full cursor-pointer object-cover transition-transform group-hover:scale-105'
-                        onClick={() => {
-                          setOpenFullScreenImage(true)
-                          setFullScreenImage(el)
-                        }}
-                      />
-                      
-                      <button
-                        type='button'
-                        onClick={() => handleDeleteProductImage(index)}
-                        className='absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full bg-red-500/90 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:scale-110'
-                      >
-                        <MdDelete className='text-sm' />
-                      </button>
-                      
-                      <div className='absolute bottom-2 left-2 rounded-full bg-white/20 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm'>
-                        {index + 1}
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className='col-span-2 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/20 bg-white/[0.03] py-12 text-center backdrop-blur-sm'>
-                    <FaCloudUploadAlt className='mx-auto h-16 w-16 text-slate-400' />
-                    <p className='mt-4 text-lg font-semibold text-slate-300'>No images added</p>
-                    <p className='mt-1 text-sm text-slate-500'>Click upload button to add product images</p>
-                  </div>
-                )}
-
-                {data.productImage?.length >= 8 && (
-                  <div className='col-span-2 rounded-2xl border border-orange-400/30 bg-orange-400/5 p-4 text-center'>
-                    <p className='text-sm font-medium text-orange-300'>Maximum 8 images reached</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Submit Button (Now visible on ALL screens right below product images!) */}
-            <div className='border-t border-white/10 bg-gradient-to-r from-slate-900/95 to-slate-800/50 px-6 py-5 backdrop-blur-xl'>
-              <button
-                type='submit'
-                form='productForm'
-                disabled={uploading || data.productImage?.length === 0}
-                className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-base sm:text-lg font-semibold text-white shadow-lg transition-all hover:from-cyan-600 hover:to-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
-              >
-                {uploading ? 'Updating...' : 'Update Product'}
-              </button>
-            </div>
-
           </div>
-        </div>
+
+          <div className='space-y-3'>
+            <label className='text-sm font-medium text-slate-200'>
+              Product Images Preview
+            </label>
+
+            {
+              data?.productImage?.length > 0 ? (
+                <div className='flex flex-wrap gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4'>
+                  {
+                    data.productImage.map((el, index) => {
+                      return (
+                        <div key={el + index} className='group relative'>
+                          <img
+                            src={el}
+                            alt={el}
+                            width={90}
+                            height={90}
+                            className='h-[90px] w-[90px] rounded-2xl border border-white/10 bg-slate-800 object-cover cursor-pointer transition group-hover:scale-[1.03]'
+                            onClick={() => {
+                              setOpenFullScreenImage(true)
+                              setFullScreenImage(el)
+                            }}
+                          />
+
+                          <button
+                            type='button'
+                            className='absolute -right-2 -top-2 hidden rounded-full bg-red-600 p-2 text-white shadow-lg transition hover:bg-red-700 group-hover:block'
+                            onClick={() => handleDeleteProductImage(index)}
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              ) : (
+                <div className='rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-300'>
+                  Please upload at least one product image.
+                </div>
+              )
+            }
+          </div>
+
+          <div className='space-y-2'>
+            <label htmlFor='description' className='text-sm font-medium text-slate-200'>
+              Description
+            </label>
+            <textarea
+              id='description'
+              className='min-h-[140px] w-full resize-none rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-white/[0.07]'
+              placeholder='Enter product description'
+              rows={4}
+              onChange={handleOnChange}
+              name='description'
+              value={data.description || ''}
+            />
+          </div>
+
+          <div className='sticky bottom-0 -mx-6 mt-2 flex justify-end gap-3 border-t border-white/10 bg-slate-950/95 px-6 py-4 backdrop-blur-xl'>
+            <button
+              type='button'
+              onClick={onClose}
+              className='rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white'
+            >
+              Cancel
+            </button>
+
+            <button 
+              disabled={uploading || data.productImage?.length === 0}
+              className='rounded-2xl border border-orange-400/30 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:from-orange-400 hover:to-red-400 disabled:opacity-50 disabled:cursor-not-allowed'
+            >
+              {uploading ? 'Updating...' : 'Update Product'}
+            </button>
+          </div>
+        </form>
       </div>
 
-      {/* Fullscreen Image Modal */}
-      {openFullScreenImage && (
-        <DisplayImage onClose={() => setOpenFullScreenImage(false)} imgUrl={fullScreenImage} />
-      )}
+      {
+        openFullScreenImage && (
+          <DisplayImage
+            onClose={() => setOpenFullScreenImage(false)}
+            imgUrl={fullScreenImage}
+          />
+        )
+      }
     </div>,
     document.body
   )
