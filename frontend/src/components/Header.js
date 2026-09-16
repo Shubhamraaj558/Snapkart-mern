@@ -137,7 +137,7 @@ const Header = () => {
         <div className="mx-auto max-w-9xl px-4 sm:px-6 lg:px-11">
           <div className="h-20 flex items-center justify-between gap-4">
 
-            {/* Logo + Brand (Original Size & Position Restored) */}
+            {/* Logo + Brand */}
             <div
               className="flex items-center gap-3 cursor-pointer select-none shrink-0"
               onClick={() => navigate('/')}
@@ -156,14 +156,25 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Desktop Search Box with Animated Placeholder */}
+            {/* Desktop Search Box */}
             <div className="hidden lg:flex flex-1 justify-center">
               <div className="w-full max-w-2xl flex items-center rounded-full border border-indigo-400 bg-slate-900 shadow-inner focus-within:border-cyan-400 transition-all duration-300">
                 <input
                   type="text"
                   placeholder={currentPlaceholder}
-                  className="w-full bg-transparent text-white placeholder:text-slate-400 px-5 py-3 outline-none"
-                  onChange={handleSearch}
+                  className="w-full bg-transparent text-white placeholder:text-slate-400 px-5 py-3 outline-none cursor-pointer"
+                  onFocus={() => {
+                    if (location.pathname !== '/search') {
+                      navigate('/search')
+                    }
+                  }}
+                  onChange={(e) => {
+                    if (location.pathname !== '/search') {
+                      navigate(`/search?q=${encodeURIComponent(e.target.value.trim())}`)
+                    } else {
+                      handleSearch(e)
+                    }
+                  }}
                   value={search}
                   aria-label="Search products"
                 />
