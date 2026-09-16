@@ -155,7 +155,7 @@ const AdminPanel = () => {
           </div>
         </div>
         {/* Close button for mobile drawer */}
-        <button
+        <button 
           onClick={() => setMobileSidebarOpen(false)}
           className="md:hidden text-slate-400 hover:text-white p-2"
         >
@@ -215,7 +215,7 @@ const AdminPanel = () => {
             <p className="text-lg font-semibold capitalize text-white">
               {user?.name || "Admin User"}
             </p>
-            <p className="mt-1 text-sm text-slate-300">
+            <p className="mt-1 text-sm text-slate-300 truncate">
               {user?.email || "admin@example.com"}
             </p>
             <div className="mx-auto mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-cyan-200">
@@ -241,17 +241,19 @@ const AdminPanel = () => {
                 key={item.to}
                 to={item.to}
                 onClick={() => setMobileSidebarOpen(false)}
-                className={`group flex items-center justify-between rounded-2xl border px-4 py-3.5 transition-all duration-300 ${active
+                className={`group flex items-center justify-between rounded-2xl border px-4 py-3.5 transition-all duration-300 ${
+                  active
                     ? 'border-cyan-300/25 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 text-white shadow-[0_10px_30px_rgba(34,211,238,0.12)]'
                     : 'border-transparent bg-white/5 text-slate-300 hover:border-white/10 hover:bg-white/10 hover:text-white'
-                  }`}
+                }`}
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`grid h-10 w-10 place-items-center rounded-xl transition ${active
+                    className={`grid h-10 w-10 place-items-center rounded-xl transition ${
+                      active
                         ? 'bg-white/15 text-cyan-200'
                         : 'bg-white/8 text-slate-300 group-hover:bg-white/12 group-hover:text-cyan-200'
-                      }`}
+                    }`}
                   >
                     {item.icon}
                   </div>
@@ -265,10 +267,11 @@ const AdminPanel = () => {
                 </div>
 
                 <FaChevronRight
-                  className={`text-sm transition ${active
+                  className={`text-sm transition ${
+                    active
                       ? 'translate-x-0 text-cyan-200'
                       : 'text-slate-500 group-hover:translate-x-1 group-hover:text-white'
-                    }`}
+                  }`}
                 />
               </Link>
             )
@@ -289,7 +292,7 @@ const AdminPanel = () => {
   )
 
   return (
-    <div className="min-h-[calc(100vh-120px)] bg-slate-950 px-2 sm:px-4 py-4">
+    <div className="min-h-[calc(100vh-120px)] bg-slate-950 px-2 sm:px-4 py-4 overflow-x-hidden">
       {/* Mobile Menu Toggle Header */}
       <div className="md:hidden flex items-center justify-between bg-slate-900 border border-white/10 px-4 py-3 rounded-2xl mb-4 shadow-lg">
         <div className="flex items-center gap-2 text-white font-bold">
@@ -317,15 +320,15 @@ const AdminPanel = () => {
 
       {/* Main Grid Layout for Desktop & Tablet */}
       <div className="mx-auto grid min-h-[calc(100vh-152px)] max-w-[1600px] md:grid-cols-[290px_1fr] gap-4">
-
+        
         {/* Desktop Sidebar */}
         <aside className="hidden md:block relative overflow-hidden rounded-[28px] border border-white/10 bg-white/8 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.20),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(251,146,60,0.16),_transparent_26%)]" />
           <SidebarContent />
         </aside>
 
-        {/* Main Content */}
-        <main className="flex min-h-0 flex-col rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+        {/* Main Content Workspace */}
+        <main className="flex min-h-0 flex-col rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.35)] overflow-hidden">
           <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-slate-900/75 px-4 sm:px-6 py-4 sm:py-5 backdrop-blur-xl">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard Workspace</h1>
@@ -342,8 +345,8 @@ const AdminPanel = () => {
             </div>
           </div>
 
-          <div className="flex-1 min-h-0 bg-[linear-gradient(to_bottom_right,rgba(15,23,42,0.98),rgba(30,41,59,0.95))] p-3 sm:p-6 overflow-y-auto">
-            <div className="rounded-[24px] border border-white/8 bg-white/[0.04] p-3 sm:p-5">
+          <div className="flex-1 min-h-0 bg-[linear-gradient(to_bottom_right,rgba(15,23,42,0.98),rgba(30,41,59,0.95))] p-3 sm:p-6 overflow-y-auto overflow-x-hidden">
+            <div className="rounded-[24px] border border-white/8 bg-white/[0.04] p-3 sm:p-5 overflow-x-auto">
               <Outlet />
             </div>
           </div>

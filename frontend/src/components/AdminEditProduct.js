@@ -8,7 +8,6 @@ import { MdDelete } from "react-icons/md"
 import SummaryApi from '../common'
 import { toast } from 'react-toastify'
 
-
 const AdminEditProduct = ({
   onClose,
   productData,
@@ -91,19 +90,19 @@ const AdminEditProduct = ({
   }
 
   return (
-    <div className='fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-xl'>
+    <div className='fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-xl overflow-y-auto'>
       {/* Full Page Container */}
-      <div className='min-h-screen w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 px-4 py-6 lg:px-8 lg:py-8'>
+      <div className='min-h-screen w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-32 lg:pb-8'>
         
         {/* Left - Main Form */}
         <div className='overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
           {/* Header */}
           <div className='sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
             <div>
-              <h2 className='text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent'>
-                {/* Edit Product */}
+              <h2 className='text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent'>
+                Edit Product
               </h2>
-              <p className='mt-1 text-sm text-slate-400'>
+              <p className='mt-1 text-xs sm:text-sm text-slate-400'>
                 Update product details and pricing
               </p>
             </div>
@@ -117,7 +116,7 @@ const AdminEditProduct = ({
           </div>
 
           {/* Form Content */}
-          <form id="productForm" className='p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto' onSubmit={handleSubmit}>
+          <form id="productForm" className='p-4 sm:p-6 lg:p-8' onSubmit={handleSubmit}>
             <div className='grid gap-6'>
               
               {/* Product Basic Info */}
@@ -129,7 +128,7 @@ const AdminEditProduct = ({
                     name='productName'
                     value={data.productName || ''}
                     onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                     placeholder='Enter product name'
                     required
                   />
@@ -142,7 +141,7 @@ const AdminEditProduct = ({
                     name='brandName'
                     value={data.brandName || ''}
                     onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                     placeholder='Enter brand name'
                     required
                   />
@@ -157,12 +156,12 @@ const AdminEditProduct = ({
                     name='category'
                     value={data.category || ''}
                     onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-lg text-white focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                    className='w-full rounded-2xl border border-white/10 bg-slate-900 px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                     required
                   >
-                    <option value={""} className='text-black'>Select Category</option>
+                    <option value={""} className='text-black bg-white'>Select Category</option>
                     {productCategory.map((el, index) => (
-                      <option value={el.value} key={el.value + index} className='text-black'>
+                      <option value={el.value} key={el.value + index} className='text-black bg-white'>
                         {el.label}
                       </option>
                     ))}
@@ -176,7 +175,7 @@ const AdminEditProduct = ({
                     name='price'
                     value={data.price || ''}
                     onChange={handleOnChange}
-                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                    className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                     placeholder='₹ 0'
                     required
                   />
@@ -190,7 +189,7 @@ const AdminEditProduct = ({
                   name='sellingPrice'
                   value={data.sellingPrice || ''}
                   onChange={handleOnChange}
-                  className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                  className='w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                   placeholder='₹ 0'
                   required
                 />
@@ -203,7 +202,7 @@ const AdminEditProduct = ({
                   value={data.description || ''}
                   onChange={handleOnChange}
                   rows={4}
-                  className='w-full resize-vertical rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
+                  className='w-full resize-vertical rounded-2xl border border-white/10 bg-white/[0.04] px-4 sm:px-5 py-3 sm:py-4 text-white placeholder-slate-400 focus:border-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all'
                   placeholder='Enter detailed product description...'
                 />
               </div>
@@ -211,9 +210,9 @@ const AdminEditProduct = ({
           </form>
         </div>
 
-        {/* Right - Image Management */}
-        <div className='hidden lg:block'>
-          <div className='sticky top-6 h-fit overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
+        {/* Right - Image Management (Visible on all screens now, optimized for mobile) */}
+        <div className='block'>
+          <div className='h-fit overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
             
             {/* Images Header */}
             <div className='border-b border-white/10 bg-slate-900/95 px-6 py-5 backdrop-blur-xl'>
@@ -243,7 +242,7 @@ const AdminEditProduct = ({
             </div>
 
             {/* Images Grid */}
-            <div className='p-6 max-h-[calc(100vh-300px)] overflow-y-auto'>
+            <div className='p-4 sm:p-6'>
               <div className='grid grid-cols-2 gap-4'>
                 {data?.productImage?.length > 0 ? (
                   data.productImage.slice(0, 8).map((el, index) => (
@@ -261,7 +260,7 @@ const AdminEditProduct = ({
                       <button
                         type='button'
                         onClick={() => handleDeleteProductImage(index)}
-                        className='absolute -right-3 -top-3 grid h-10 w-10 place-items-center rounded-full bg-red-500/90 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:scale-110 opacity-0 group-hover:opacity-100'
+                        className='absolute right-2 top-2 sm:-right-3 sm:-top-3 grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-full bg-red-500/90 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-red-600 hover:scale-110 sm:opacity-0 group-hover:opacity-100'
                       >
                         <MdDelete className='text-sm' />
                       </button>
@@ -287,19 +286,31 @@ const AdminEditProduct = ({
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className='border-t border-white/10 bg-gradient-to-r from-slate-900/95 to-slate-800/50 px-6 py-5 backdrop-blur-xl'>
+            {/* Submit Button (Desktop View inside card) */}
+            <div className='hidden lg:block border-t border-white/10 bg-gradient-to-r from-slate-900/95 to-slate-800/50 px-6 py-5 backdrop-blur-xl'>
               <button
                 type='submit'
                 form='productForm'
                 disabled={uploading || data.productImage?.length === 0}
-                className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:from-cyan-600 hover:to-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-400/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:from-cyan-400 disabled:to-blue-500'
+                className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:from-cyan-600 hover:to-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 {uploading ? 'Updating...' : 'Update Product'}
               </button>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Sticky Bottom Submit Button for Mobile Screens */}
+      <div className='lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-slate-950/95 px-4 py-4 backdrop-blur-xl'>
+        <button
+          type='submit'
+          form='productForm'
+          disabled={uploading || data.productImage?.length === 0}
+          className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-base font-semibold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
+        >
+          {uploading ? 'Updating...' : 'Update Product'}
+        </button>
       </div>
 
       {/* Fullscreen Image Modal */}
