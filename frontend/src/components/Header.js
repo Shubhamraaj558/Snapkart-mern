@@ -134,16 +134,16 @@ const Header = () => {
           : 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/70'
           }`}
       >
-        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-          <div className="h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-1">
+          <div className="h-36 sm:h-32 flex items-center justify-between gap-2 sm:gap-4">
 
             {/* Logo + Brand */}
             <div
-              className="flex items-center gap-2 sm:gap-3 cursor-pointer select-none shrink-0"
+              className="flex items-center gap-2 sm:gap-2 cursor-pointer select-none shrink-0"
               onClick={() => navigate('/')}
             >
-              <div className="flex items-center justify-center rounded-xl bg-white px-2 py-1 shadow-md">
-                <Logo w={55} h={32} />
+              <div className="flex items-center justify-center rounded-xl px-0 py-0 shadow-md">
+                <Logo w={90} h={60} />
               </div>
 
               <div className="hidden sm:block leading-tight">
