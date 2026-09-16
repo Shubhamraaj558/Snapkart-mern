@@ -43,19 +43,19 @@ const Footer = () => {
     <footer className="mt-4 border-t border-white/10 bg-slate-950 text-slate-200">
       <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          
+
           {/* Brand */}
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <img
-                src="/logo.jpg"
+                src="/logo3.png"
                 alt="SnapKart Logo"
-                className="h-20 w-20 rounded-2xl border border-cyan-400/30 object-cover shadow-lg"
+                className="h-25 w-28 rounded-2xl border border-cyan-400/30 object-contain bg-transparent mix-blend-screen shadow-lg"
               />
 
               <div>
                 <h2 className="text-2xl font-extrabold tracking-wide text-white">
-                    𝕊𝕟𝕒𝕡𝕜𝕒𝕣𝕥
+                  𝕊𝕟𝕒𝕡𝕜𝕒𝕣𝕥
                 </h2>
                 <p className="text-sm text-cyan-300">
                   Everything you need. Delivered.
