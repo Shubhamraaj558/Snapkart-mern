@@ -264,9 +264,10 @@ const AdminEditProduct = ({
                             }}
                           />
 
+                          {/* Mobile pe hamesha dikhega, Desktop pe hover karne par */}
                           <button
                             type='button'
-                            className='absolute -right-2 -top-2 hidden rounded-full bg-red-600 p-2 text-white shadow-lg transition hover:bg-red-700 group-hover:block'
+                            className='absolute -right-2 -top-2 rounded-full bg-red-600 p-2 text-white shadow-lg transition hover:bg-red-700 md:hidden md:group-hover:block'
                             onClick={() => handleDeleteProductImage(index)}
                           >
                             <MdDelete />
