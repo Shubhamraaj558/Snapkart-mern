@@ -90,11 +90,10 @@ const AdminEditProduct = ({
     }
   }
 
-  // ReactDOM Portal use kar rahe hain taaki modal kisi bhi parent layout/footer ke andar na fase
   return ReactDOM.createPortal(
-    <div className='fixed inset-0 z-[999999] h-screen w-screen bg-slate-950/95 backdrop-blur-2xl overflow-y-auto flex flex-col'>
+    <div className='fixed inset-0 z-[999999] h-screen w-screen bg-slate-950/95 backdrop-blur-2xl overflow-y-auto'>
       {/* Full Page Container */}
-      <div className='flex-1 w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-32 lg:pb-12'>
+      <div className='w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 p-3 sm:p-6 lg:p-8 pb-20'>
         
         {/* Left - Main Form */}
         <div className='overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
@@ -212,7 +211,7 @@ const AdminEditProduct = ({
           </form>
         </div>
 
-        {/* Right - Image Management */}
+        {/* Right - Image Management & Update Button right below it */}
         <div className='block'>
           <div className='h-fit overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/90 shadow-[0_20px_80px_rgba(0,0,0,0.45)]'>
             
@@ -288,31 +287,20 @@ const AdminEditProduct = ({
               </div>
             </div>
 
-            {/* Submit Button (Desktop View inside card) */}
-            <div className='hidden lg:block border-t border-white/10 bg-gradient-to-r from-slate-900/95 to-slate-800/50 px-6 py-5 backdrop-blur-xl'>
+            {/* Submit Button (Now visible on ALL screens right below product images!) */}
+            <div className='border-t border-white/10 bg-gradient-to-r from-slate-900/95 to-slate-800/50 px-6 py-5 backdrop-blur-xl'>
               <button
                 type='submit'
                 form='productForm'
                 disabled={uploading || data.productImage?.length === 0}
-                className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:from-cyan-600 hover:to-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
+                className='w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-base sm:text-lg font-semibold text-white shadow-lg transition-all hover:from-cyan-600 hover:to-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 {uploading ? 'Updating...' : 'Update Product'}
               </button>
             </div>
+
           </div>
         </div>
-      </div>
-
-      {/* Sticky Bottom Floating Submit Button for Mobile Screens */}
-      <div className='lg:hidden fixed bottom-3 left-3 right-3 z-[9999999] bg-slate-950/90 border border-white/15 p-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-2xl'>
-        <button
-          type='submit'
-          form='productForm'
-          disabled={uploading || data.productImage?.length === 0}
-          className='w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
-        >
-          {uploading ? 'Updating...' : 'Update Product'}
-        </button>
       </div>
 
       {/* Fullscreen Image Modal */}
