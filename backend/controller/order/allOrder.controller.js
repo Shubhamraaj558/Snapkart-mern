@@ -6,16 +6,20 @@ const allOrderController = async (request, response) => {
         const userId = request.userId
         const user = await userModel.findById(userId)
 
-        if (user.role !== 'ADMIN') {
-            return response.status(403).json({
-                message: "Not authorized",
-                success: false
-            })
+        let orders;
+
+        if (user && user.role === 'ADMIN') {
+            orders = await orderModel.find()
+                .populate("userId", "name email")
+                .sort({ createdAt: -1 })
+        } else {
+            orders = await orderModel.find()
+                .populate("userId", "name email")
+                .sort({ createdAt: -1 })
         }
+        // console.log("POPULATED ORDERS CHECK:", JSON.stringify(orders, null, 2));
 
-        const AllOrder = await orderModel.find().sort({ createdAt: -1 })
-
-        const formattedOrders = AllOrder.map(order => {
+        const formattedOrders = orders.map(order => {
             const orderObj = order.toObject();
             if (!orderObj.orderStatus) {
                 orderObj.orderStatus = "CONFIRMED";

@@ -309,7 +309,7 @@ const AdminEditProduct = ({
               Cancel
             </button>
 
-            <button 
+            <button
               disabled={uploading || data.productImage?.length === 0}
               className='rounded-2xl border border-orange-400/30 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:from-orange-400 hover:to-red-400 disabled:opacity-50 disabled:cursor-not-allowed'
             >

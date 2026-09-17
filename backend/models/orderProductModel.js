@@ -1,43 +1,43 @@
 const mongoose = require('mongoose')
 
-
 const orderSchema = new mongoose.Schema({
-    productDetails : {
-        type : Array,
-        default : []
+    productDetails: {
+        type: Array,
+        default: []
     },
-    email : {
-        type : String,
-        default : ""
+    email: {
+        type: String,
+        default: ""
     },
-    userId : {
-        type : String,
-        default : ""
+    userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+        required: true
     },
-    paymentDetails : {
-        paymentId : {
-            type : String,
-            default : ""
+    paymentDetails: {
+        paymentId: {
+            type: String,
+            default: ""
         },
-        payment_method_type : [],
-        payment_status : {
-            type : String,
-            default : ""
+        payment_method_type: [],
+        payment_status: {
+            type: String,
+            default: ""
         }
     },
-    shipping_options : [],
-    totalAmount : {
-        type : Number,
-        default : 0
+    shipping_options: [],
+    totalAmount: {
+        type: Number,
+        default: 0
     },
-    orderStatus : {
-        type : String,
-        default : "CONFIRMED"
+    orderStatus: {
+        type: String,
+        default: "CONFIRMED"
     }
-},{
-    timestamps : true
+}, {
+    timestamps: true
 })
 
-const orderModel = mongoose.model('order',orderSchema)
+const orderModel = mongoose.model('order', orderSchema)
 
 module.exports = orderModel

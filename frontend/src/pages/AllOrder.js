@@ -199,8 +199,8 @@ const AllOrders = () => {
                 key={status}
                 onClick={() => setStatusFilter(status)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${statusFilter === status
-                    ? 'bg-purple-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-gray-600 hover:bg-slate-200'
+                  ? 'bg-purple-600 text-white shadow-sm'
+                  : 'bg-slate-100 text-gray-600 hover:bg-slate-200'
                   }`}
               >
                 {status}
@@ -253,10 +253,10 @@ const AllOrders = () => {
                         {moment(item.createdAt).format('LLL')}
                       </p>
                     </div>
-                    {/* Customer Info */}
+                    {/* Customer Info  ****************************************************************************/}
                     <p className="text-xs sm:text-sm text-purple-100 flex items-center gap-1.5 pt-1">
                       <FaUser className="text-xs" />
-                      <span>{item.userId?.name || 'Customer'}</span>
+                      <span>{item.userId?.name || item.userName || item.name || 'Customer'}</span>
                       {item.userId?.email && <span className="text-purple-200">({item.userId.email})</span>}
                     </p>
                   </div>
