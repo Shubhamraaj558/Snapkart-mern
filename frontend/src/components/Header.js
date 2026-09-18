@@ -179,21 +179,21 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full py-3 z-50 transition-all duration-300 ${isScrolled
+        className={`fixed top-0 left-0 w-full py-2.5 sm:py-3 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-slate-950/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)] border-b border-slate-800'
           : 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/70'
           }`}
       >
-        <div className="mx-auto max-w-9xl px-4 sm:px-6 lg:px-11">
-          <div className="h-20 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-9xl px-2 sm:px-6 lg:px-11">
+          <div className="h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
 
             {/* Logo + Brand */}
             <div
-              className="flex items-center gap-3 cursor-pointer select-none shrink-0"
+              className="flex items-center gap-2 sm:gap-3 cursor-pointer select-none shrink-0"
               onClick={() => navigate('/')}
             >
-              <div className="flex items-center justify-center rounded-xl px-2 py-1 shadow-md">
-                <Logo w={90} h={60} />
+              <div className="flex items-center justify-center rounded-xl px-1 sm:px-2 py-1 shadow-md">
+                <Logo w={75} h={50} />
               </div>
 
               <div className="hidden sm:block leading-tight">
@@ -206,13 +206,13 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Desktop Search Box */}
-            <div className="hidden lg:flex flex-1 justify-center">
-              <div className="w-full max-w-2xl flex items-center rounded-full border border-indigo-400 bg-slate-900 shadow-inner focus-within:border-cyan-400 transition-all duration-300">
+            {/* Fully Responsive Search Box (Visible on Mobile, Tablet & Desktop) */}
+            <div className="flex flex-1 justify-center max-w-xl lg:max-w-2xl px-1 sm:px-0">
+              <div className="w-full flex items-center rounded-full border border-indigo-400 bg-slate-900 shadow-inner focus-within:border-cyan-400 transition-all duration-300">
                 <input
                   type="text"
                   placeholder={currentPlaceholder}
-                  className="w-full bg-transparent text-white placeholder:text-slate-400 px-5 py-3 outline-none cursor-pointer"
+                  className="w-full bg-transparent text-white placeholder:text-slate-400 text-xs sm:text-sm px-3 sm:px-5 py-2 sm:py-3 outline-none cursor-pointer truncate"
                   onFocus={() => {
                     if (location.pathname !== '/search') {
                       navigate('/search')
@@ -239,49 +239,40 @@ const Header = () => {
                 <button
                   type="button"
                   onClick={handleVoiceSearch}
-                  className={`p-2.5 rounded-full transition mr-2 relative flex items-center justify-center ${isListening
-                      ? 'bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)]'
+                  className={`p-2 sm:p-2.5 rounded-full transition mr-1.5 sm:mr-2 relative flex items-center justify-center shrink-0 ${
+                    isListening 
+                      ? 'bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)]' 
                       : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-md'
-                    }`}
+                  }`}
                   title={isListening ? "Listening..." : "Search with Voice"}
                   aria-label="Voice Search"
                 >
-                  {isListening ? <FaMicrophoneSlash size={16} /> : <FaMicrophone size={16} />}
+                  {isListening ? <FaMicrophoneSlash size={14} className="sm:w-4 sm:h-4" /> : <FaMicrophone size={14} className="sm:w-4 sm:h-4" />}
                 </button>
 
                 {/* Search Button */}
                 <button
-                  className="mr-2 bg-cyan-500 hover:bg-purple-600 text-white rounded-full p-2.5 transition shadow-md"
+                  className="mr-1.5 sm:mr-2 bg-cyan-500 hover:bg-purple-600 text-white rounded-full p-2 sm:p-2.5 transition shadow-md shrink-0"
                   aria-label="Search button"
                   onClick={handleSearchClick}
                   type="button"
                 >
-                  <FaSearchengin size={18} />
+                  <FaSearchengin size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </button>
               </div>
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-
-              {/* Mobile Search Button */}
-              <button
-                type="button"
-                onClick={() => navigate('/search')}
-                className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl border border-slate-700 bg-slate-900 text-white hover:border-cyan-400 transition"
-                aria-label="Search"
-              >
-                <FaSearchengin size={18} />
-              </button>
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
 
               {/* Wishlist */}
               {user?._id && (
                 <Link
                   to="/wishlist"
-                  className="flex items-center justify-center w-11 h-11 rounded-xl border border-rose-400 bg-slate-900 text-pink-400 hover:border-pink-400 hover:text-pink-300 transition"
+                  className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl border border-rose-400 bg-slate-900 text-pink-400 hover:border-pink-400 hover:text-pink-300 transition"
                 >
                   <span className="flex items-center justify-center">
-                    <FaHeart size={20} style={{ color: "red" }} />
+                    <FaHeart size={16} className="sm:w-5 sm:h-5" style={{ color: "red" }} />
                   </span>
                 </Link>
               )}
@@ -290,12 +281,12 @@ const Header = () => {
               {user?._id && (
                 <Link
                   to="/cart"
-                  className="relative flex items-center justify-center w-11 h-11 rounded-xl border border-green-300 bg-slate-900 text-white hover:border-cyan-400 hover:text-cyan-300 transition"
+                  className="relative flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl border border-green-300 bg-slate-900 text-white hover:border-cyan-400 hover:text-cyan-300 transition"
                   aria-label="Cart"
                 >
-                  <FaCartArrowDown size={20} />
+                  <FaCartArrowDown size={16} className="sm:w-5 sm:h-5" />
                   {context?.cartProductCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center shadow-md">
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 flex items-center justify-center shadow-md">
                       {context.cartProductCount}
                     </span>
                   )}
@@ -310,7 +301,7 @@ const Header = () => {
                     aria-label="User menu"
                     aria-haspopup="true"
                     aria-expanded={menuDisplay}
-                    className="flex items-center justify-center w-11 h-11 rounded-xl border border-cyan-500 bg-slate-900 overflow-hidden shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
+                    className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl border border-cyan-500 bg-slate-900 overflow-hidden shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
                   >
                     {user?.profilePic ? (
                       <img
@@ -320,13 +311,13 @@ const Header = () => {
                         loading="lazy"
                       />
                     ) : (
-                      <FaUserTie className="text-cyan-300 w-5 h-5" />
+                      <FaUserTie className="text-cyan-300 w-4 h-4 sm:w-5 sm:h-5" />
                     )}
                   </button>
                 ) : (
                   <Link
                     to="/login"
-                    className="flex items-center gap-2 rounded-xl border border-cyan-500 bg-cyan-500 px-4 py-2.5 text-white font-semibold hover:bg-pink-600 transition"
+                    className="flex items-center gap-1.5 sm:gap-2 rounded-xl border border-cyan-500 bg-cyan-500 px-3 sm:px-4 py-2 sm:py-2.5 text-white font-semibold text-xs sm:text-sm hover:bg-pink-600 transition"
                     aria-label="Login"
                   >
                     <FaUserTie />
@@ -385,7 +376,7 @@ const Header = () => {
         </div>
       </header>
 
-      <div className="h-20" />
+      <div className="h-16 sm:h-20" />
     </>
   )
 }
