@@ -17,7 +17,6 @@ import image23 from '../assest/banner/im23.jpg'
 import image24 from '../assest/banner/im24.jpg'
 import image25 from '../assest/banner/im25.jpg'
 import image26 from '../assest/banner/im26.jpg'
-// import image27 from '../assest/banner/im27.jpg'
 import image28 from '../assest/banner/im28.jpg'
 import image29 from '../assest/banner/im29.jpg'
 import image30 from '../assest/banner/im30.jpg'
@@ -33,59 +32,51 @@ import image4Mobile from '../assest/banner/img4_mobile.jpg'
 import image5Mobile from '../assest/banner/img5_mobile.jpg'
 import image6Mobile from '../assest/banner/imb8.jpg'
 
-
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 const BannerProduct = () => {
     const [currentImage, setCurrentImage] = useState(0)
+    const [isMobile, setIsMobile] = useState(false)
     const intervalRef = useRef(null)
 
     const desktopImages = [
-        image6,
-        image20,
-        image7,
-        image26,
-        image8,
-        image33,
-        image21,
-        image1,
-        image24,
-        image9,
-        image22,
-        // image27,
-        image32,
-        image23,
-        image3,
-        image25,
-        image4,
-        image28,
-        image29,
-        image34,
-        image30,
-        image31,
-        image5,
-        image56,
-        image2,
+        image6, image20, image7, image26, image8, image33,
+        image21, image1, image24, image9, image22, image32,
+        image23, image3, image25, image4, image28, image29,
+        image34, image30, image31, image5, image56, image2,
     ]
 
     const mobileImages = [
-        image1Mobile,
-        image2Mobile,
-        image6Mobile,
-        image3Mobile,
-        image4Mobile,
-        image5Mobile
+        image1Mobile, image2Mobile, image6Mobile,
+        image3Mobile, image4Mobile, image5Mobile
     ]
 
-    const totalSlides = desktopImages.length
+    // Check screen size to toggle between desktop/mobile arrays and lengths safely
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    const currentImagesList = isMobile ? mobileImages : desktopImages
+    const totalSlides = currentImagesList.length
+
+    // Reset index if screen mode changes and index is out of bounds
+    useEffect(() => {
+        if (currentImage >= totalSlides) {
+            setCurrentImage(0)
+        }
+    }, [isMobile, totalSlides, currentImage])
 
     const nextImage = () => {
-        setCurrentImage(prev => prev === totalSlides - 1 ? 0 : prev + 1)
+        setCurrentImage(prev => (prev === totalSlides - 1 ? 0 : prev + 1))
     }
 
     const preveImage = () => {
-        setCurrentImage(prev => prev === 0 ? totalSlides - 1 : prev - 1)
+        setCurrentImage(prev => (prev === 0 ? totalSlides - 1 : prev - 1))
     }
 
     const startAutoSlide = () => {
@@ -102,76 +93,70 @@ const BannerProduct = () => {
     useEffect(() => {
         startAutoSlide()
         return () => stopAutoSlide()
-    }, [])
+    }, [totalSlides])
 
     return (
-        <div className='container mx-auto px-4 rounded'>
-
+        <div className='container mx-auto px-3 my-4'>
             <div
-                className='h-60 md:h-78 w-full bg-black relative overflow-hidden rounded-lg border-2 border-indigo-700 shadow-md'
+                className='h-44 sm:h-56 md:h-68 w-full bg-black relative overflow-hidden rounded-2xl border border-indigo-500/40 shadow-sm'
                 onMouseDown={stopAutoSlide}
                 onMouseUp={startAutoSlide}
                 onMouseLeave={startAutoSlide}
+                onTouchStart={stopAutoSlide}
+                onTouchEnd={startAutoSlide}
             >
-
-                {/* Navigation */}
-                <div className='absolute z-10 h-full w-full md:flex items-center hidden'>
-                    <div className='flex justify-between w-full text-2xl px-2'>
-                        <button onClick={preveImage} className='bg-white shadow-md rounded-full p-1'>
-                            <FaAngleLeft />
+                {/* Navigation Arrows (Desktop) */}
+                <div className='absolute z-10 h-full w-full md:flex items-center hidden pointer-events-none'>
+                    <div className='flex justify-between w-full text-lg px-3'>
+                        <button 
+                            onClick={preveImage} 
+                            aria-label="Previous Slide"
+                            className='pointer-events-auto bg-white/90 hover:bg-white text-slate-800 shadow-md rounded-full p-2 transition-all hover:scale-105'
+                        >
+                            <FaAngleLeft size={16} />
                         </button>
-                        <button onClick={nextImage} className='bg-white shadow-md rounded-full p-1'>
-                            <FaAngleRight />
+                        <button 
+                            onClick={nextImage} 
+                            aria-label="Next Slide"
+                            className='pointer-events-auto bg-white/90 hover:bg-white text-slate-800 shadow-md rounded-full p-2 transition-all hover:scale-105'
+                        >
+                            <FaAngleRight size={16} />
                         </button>
                     </div>
                 </div>
 
-                {/* Desktop */}
-                <div className='hidden md:flex h-full w-full overflow-hidden'>
-                    {desktopImages.map((imageURL) => (
+                {/* Slides Container */}
+                <div className='flex h-full w-full overflow-hidden'>
+                    {currentImagesList.map((imageURL, index) => (
                         <div
-                            key={imageURL}
-                            className='w-full h-full min-w-full transition-all duration-700'
+                            key={index}
+                            className='w-full h-full min-w-full transition-transform duration-500 ease-out'
                             style={{ transform: `translateX(-${currentImage * 100}%)` }}
                         >
                             <img
                                 src={imageURL}
+                                alt={`Banner slide ${index + 1}`}
                                 className='w-full h-full object-cover object-center'
                             />
                         </div>
                     ))}
                 </div>
 
-                {/* Mobile */}
-                <div className='flex md:hidden h-full w-full overflow-hidden'>
-                    {mobileImages.map((imageURL) => (
-                        <div
-                            key={imageURL}
-                            className='w-full h-full min-w-full transition-all duration-700'
-                            style={{ transform: `translateX(-${currentImage * 100}%)` }}
-                        >
-                            <img
-                                src={imageURL}
-                                className='w-full h-full object-cover object-center'
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                {/* Dots */}
-                <div className='absolute bottom-2 left-0 right-0 flex justify-center gap-2'>
-                    {desktopImages.map((_, index) => (
+                {/* Dots Indicator */}
+                <div className='absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10'>
+                    {currentImagesList.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentImage(index)}
-                            className={`transition-all duration-300 rounded-full ${currentImage === index
-                                ? 'w-6 h-2 bg-purple-600'
-                                : 'w-2 h-2 bg-white/70'
-                                }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                            className={`transition-all duration-300 rounded-full ${
+                                currentImage === index
+                                    ? 'w-5 h-1.5 bg-indigo-600'
+                                    : 'w-1.5 h-1.5 bg-white/70 hover:bg-white'
+                            }`}
                         />
                     ))}
                 </div>
-
             </div>
         </div>
     )
