@@ -106,21 +106,21 @@ const termsData = [
     icon: <FaEnvelope />,
     title: 'Contact Information',
     content: (
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         <p>For any questions or concerns regarding these terms:</p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm border border-pink-100">
-            <FaEnvelope className="text-pink-600" />
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+          <div className="flex items-center gap-2.5 rounded-xl bg-white p-3 shadow-sm border border-pink-100">
+            <FaEnvelope className="text-pink-600 text-sm" />
             <div>
-              <p className="font-semibold text-slate-900">Email</p>
-              <p className="text-sm text-slate-600">support@snapkart.in</p>
+              <p className="font-semibold text-slate-900 text-xs">Email</p>
+              <p className="text-xs text-slate-600">support@snapkart.in</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm border border-sky-100">
-            <FaPhone className="text-sky-600" />
+          <div className="flex items-center gap-2.5 rounded-xl bg-white p-3 shadow-sm border border-sky-100">
+            <FaPhone className="text-sky-600 text-sm" />
             <div>
-              <p className="font-semibold text-slate-900">Phone</p>
-              <p className="text-sm text-slate-600">+91-XXXXXXXXXX</p>
+              <p className="font-semibold text-slate-900 text-xs">Phone</p>
+              <p className="text-xs text-slate-600">+91-XXXXXXXXXX</p>
             </div>
           </div>
         </div>
@@ -137,7 +137,7 @@ const TermsAndConditions = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-rose-100 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-rose-100 px-3 py-6 sm:px-4 lg:px-6">
       {/* Ambient background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-20 left-0 h-72 w-72 rounded-full bg-amber-300/20 blur-3xl" />
@@ -145,109 +145,109 @@ const TermsAndConditions = () => {
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-rose-300/20 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-4xl">
         {/* Hero */}
-        <div className="mb-10 text-center sm:mb-14">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/70 px-4 py-2 text-sm font-semibold text-amber-700 shadow-sm backdrop-blur-md">
+        <div className="mb-6 text-center sm:mb-8">
+          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-amber-700 shadow-sm backdrop-blur-md">
             <FaGavel />
             Legal Information
           </div>
 
-          <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-2xl">
-            <FaFileContract className="text-3xl" />
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg">
+            <FaFileContract className="text-xl" />
           </div>
 
-          <h1 className="bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-4xl font-black text-transparent sm:text-5xl lg:text-6xl">
+          <h1 className="bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-2xl font-black text-transparent sm:text-3xl lg:text-4xl">
             Terms & Conditions
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600 sm:text-lg">
+          <p className="mx-auto mt-2 max-w-xl text-xs sm:text-sm text-slate-600 leading-relaxed">
             Please read these terms carefully before using SnapKart. They explain your rights, responsibilities, and the conditions under which our services are provided.
           </p>
         </div>
 
         {/* Top cards */}
-        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+        <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-600 text-sm">
               <FaShieldAlt />
             </div>
-            <h3 className="font-bold text-slate-900">Clear Policies</h3>
-            <p className="mt-1 text-sm text-slate-600">
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Clear Policies</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
               Transparent rules for safe and fair use of the platform.
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-orange-100 text-orange-600 text-sm">
               <FaFileContract />
             </div>
-            <h3 className="font-bold text-slate-900">User Agreement</h3>
-            <p className="mt-1 text-sm text-slate-600">
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">User Agreement</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
               Your continued use means you agree to these terms.
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-rose-100 text-rose-600 text-sm">
               <FaHeadset />
             </div>
-            <h3 className="font-bold text-slate-900">Support Available</h3>
-            <p className="mt-1 text-sm text-slate-600">
-              Reach out anytime for help understanding our policies.
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Support Available</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">
+              Reach out anytime for help understanding policies.
             </p>
           </div>
         </div>
 
         {/* Terms content */}
-        <div className="rounded-[2rem] border border-white/50 bg-white/65 p-5 shadow-2xl backdrop-blur-2xl sm:p-6 lg:p-8">
-          <div className="mb-6 rounded-3xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 px-5 py-5 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">
+        <div className="rounded-2xl border border-white/50 bg-white/65 p-4 shadow-xl backdrop-blur-2xl sm:p-5 lg:p-6">
+          <div className="mb-4 rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-700">
               Important
             </p>
-            <p className="mt-2 text-base text-slate-700 sm:text-lg">
+            <p className="mt-1 text-xs sm:text-sm text-slate-700">
               These terms help maintain a secure, fair, and reliable shopping experience for every SnapKart customer.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {termsData.map(({ id, icon, title, content, color, soft }) => {
               const isOpen = openSection === id;
 
               return (
                 <div
                   key={id}
-                  className={`overflow-hidden rounded-3xl border transition-all duration-300 ${
+                  className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
                     isOpen
-                      ? 'border-orange-200 bg-gradient-to-r from-orange-50 to-rose-50 shadow-lg'
+                      ? 'border-orange-200 bg-gradient-to-r from-orange-50 to-rose-50 shadow-md'
                       : 'border-slate-200/70 bg-white/80 hover:border-orange-200 hover:bg-orange-50/40'
                   }`}
                 >
                   <button
                     onClick={() => toggleSection(id)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left sm:px-6"
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left sm:px-5"
                     aria-expanded={isOpen}
                     aria-controls={`section-content-${id}`}
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex items-center gap-3">
                       <div
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white shadow-md bg-gradient-to-br ${color}`}
+                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white shadow-md text-xs bg-gradient-to-br ${color}`}
                       >
                         {icon}
                       </div>
 
                       <div className="min-w-0">
-                        <span className="block text-base font-semibold text-slate-900 sm:text-lg">
+                        <span className="block text-xs sm:text-sm font-bold text-slate-900 leading-tight">
                           {title}
                         </span>
-                        <span className={`mt-1 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${soft}`}>
+                        <span className={`mt-0.5 inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-semibold ${soft}`}>
                           Section {id}
                         </span>
                       </div>
                     </div>
 
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all duration-300 text-xs ${
                         isOpen
                           ? 'rotate-180 bg-orange-500 text-white'
                           : 'bg-slate-100 text-slate-500'
@@ -265,8 +265,8 @@ const TermsAndConditions = () => {
                     aria-hidden={!isOpen}
                   >
                     <div className="overflow-hidden">
-                      <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-                        <div className="ml-0 sm:ml-16 rounded-2xl border border-white/70 bg-white/90 p-4 text-sm leading-7 text-slate-600 shadow-sm sm:text-base">
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+                        <div className="ml-0 sm:ml-12 rounded-xl border border-white/70 bg-white/90 p-3 text-xs sm:text-sm leading-relaxed text-slate-600 shadow-sm">
                           {content}
                         </div>
                       </div>
@@ -277,39 +277,39 @@ const TermsAndConditions = () => {
             })}
           </div>
 
-          <p className="mt-8 text-center text-sm font-medium text-slate-500">
+          <p className="mt-6 text-center text-xs font-medium text-slate-500">
             Thank you for shopping with SnapKart — your trust and satisfaction remain our priority.
           </p>
         </div>
 
         {/* Support CTA */}
-        <div className="mt-10 rounded-[2rem] border border-white/50 bg-slate-900 p-6 text-white shadow-2xl sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div className="mt-6 rounded-2xl border border-white/50 bg-slate-900 p-5 text-white shadow-xl sm:p-6">
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-amber-300">
+              <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-amber-300">
                 <FaHeadset />
                 Need Clarification?
               </div>
 
-              <h3 className="text-2xl font-bold sm:text-3xl">
+              <h3 className="text-lg sm:text-xl font-bold">
                 Questions about our terms?
               </h3>
 
-              <p className="mt-3 max-w-2xl text-slate-300">
+              <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Contact our support team for clarification on policies, account responsibility, returns, payments, or any legal questions related to SnapKart.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 lg:items-end">
+            <div className="flex flex-col gap-2 lg:items-end">
               <a
                 href="mailto:support@snapkart.in"
-                className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md transition-all duration-300 hover:scale-[1.02]"
               >
                 Contact Support
               </a>
 
-              <p className="text-sm text-slate-400 lg:text-right">
-                We aim to respond to policy-related questions as quickly as possible.
+              <p className="text-[11px] text-slate-400 lg:text-right">
+                We aim to respond to policy-related questions quickly.
               </p>
             </div>
           </div>

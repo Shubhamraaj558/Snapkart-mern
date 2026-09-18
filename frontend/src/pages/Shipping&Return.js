@@ -112,7 +112,7 @@ const ShippingAndReturns = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-50 via-cyan-50 to-indigo-100 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-50 via-cyan-50 to-indigo-100 px-3 py-6 sm:px-4 lg:px-6">
       {/* ambient blobs */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-0 h-72 w-72 rounded-full bg-emerald-300/20 blur-3xl" />
@@ -120,74 +120,74 @@ const ShippingAndReturns = () => {
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-indigo-300/20 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-4xl">
         {/* Hero */}
-        <div className="mb-10 text-center sm:mb-14">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/70 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm backdrop-blur-md">
+        <div className="mb-6 text-center sm:mb-8">
+          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm backdrop-blur-md">
             <FaTruck />
             SnapKart Policies
           </div>
 
-          <h1 className="bg-gradient-to-r from-emerald-600 via-sky-600 to-indigo-600 bg-clip-text text-4xl font-black text-transparent sm:text-5xl lg:text-6xl">
+          <h1 className="bg-gradient-to-r from-emerald-600 via-sky-600 to-indigo-600 bg-clip-text text-2xl font-black text-transparent sm:text-3xl lg:text-4xl">
             Shipping & Returns
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600 sm:text-lg">
+          <p className="mx-auto mt-2 max-w-xl text-xs sm:text-sm text-slate-600 leading-relaxed">
             Fast deliveries, transparent charges, and hassle-free returns — designed to keep your shopping experience smooth from checkout to doorstep.
           </p>
         </div>
 
         {/* top stat / promise cards */}
-        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+        <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 text-sm">
               <FaTruck />
             </div>
-            <h3 className="font-bold text-slate-900">Fast Dispatch</h3>
-            <p className="mt-1 text-sm text-slate-600">Orders usually leave our system within 24–48 hours.</p>
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Fast Dispatch</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">Orders usually leave within 24–48 hours.</p>
           </div>
 
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-rose-100 text-rose-600 text-sm">
               <FaUndoAlt />
             </div>
-            <h3 className="font-bold text-slate-900">Easy Returns</h3>
-            <p className="mt-1 text-sm text-slate-600">Simple return window with clear eligibility rules.</p>
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Easy Returns</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">Simple return window with clear rules.</p>
           </div>
 
-          <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600">
+          <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-md backdrop-blur-xl">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 text-sm">
               <FaHeadset />
             </div>
-            <h3 className="font-bold text-slate-900">Support Ready</h3>
-            <p className="mt-1 text-sm text-slate-600">Need help with a shipment or refund? We’re here.</p>
+            <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Support Ready</h3>
+            <p className="mt-0.5 text-[11px] sm:text-xs text-slate-600">Need help with a shipment or refund?</p>
           </div>
         </div>
 
         {/* policy blocks */}
-        <div className="space-y-8">
+        <div className="space-y-5">
           {sections.map((section, pIdx) => (
             <div
               key={section.title}
-              className="rounded-[2rem] border border-white/50 bg-white/65 p-5 shadow-2xl backdrop-blur-2xl sm:p-6 lg:p-8"
+              className="rounded-2xl border border-white/50 bg-white/65 p-4 shadow-xl backdrop-blur-2xl sm:p-5 lg:p-6"
             >
-              <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-lg">
+                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-slate-900 text-white shadow-md text-sm">
                     {section.icon}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
-                    <p className="text-sm text-slate-500">Clear information, no hidden surprises.</p>
+                    <h2 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight">{section.title}</h2>
+                    <p className="text-[11px] sm:text-xs text-slate-500">Clear information, no hidden surprises.</p>
                   </div>
                 </div>
 
-                <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-600">
+                <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-slate-600">
                   {section.badge}
                 </span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {section.items.map(({ heading, content, icon }, idx) => {
                   const key = `${pIdx}-${idx}`;
                   const isOpen = !!openSections[key];
@@ -195,21 +195,21 @@ const ShippingAndReturns = () => {
                   return (
                     <div
                       key={key}
-                      className={`overflow-hidden rounded-3xl border transition-all duration-300 ${
+                      className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
                         isOpen
-                          ? 'border-sky-200 bg-gradient-to-r from-sky-50 to-white shadow-lg'
+                          ? 'border-sky-200 bg-gradient-to-r from-sky-50 to-white shadow-md'
                           : 'border-slate-200/70 bg-white/80 hover:border-sky-100 hover:bg-slate-50'
                       }`}
                     >
                       <button
                         onClick={() => toggleSection(pIdx, idx)}
-                        className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left sm:px-6"
+                        className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left sm:px-5"
                         aria-expanded={isOpen}
                         aria-controls={`section-content-${key}`}
                       >
-                        <div className="flex items-start gap-4">
+                        <div className="flex items-center gap-3">
                           <div
-                            className={`mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl transition-all duration-300 ${
+                            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-300 text-xs ${
                               isOpen
                                 ? 'bg-gradient-to-br from-sky-500 to-indigo-500 text-white shadow-md'
                                 : 'bg-slate-100 text-slate-500'
@@ -219,17 +219,17 @@ const ShippingAndReturns = () => {
                           </div>
 
                           <div>
-                            <span className="block text-base font-semibold text-slate-900 sm:text-lg">
+                            <span className="block text-xs sm:text-sm font-bold text-slate-900 leading-tight">
                               {heading}
                             </span>
-                            <span className="mt-1 block text-sm text-slate-500">
-                              Tap to {isOpen ? 'hide details' : 'view details'}
+                            <span className="mt-0.5 block text-[11px] text-slate-500">
+                              {isOpen ? 'Hide details' : 'View details'}
                             </span>
                           </div>
                         </div>
 
                         <div
-                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all duration-300 text-xs ${
                             isOpen
                               ? 'rotate-180 bg-sky-500 text-white'
                               : 'bg-slate-100 text-slate-500'
@@ -247,8 +247,8 @@ const ShippingAndReturns = () => {
                         aria-hidden={!isOpen}
                       >
                         <div className="overflow-hidden">
-                          <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-                            <div className="ml-0 sm:ml-[3.75rem] rounded-2xl border border-white/60 bg-white/85 p-4 text-sm leading-7 text-slate-600 shadow-sm sm:text-base">
+                          <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+                            <div className="ml-0 sm:ml-12 rounded-xl border border-white/60 bg-white/85 p-3 text-xs sm:text-sm leading-relaxed text-slate-600 shadow-sm">
                               {content}
                             </div>
                           </div>
@@ -263,44 +263,44 @@ const ShippingAndReturns = () => {
         </div>
 
         {/* support card */}
-        <div className="mt-10 rounded-[2rem] border border-white/50 bg-slate-900 p-6 text-white shadow-2xl sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div className="mt-6 rounded-2xl border border-white/50 bg-slate-900 p-5 text-white shadow-xl sm:p-6">
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-emerald-300">
+              <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-300">
                 <FaHeadset />
                 Need Help?
               </div>
 
-              <h3 className="text-2xl font-bold sm:text-3xl">
+              <h3 className="text-lg sm:text-xl font-bold">
                 Questions about shipping or returns?
               </h3>
 
-              <p className="mt-3 max-w-2xl text-slate-300">
+              <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Our support team can help with delivery timelines, order tracking, return eligibility, and refund status.
               </p>
 
-              <div className="mt-6 space-y-3 text-sm sm:text-base">
-                <div className="flex items-center gap-3">
+              <div className="mt-4 flex flex-wrap gap-4 text-xs sm:text-sm">
+                <div className="flex items-center gap-2">
                   <FaEnvelope className="text-emerald-400" />
                   <span className="font-medium">support@snapkart.in</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <FaPhone className="text-sky-400" />
                   <span className="font-medium">+91-XXXXXXXXXX</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 lg:items-end">
+            <div className="flex flex-col gap-2 lg:items-end">
               <a
                 href="mailto:support@snapkart.in"
-                className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-500 px-6 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-sky-500 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md transition-all duration-300 hover:scale-[1.02]"
               >
                 Contact Support
               </a>
 
-              <p className="text-sm text-slate-400 lg:text-right">
-                Your satisfaction is our priority at every step of the journey.
+              <p className="text-[11px] text-slate-400 lg:text-right">
+                Your satisfaction is our priority at every step.
               </p>
             </div>
           </div>
