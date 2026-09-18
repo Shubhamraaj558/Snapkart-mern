@@ -13,11 +13,12 @@ import {
 
 const Aboutus = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-300 px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+    <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-300 px-4 py-8 sm:px-6 lg:px-8 overflow-x-hidden">
+      {/* Zoom Out Wrapper to make everything compact and professional */}
+      <div className="mx-auto max-w-5xl" style={{ zoom: '0.82' }}>
 
         {/* Back Button */}
-        <div className="mb-6">
+        <div className="mb-5">
           <Link
             to="/"
             className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-white/60 px-5 py-2.5 text-sm font-semibold text-gray-800 shadow-md transition-all duration-300 hover:bg-white hover:shadow-xl hover:-translate-y-0.5"
@@ -134,15 +135,15 @@ const Aboutus = () => {
                 <h2 className="text-xl font-bold mb-3 text-gray-900">What We Offer</h2>
                 <div className="space-y-3 text-gray-700">
                   <div className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 mt-1" />
+                    <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
                     <p>Wide range of categories from fashion to electronics and home essentials.</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 mt-1" />
+                    <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
                     <p>Trusted brands, verified sellers, and carefully selected products.</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 mt-1" />
+                    <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
                     <p>Secure payments, fast delivery, easy returns, and reliable customer support.</p>
                   </div>
                 </div>
