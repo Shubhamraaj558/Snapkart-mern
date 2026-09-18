@@ -254,7 +254,7 @@ const ChatBot = () => {
     <>
       {!open && (
         <motion.button
-          whileHover={{ scale: 1.04, y: -2 }}
+          whileHover={{ scale: 1.08, y: -2 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setOpen(true)}
           className="fixed bottom-5 right-5 z-50"
@@ -263,17 +263,9 @@ const ChatBot = () => {
           <div className="relative">
             <span className="absolute inset-0 rounded-full bg-[#6d4aff]/30 animate-ping" />
 
-            <div className="relative flex items-center gap-3 rounded-full bg-gradient-to-r from-[#6d4aff] to-[#8f6bff] text-white pl-3 pr-5 py-3 shadow-[0_18px_40px_rgba(109,74,255,0.35)] border border-white/20 backdrop-blur-xl">
-              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
-                <FaHeadset className="text-lg" />
-              </div>
-
-              <div className="hidden sm:block text-left">
-                <p className="text-sm font-semibold leading-none">Need help?</p>
-                <p className="text-[11px] text-white/80 mt-1">
-                  Chat with Snapkart
-                </p>
-              </div>
+            {/* Changed from pill style with text to a compact circular button matching mobile view */}
+            <div className="relative w-14 h-14 rounded-full bg-gradient-to-r from-[#6d4aff] to-[#8f6bff] text-white flex items-center justify-center shadow-[0_18px_40px_rgba(109,74,255,0.35)] border border-white/20 backdrop-blur-xl">
+              <FaHeadset className="text-xl" />
 
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 min-w-[22px] h-[22px] px-1 rounded-full bg-[#ff4d6d] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow">
