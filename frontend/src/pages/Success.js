@@ -1,36 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SUCCESSIMAGE from '../assest/success.gif';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCheckCircle, FaShoppingBag } from 'react-icons/fa';
-import SummaryApi from '../common';
 
 const Success = () => {
-
-  // ✅ Stripe se redirect hone ke baad cart clear karne ki API call
-  useEffect(() => {
-    const clearCartAfterPayment = async () => {
-      try {
-        const response = await fetch(SummaryApi.deleteCartProduct?.url || '/api/delete-cart-product', { // Apne SummaryApi ke mutabiq route check kar lein
-          method: SummaryApi.deleteCartProduct?.method || 'POST',
-          credentials: 'include',
-        });
-        const data = await response.json();
-        if (data.success) {
-          console.log("Cart cleared successfully after payment.");
-        }
-      } catch (error) {
-        console.error("Failed to clear cart:", error);
-      }
-    };
-
-    clearCartAfterPayment();
-  }, []);
-
-
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-100 flex items-center justify-center px-4 py-8 relative overflow-hidden">
-
+      
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-6 sm:left-16 w-40 sm:w-72 h-40 sm:h-72 bg-green-300/20 rounded-full blur-3xl animate-pulse" />
@@ -38,9 +14,10 @@ const Success = () => {
         <div className="absolute top-1/2 left-1/2 w-44 sm:w-64 h-44 sm:h-64 -translate-x-1/2 -translate-y-1/2 bg-lime-200/20 rounded-full blur-3xl animate-ping" />
       </div>
 
-      <div className="relative z-10 w-full max-w-md sm:max-w-lg">
+      {/* Zoom Out Wrapper to make it compact and professional */}
+      <div className="relative z-10 w-full max-w-md sm:max-w-lg" style={{ zoom: '0.82' }}>
         <div className="bg-white/75 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-5 sm:p-7 md:p-8 text-center">
-
+          
           {/* Success icon area */}
           <div className="flex justify-center mb-5">
             <div className="relative">
