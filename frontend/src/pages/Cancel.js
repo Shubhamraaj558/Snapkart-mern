@@ -12,7 +12,8 @@ const Cancel = () => {
         <div className="absolute bottom-10 right-6 sm:right-16 w-52 sm:w-80 h-52 sm:h-80 bg-orange-300/20 rounded-full blur-3xl animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full max-w-md sm:max-w-lg">
+      {/* Zoom Out Wrapper to make it compact and professional */}
+      <div className="relative z-10 w-full max-w-md sm:max-w-lg" style={{ zoom: '0.82' }}>
         <div className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-5 sm:p-7 md:p-8 text-center">
           
           {/* Image */}
