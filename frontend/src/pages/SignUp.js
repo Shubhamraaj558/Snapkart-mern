@@ -144,63 +144,61 @@ const SignUp = () => {
   const passwordStrength = getPasswordStrength(data.password)
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-3 py-4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 relative overflow-hidden text-xs sm:text-sm">
       
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-pink-300/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 w-80 h-80 -translate-x-1/2 -translate-y-1/2 bg-blue-300/15 rounded-full blur-3xl animate-ping" />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto">
-        <div className="overflow-hidden rounded-[32px] border border-white/30 bg-white/60 shadow-2xl backdrop-blur-xl">
+      <div className="relative z-10 w-full max-w-5xl mx-auto">
+        <div className="overflow-hidden rounded-2xl border border-white/40 bg-white/70 shadow-xl backdrop-blur-xl">
           
           <div className="flex flex-col lg:flex-row">
             
             {/* Left panel */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-12 text-white relative overflow-hidden">
+            <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-8 text-white relative overflow-hidden flex-col justify-center items-center text-center">
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10" />
-              <div className="relative z-10 flex flex-col items-center justify-center text-center w-full">
-                <div className="w-24 h-24 bg-white/20 rounded-2xl flex items-center justify-center mb-6 shadow-xl backdrop-blur-sm">
-                  <FaUserPlus className="text-3xl" />
+              <div className="relative z-10 flex flex-col items-center justify-center w-full">
+                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 shadow-md backdrop-blur-sm">
+                  <FaUserPlus className="text-2xl" />
                 </div>
 
-                <h1 className="text-4xl font-black mb-4">
+                <h1 className="text-2xl font-black mb-2">
                   Welcome to SnapKart!
                 </h1>
 
-                <p className="text-lg mb-8 font-light leading-relaxed max-w-md">
-                  Create your account and start your shopping journey.
-                  Enjoy personalized deals, wishlist, faster checkout and more.
+                <p className="text-xs mb-6 font-light leading-relaxed max-w-xs opacity-90">
+                  Create your account and start your shopping journey. Enjoy personalized deals and faster checkout.
                 </p>
 
                 <img
                   src={loginIcons}
                   alt="Sign up illustration"
-                  className="w-40 h-40 object-cover rounded-3xl shadow-2xl mb-6 bg-white"
+                  className="w-28 h-28 object-cover rounded-2xl shadow-md mb-4 bg-white"
                 />
 
-                <p className="text-sm opacity-90 max-w-sm">
-                  Your privacy and account security are always our top priorities.
+                <p className="text-[11px] opacity-80 max-w-xs">
+                  Your privacy and account security are our top priorities.
                 </p>
               </div>
             </div>
 
             {/* Right form panel */}
-            <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12">
+            <div className="w-full lg:w-7/12 p-5 sm:p-6 lg:p-8">
               
               {/* Profile Upload */}
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-5">
                 <div className="relative group">
                   <img
                     src={data.profilePic || loginIcons}
                     alt="Profile preview"
-                    className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-3xl border-4 border-white/60 shadow-2xl bg-white"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl border-2 border-white/80 shadow-md bg-white"
                   />
 
-                  <label className="absolute -bottom-2 -right-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white p-3 rounded-2xl shadow-xl cursor-pointer border-4 border-white/60 transition-all duration-300 hover:scale-110">
-                    <FaCloudUploadAlt className="text-lg" />
+                  <label className="absolute -bottom-1 -right-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white p-2 rounded-xl shadow-md cursor-pointer border-2 border-white/80 transition-all hover:scale-105">
+                    <FaCloudUploadAlt className="text-sm" />
                     <input
                       type="file"
                       onChange={handleUploadPic}
@@ -211,19 +209,19 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-black text-center mb-2 bg-gradient-to-r from-gray-900 via-purple-900 to-pink-600 bg-clip-text text-transparent">
+              <h2 className="text-2xl sm:text-3xl font-black text-center mb-1 bg-gradient-to-r from-gray-900 via-purple-900 to-pink-600 bg-clip-text text-transparent">
                 Create Account
               </h2>
 
-              <p className="text-center text-gray-600 mb-8 text-base sm:text-lg font-medium">
+              <p className="text-center text-gray-500 mb-5 text-xs sm:text-sm font-medium">
                 Join us today and start shopping!
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-3.5">
                 
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1 uppercase tracking-wider">
                     Full Name
                   </label>
                   <input
@@ -233,13 +231,13 @@ const SignUp = () => {
                     value={data.name}
                     onChange={handleOnChange}
                     required
-                    className="w-full px-5 py-3.5 rounded-2xl border-2 border-gray-200 shadow-lg focus:border-purple-400 focus:ring-4 focus:ring-purple-200/50 outline-none bg-white/80 text-base transition-all duration-300 hover:border-gray-300"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 shadow-sm focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none bg-white/90 text-xs sm:text-sm transition-all"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1 uppercase tracking-wider">
                     Email Address
                   </label>
                   <input
@@ -249,13 +247,13 @@ const SignUp = () => {
                     value={data.email}
                     onChange={handleOnChange}
                     required
-                    className="w-full px-5 py-3.5 rounded-2xl border-2 border-gray-200 shadow-lg focus:border-purple-400 focus:ring-4 focus:ring-purple-200/50 outline-none bg-white/80 text-base transition-all duration-300 hover:border-gray-300"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 shadow-sm focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none bg-white/90 text-xs sm:text-sm transition-all"
                   />
                 </div>
 
                 {/* Password */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1 uppercase tracking-wider">
                     Password
                   </label>
 
@@ -267,30 +265,30 @@ const SignUp = () => {
                       value={data.password}
                       onChange={handleOnChange}
                       required
-                      className="w-full px-5 py-3.5 pr-12 rounded-2xl border-2 border-gray-200 shadow-lg focus:border-pink-400 focus:ring-4 focus:ring-pink-200/50 outline-none bg-white/80 text-base transition-all duration-300 hover:border-gray-300"
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-gray-200 shadow-sm focus:border-pink-400 focus:ring-2 focus:ring-pink-200 outline-none bg-white/90 text-xs sm:text-sm transition-all"
                     />
                     <button
                       type="button"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                       aria-label={showPassword ? "Hide password" : "Show password"}
                     >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
                     </button>
                   </div>
 
-                  <p className="mt-2 text-xs text-gray-500">
-                    Use 8+ characters with uppercase, lowercase, number, and special character.
+                  <p className="mt-1 text-[10px] text-gray-500">
+                    Use 8+ chars with uppercase, lowercase, number & special character.
                   </p>
 
                   {data.password && (
-                    <div className="mt-3 space-y-3">
+                    <div className="mt-2 space-y-2 bg-gray-50/80 p-2.5 rounded-xl border border-gray-100">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-semibold text-gray-700">
+                        <span className="text-[11px] font-semibold text-gray-700">
                           Password Strength
                         </span>
                         <span
-                          className={`text-sm font-bold ${
+                          className={`text-[11px] font-bold ${
                             passwordStrength.score === 1
                               ? "text-red-500"
                               : passwordStrength.score === 2
@@ -302,36 +300,36 @@ const SignUp = () => {
                         </span>
                       </div>
 
-                      <div className="h-2 w-full rounded-full bg-gray-200 overflow-hidden">
+                      <div className="h-1.5 w-full rounded-full bg-gray-200 overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all duration-500 ${passwordStrength.color}`}
+                          className={`h-full rounded-full transition-all duration-300 ${passwordStrength.color}`}
                           style={{ width: passwordStrength.width }}
                         />
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                        <div className={`flex items-center gap-2 ${passwordStrength.checks.minLength ? "text-green-600" : "text-gray-500"}`}>
-                          {passwordStrength.checks.minLength ? <FaCheckCircle /> : <FaExclamationCircle />}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px]">
+                        <div className={`flex items-center gap-1.5 ${passwordStrength.checks.minLength ? "text-green-600" : "text-gray-400"}`}>
+                          {passwordStrength.checks.minLength ? <FaCheckCircle size={10} /> : <FaExclamationCircle size={10} />}
                           At least 8 characters
                         </div>
 
-                        <div className={`flex items-center gap-2 ${passwordStrength.checks.hasUpper ? "text-green-600" : "text-gray-500"}`}>
-                          {passwordStrength.checks.hasUpper ? <FaCheckCircle /> : <FaExclamationCircle />}
+                        <div className={`flex items-center gap-1.5 ${passwordStrength.checks.hasUpper ? "text-green-600" : "text-gray-400"}`}>
+                          {passwordStrength.checks.hasUpper ? <FaCheckCircle size={10} /> : <FaExclamationCircle size={10} />}
                           One uppercase letter
                         </div>
 
-                        <div className={`flex items-center gap-2 ${passwordStrength.checks.hasLower ? "text-green-600" : "text-gray-500"}`}>
-                          {passwordStrength.checks.hasLower ? <FaCheckCircle /> : <FaExclamationCircle />}
+                        <div className={`flex items-center gap-1.5 ${passwordStrength.checks.hasLower ? "text-green-600" : "text-gray-400"}`}>
+                          {passwordStrength.checks.hasLower ? <FaCheckCircle size={10} /> : <FaExclamationCircle size={10} />}
                           One lowercase letter
                         </div>
 
-                        <div className={`flex items-center gap-2 ${passwordStrength.checks.hasNumber ? "text-green-600" : "text-gray-500"}`}>
-                          {passwordStrength.checks.hasNumber ? <FaCheckCircle /> : <FaExclamationCircle />}
+                        <div className={`flex items-center gap-1.5 ${passwordStrength.checks.hasNumber ? "text-green-600" : "text-gray-400"}`}>
+                          {passwordStrength.checks.hasNumber ? <FaCheckCircle size={10} /> : <FaExclamationCircle size={10} />}
                           One number
                         </div>
 
-                        <div className={`flex items-center gap-2 ${passwordStrength.checks.hasSpecial ? "text-green-600" : "text-gray-500"}`}>
-                          {passwordStrength.checks.hasSpecial ? <FaCheckCircle /> : <FaExclamationCircle />}
+                        <div className={`flex items-center gap-1.5 ${passwordStrength.checks.hasSpecial ? "text-green-600" : "text-gray-400"}`}>
+                          {passwordStrength.checks.hasSpecial ? <FaCheckCircle size={10} /> : <FaExclamationCircle size={10} />}
                           One special character
                         </div>
                       </div>
@@ -341,7 +339,7 @@ const SignUp = () => {
 
                 {/* Confirm Password */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1 uppercase tracking-wider">
                     Confirm Password
                   </label>
 
@@ -353,29 +351,27 @@ const SignUp = () => {
                       value={data.confirmPassword}
                       onChange={handleOnChange}
                       required
-                      className="w-full px-5 py-3.5 pr-12 rounded-2xl border-2 border-gray-200 shadow-lg focus:border-pink-400 focus:ring-4 focus:ring-pink-200/50 outline-none bg-white/80 text-base transition-all duration-300 hover:border-gray-300"
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-gray-200 shadow-sm focus:border-pink-400 focus:ring-2 focus:ring-pink-200 outline-none bg-white/90 text-xs sm:text-sm transition-all"
                     />
                     <button
                       type="button"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
                     >
-                      {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                      {showConfirmPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
                     </button>
                   </div>
 
                   {data.confirmPassword && (
-                    <div className="mt-2 text-sm">
+                    <div className="mt-1 text-[11px]">
                       {data.password === data.confirmPassword ? (
-                        <p className="text-green-600 font-medium flex items-center gap-2">
-                          <FaCheckCircle />
-                          Passwords match
+                        <p className="text-green-600 font-medium flex items-center gap-1">
+                          <FaCheckCircle size={10} /> Passwords match
                         </p>
                       ) : (
-                        <p className="text-red-500 font-medium flex items-center gap-2">
-                          <FaExclamationCircle />
-                          Passwords do not match
+                        <p className="text-red-500 font-medium flex items-center gap-1">
+                          <FaExclamationCircle size={10} /> Passwords do not match
                         </p>
                       )}
                     </div>
@@ -392,17 +388,17 @@ const SignUp = () => {
                     !data.password ||
                     !data.confirmPassword
                   }
-                  className="group w-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-600 text-white font-black py-3.5 px-8 rounded-2xl shadow-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 text-lg"
+                  className="group w-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:opacity-95 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 text-sm mt-1"
                 >
                   <span className="flex items-center justify-center gap-2">
                     {loading ? (
                       <>
-                        <FaSpinner className="animate-spin text-xl" />
+                        <FaSpinner className="animate-spin text-base" />
                         Creating Account...
                       </>
                     ) : (
                       <>
-                        <FaUserPlus className="text-xl group-hover:translate-x-1 transition-transform" />
+                        <FaUserPlus className="text-base group-hover:translate-x-0.5 transition-transform" />
                         Sign Up Now
                       </>
                     )}
@@ -411,17 +407,18 @@ const SignUp = () => {
               </form>
 
               {/* Footer */}
-              <div className="text-center mt-8 pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-600">
+              <div className="text-center mt-5 pt-4 border-t border-gray-200">
+                <p className="text-xs text-gray-600">
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="font-bold text-purple-600 hover:text-purple-700 transition-colors duration-300 underline decoration-2"
+                    className="font-bold text-purple-600 hover:text-purple-700 transition-colors underline"
                   >
                     Sign In
                   </Link>
                 </p>
               </div>
+
             </div>
 
           </div>
