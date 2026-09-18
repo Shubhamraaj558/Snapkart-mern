@@ -54,7 +54,6 @@ const ProductDetails = () => {
   };
 
   // 🔥 FIXED ZOOM FUNCTION
-  console.log("activeImage:", activeImage);
   const handleZoomImage = useCallback((e) => {
     if (!imageContainerRef.current) return;
 
@@ -107,15 +106,16 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-rose-25 to-pink-50">
-      <div className="container mx-auto px-3 sm:px-4 py-2">
-        <div className="min-h-[180px] flex flex-col lg:flex-row gap-4 lg:gap-6">
+      {/* Further Zoom Out Wrapper (0.70) */}
+      <div className="container mx-auto px-3 sm:px-4 py-6" style={{ zoom: '0.70' }}>
+        <div className="min-h-[180px] flex flex-col lg:flex-row gap-6 lg:gap-10">
           {/* IMAGE SECTION */}
           <div className="h-auto flex flex-col lg:flex-row-reverse gap-3 lg:gap-5">
-            
-            {/* 🔥 REF ADDED HERE (NO UI CHANGE) */}
+
+            {/* 🔥 REF ADDED HERE */}
             <div
               ref={imageContainerRef}
-              className="h-[220px] w-[220px] sm:h-[260px] sm:w-[260px] lg:h-[320px] lg:w-[320px] relative bg-gradient-to-br from-white via-slate-50 to-rose-50 rounded-3xl p-4 shadow-2xl border border-white/50 backdrop-blur-sm"
+              className="h-[260px] w-[260px] sm:h-[320px] sm:w-[320px] lg:h-[380px] lg:w-[380px] relative bg-gradient-to-br from-white via-slate-50 to-rose-50 rounded-3xl p-4 shadow-2xl border border-white/50 backdrop-blur-sm"
             >
               <img
                 src={activeImage}
@@ -130,7 +130,7 @@ const ProductDetails = () => {
                   <div
                     className="w-full h-full"
                     style={{
-                      backgroundImage: `url("${activeImage}")`, // 🔥 IMPORTANT FIX
+                      backgroundImage: `url("${activeImage}")`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "180% 180%",
                       backgroundPosition: `${zoomImageCoordinate.x * 100}% ${zoomImageCoordinate.y * 100}%`,
@@ -159,18 +159,18 @@ const ProductDetails = () => {
           </div>
 
           {/* DETAILS */}
-          <div className="flex flex-col gap-4 lg:gap-6">
+          <div className="flex flex-col gap-4 lg:gap-6 flex-1">
             <div>
               <p className="inline-flex items-center gap-2 bg-gradient-to-r from-rose-100 via-pink-100 to-orange-100 text-rose-600 px-4 py-2 rounded-full text-sm font-semibold shadow-md">
                 {data?.brandName}
               </p>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black bg-gradient-to-r from-slate-800 via-slate-900 to-slate-700 bg-clip-text text-transparent mt-2">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-slate-800 via-slate-900 to-slate-700 bg-clip-text text-transparent mt-2">
                 {data?.productName}
               </h2>
               <p className="text-slate-500 font-medium mt-1">{data?.category}</p>
             </div>
 
-            <div className="flex items-center gap-2 text-amber-400 mb-2">
+            <div className="flex items-center gap-2 text-amber-400 mb-1">
               <FaStar />
               <FaStar />
               <FaStar />
@@ -179,7 +179,7 @@ const ProductDetails = () => {
               <span className="text-slate-600 font-medium">4.8 (1.2k reviews)</span>
             </div>
 
-            <div className="flex items-center gap-4 text-xl sm:text-2xl lg:text-3xl font-black">
+            <div className="flex items-center gap-4 text-2xl sm:text-3xl lg:text-4xl font-black">
               <p className="bg-gradient-to-r from-rose-500 via-pink-500 to-orange-500 bg-clip-text text-transparent">
                 {displayINRCurrency(data.sellingPrice)}
               </p>
@@ -190,21 +190,21 @@ const ProductDetails = () => {
               )}
             </div>
 
-            {/* 🔥 PREMIUM BUTTONS (UNCHANGED) */}
-            <div className="flex flex-col sm:flex-row gap-3 my-4 flex-wrap">
+            {/* BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-3 my-2 flex-wrap">
               <button
                 onClick={(e) => handleBuyProduct(e, data?._id)}
-                className="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-rose-500 via-pink-500 to-orange-500 px-8 py-4 text-lg font-bold text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl hover:from-rose-600 hover:via-pink-600 hover:to-orange-600 active:scale-95 min-w-[140px]"
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-rose-500 via-pink-500 to-orange-500 px-8 py-4 text-lg font-bold text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl active:scale-95 min-w-[140px]"
               >
                 <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition duration-300" />
-                <span className=" px-3 py-1.5 text-sm sm:text-base relative z-10 flex items-center justify-center gap-2">
+                <span className="px-3 py-1.5 text-sm sm:text-base relative z-10 flex items-center justify-center gap-2">
                   🛒 Buy Now
                 </span>
               </button>
 
               <button
                 onClick={(e) => handleAddToCart(e, data?._id)}
-                className="group relative rounded-3xl border-2 border-slate-900 bg-white px-8 py-4 text-lg font-bold text-slate-900 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-rose-500 hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 hover:text-rose-600 hover:shadow-2xl active:scale-95 min-w-[140px]"
+                className="group relative rounded-3xl border-2 border-slate-900 bg-white px-8 py-4 text-lg font-bold text-slate-900 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-rose-500 hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 hover:text-rose-600 active:scale-95 min-w-[140px]"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-slate-900/10 to-rose-500/10 opacity-0 group-hover:opacity-100 transition duration-300" />
                 <span className="relative flex items-center justify-center gap-2">
@@ -214,16 +214,16 @@ const ProductDetails = () => {
 
               <button
                 onClick={handleAddToWishlist}
-                className="group flex items-center justify-center gap-2 rounded-3xl border-2 border-pink-500/60 bg-gradient-to-r from-pink-50/50 to-rose-50/50 px-6 py-4 text-lg font-semibold text-pink-600 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-pink-400 hover:bg-gradient-to-r hover:from-pink-100 hover:to-rose-100 hover:shadow-xl active:scale-95"
+                className="group flex items-center justify-center gap-2 rounded-3xl border-2 border-pink-500/60 bg-gradient-to-r from-pink-50/50 to-rose-50/50 px-6 py-4 text-lg font-semibold text-pink-600 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 active:scale-95"
               >
                 <FaHeart className="text-xl group-hover:scale-110 transition-transform duration-200" />
                 <span>Wishlist</span>
               </button>
             </div>
 
-            <div className="bg-rose-100 rounded-2xl p-4 shadow-xl backdrop-blur-sm border border-white/50">
-              <p className="text-lg font-bold underline italic text-slate-800 mb-3"> 🧾Product Description :</p>
-              <p className="text-slate-600 leading-6 whitespace-pre-line">{data?.description}</p>
+            <div className="bg-rose-100/70 rounded-2xl p-5 shadow-xl backdrop-blur-sm border border-white/50">
+              <p className="text-lg font-bold underline italic text-slate-800 mb-3"> 🧾 Product Description :</p>
+              <p className="text-slate-600 leading-7 whitespace-pre-line text-sm sm:text-base">{data?.description}</p>
             </div>
           </div>
         </div>
