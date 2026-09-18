@@ -52,11 +52,10 @@ const AllOrders = () => {
     fetchAllOrders();
   }, []);
 
-  // Fixed Filter and Search Logic
+  // Filter and Search Logic
   useEffect(() => {
     let result = [...allOrders];
 
-    // Status Filter Logic
     if (statusFilter !== 'ALL') {
       result = result.filter(order => {
         const status = (order?.orderStatus || 'CONFIRMED').toUpperCase();
@@ -64,7 +63,6 @@ const AllOrders = () => {
       });
     }
 
-    // Search Logic (Order ID, Customer Name, or Email)
     if (searchTerm.trim() !== '') {
       const term = searchTerm.toLowerCase();
       result = result.filter(order => {
@@ -79,7 +77,6 @@ const AllOrders = () => {
     setFilteredOrders(result);
   }, [searchTerm, statusFilter, allOrders]);
 
-  // Delivery Progress Calculate function
   const calculateDeliveryProgress = (createdAt, currentStatus) => {
     if (currentStatus === 'DELIVERED') return 100;
     if (currentStatus === 'CANCELLED') return 0;
@@ -100,7 +97,6 @@ const AllOrders = () => {
     return Math.max(15, Math.min(progress, 100));
   };
 
-  // Status Badge Helper
   const getStatusBadge = (status) => {
     const s = (status || 'CONFIRMED').toUpperCase();
     switch (s) {
@@ -137,7 +133,6 @@ const AllOrders = () => {
     }
   };
 
-  // Status Change Handler
   const handleUpdateOrderStatus = async () => {
     if (!selectedOrder || !updateStatus) return;
 
@@ -167,8 +162,6 @@ const AllOrders = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 px-3 py-5 sm:px-4 sm:py-8 lg:px-6">
       <div className="max-w-7xl mx-auto">
-
-        {/* Header Section */}
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 bg-clip-text text-transparent">
             All Customer Orders
@@ -180,7 +173,6 @@ const AllOrders = () => {
 
         {/* Filter and Search Bar */}
         <div className="bg-white rounded-2xl shadow-sm border p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
-          {/* Search Box */}
           <div className="relative w-full md:w-96">
             <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
             <input
@@ -192,15 +184,14 @@ const AllOrders = () => {
             />
           </div>
 
-          {/* Status Filter */}
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
             {['ALL', 'CONFIRMED', 'PACKED', 'SHIPPED', 'DELIVERED', 'CANCELLED'].map((status) => (
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${statusFilter === status
-                  ? 'bg-purple-600 text-white shadow-sm'
-                  : 'bg-slate-100 text-gray-600 hover:bg-slate-200'
+                    ? 'bg-purple-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-gray-600 hover:bg-slate-200'
                   }`}
               >
                 {status}
@@ -209,7 +200,6 @@ const AllOrders = () => {
           </div>
         </div>
 
-        {/* No Orders Available */}
         {filteredOrders.length === 0 && !loading && (
           <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-md border p-6 sm:p-8 text-center my-8">
             <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-purple-100 flex items-center justify-center mb-4">
@@ -224,25 +214,25 @@ const AllOrders = () => {
           </div>
         )}
 
-        {/* Loading Spinner */}
         {loading && (
           <div className="text-center py-12 text-purple-600 font-semibold">
             Loading orders...
           </div>
         )}
 
-        {/* Orders List */}
         <div className="space-y-5 sm:space-y-6">
           {filteredOrders.map((item, index) => {
             const currentStatus = item.orderStatus || 'CONFIRMED';
             const progressPercent = calculateDeliveryProgress(item.createdAt, currentStatus);
+
+            // Correct mapping to match MongoDB schema fields: name, address, pincode, phone
+            const addressObj = item.shipping_address || {};
 
             return (
               <div
                 key={item._id || index}
                 className="bg-white rounded-2xl shadow-md border overflow-hidden"
               >
-                {/* Header Section */}
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-purple-700 to-pink-600 text-white px-4 py-3.5">
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">
@@ -253,18 +243,15 @@ const AllOrders = () => {
                         {moment(item.createdAt).format('LLL')}
                       </p>
                     </div>
-                    {/* Customer Info  ****************************************************************************/}
                     <p className="text-xs sm:text-sm text-purple-100 flex items-center gap-1.5 pt-1">
                       <FaUser className="text-xs" />
-                      <span>{item.userId?.name || item.userName || item.name || 'Customer'}</span>
+                      <span>{item.userId?.name || item.userName || addressObj.name || 'Customer'}</span>
                       {item.userId?.email && <span className="text-purple-200">({item.userId.email})</span>}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-3">
                     {getStatusBadge(currentStatus)}
-
-                    {/* Admin Action Button */}
                     <button
                       onClick={() => {
                         setSelectedOrder(item);
@@ -278,7 +265,7 @@ const AllOrders = () => {
                   </div>
                 </div>
 
-                {/* Progress Bar Section */}
+                {/* Progress Bar */}
                 <div className="bg-slate-50 border-b p-4 sm:p-5">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
@@ -289,7 +276,6 @@ const AllOrders = () => {
                     </span>
                   </div>
 
-                  {/* Visual Progress Bar Line */}
                   <div className="relative w-full bg-gray-200 h-2.5 rounded-full overflow-hidden my-3">
                     <div
                       className="bg-gradient-to-r from-purple-600 to-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
@@ -297,7 +283,6 @@ const AllOrders = () => {
                     ></div>
                   </div>
 
-                  {/* Step Icons & Labels */}
                   <div className="grid grid-cols-4 text-center mt-3 text-xs sm:text-sm">
                     <div className="flex flex-col items-center text-purple-700 font-semibold">
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-purple-100 flex items-center justify-center mb-1">
@@ -351,7 +336,6 @@ const AllOrders = () => {
                             <h3 className="font-semibold text-sm sm:text-base text-gray-800 line-clamp-2">
                               {product.name}
                             </h3>
-
                             <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
                               <p className="text-base font-bold text-red-500">
                                 {displayINRCurrency(product.price)}
@@ -374,12 +358,12 @@ const AllOrders = () => {
                         </h3>
                         <p className="text-sm text-gray-700">
                           <span className="font-semibold">Method:</span>{' '}
-                          {item.paymentDetails?.payment_method_type?.[0] || 'N/A'}
+                          {item.paymentDetails?.payment_method_type?.[0] || item.paymentMethod || 'N/A'}
                         </p>
                         <p className="text-sm text-gray-700 mt-1">
                           <span className="font-semibold">Status:</span>{' '}
                           <span className="capitalize font-medium text-green-600">
-                            {item.paymentDetails?.payment_status || 'N/A'}
+                            {item.paymentDetails?.payment_status || 'Success'}
                           </span>
                         </p>
                       </div>
@@ -398,31 +382,35 @@ const AllOrders = () => {
                           {moment(item.createdAt).add(5, 'days').format('LL')}
                         </p>
 
-                        {item.shipping_options?.map((shipping, sIndex) => (
-                          <p
-                            key={shipping.shipping_rate || sIndex}
-                            className="text-sm text-gray-700"
-                          >
-                            <span className="font-semibold">Shipping Amount:</span>{' '}
-                            {displayINRCurrency(shipping.shipping_amount || 0)}
-                          </p>
-                        ))}
-
-                        {item.shipping_address && (
-                          <div className="pt-2 border-t border-emerald-200 mt-2">
-                            <div className="flex items-start gap-1.5 text-sm text-gray-700">
-                              <FaMapMarkerAlt className="text-emerald-600 mt-1 flex-shrink-0" />
-                              <div>
-                                <p className="font-semibold">Delivery Address:</p>
-                                <p className="text-xs sm:text-sm text-gray-600">
-                                  {item.shipping_address.line1 || item.shipping_address.street},{' '}
-                                  {item.shipping_address.city}, {item.shipping_address.state} -{' '}
-                                  {item.shipping_address.postal_code}
-                                </p>
-                              </div>
+                        {/* Shipping Address Box matched with actual database fields */}
+                        <div className="mt-3 p-3 bg-slate-50 rounded border border-slate-200 text-sm">
+                          <div className="flex items-start gap-1.5 text-sm text-gray-700">
+                            <FaMapMarkerAlt className="text-emerald-600 mt-1 flex-shrink-0" />
+                            <div className="w-full">
+                              <p className="font-semibold text-slate-700 mb-1">Delivery Address:</p>
+                              {Object.keys(addressObj).length > 0 ? (
+                                <div className="text-slate-600 text-xs sm:text-sm space-y-0.5">
+                                  <p className="font-bold text-slate-800">
+                                    {addressObj.name || 'N/A'}
+                                  </p>
+                                  <p>
+                                    <span className="font-medium text-slate-700">Address:</span> {addressObj.address || 'N/A'}
+                                  </p>
+                                  <p>
+                                    <span className="font-medium text-slate-700">Pincode:</span> {addressObj.pincode || 'N/A'}
+                                  </p>
+                                  {addressObj.phone && (
+                                    <p>
+                                      <span className="font-medium text-slate-700">Phone:</span> {addressObj.phone}
+                                    </p>
+                                  )}
+                                </div>
+                              ) : (
+                                <p className="text-slate-400 italic">No address details available</p>
+                              )}
                             </div>
                           </div>
-                        )}
+                        </div>
                       </div>
 
                       {/* Total Amount */}

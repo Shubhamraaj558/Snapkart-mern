@@ -53,34 +53,34 @@ const OrderPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 px-3 py-5 sm:px-4 sm:py-8 lg:px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 px-3 py-4 sm:px-4 sm:py-6 lg:px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-5">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 bg-clip-text text-transparent">
             My Orders
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-2">
+          <p className="text-xs sm:text-sm text-gray-600 mt-1">
             Track your orders and payment details
           </p>
         </div>
 
         {!data[0] && (
-          <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-md border p-6 sm:p-8 text-center">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-purple-100 flex items-center justify-center mb-4">
-              <FaBoxOpen className="text-2xl sm:text-3xl text-purple-600" />
+          <div className="max-w-md mx-auto bg-white rounded-xl shadow-md border p-6 text-center">
+            <div className="w-14 h-14 mx-auto rounded-xl bg-purple-100 flex items-center justify-center mb-3">
+              <FaBoxOpen className="text-xl text-purple-600" />
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+            <h2 className="text-lg font-bold text-gray-800 mb-1">
               No Order Available
             </h2>
 
-            <p className="text-sm sm:text-base text-gray-600 mb-5">
+            <p className="text-xs sm:text-sm text-gray-600 mb-4">
               You have not placed any order yet.
             </p>
 
             <Link
               to="/"
-              className="inline-flex items-center gap-2 bg-purple-600 text-white font-semibold py-3 px-5 rounded-xl hover:bg-purple-700 transition"
+              className="inline-flex items-center gap-2 bg-purple-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-purple-700 transition text-xs sm:text-sm"
             >
               <FaArrowLeft />
               Continue Shopping
@@ -88,45 +88,45 @@ const OrderPage = () => {
           </div>
         )}
 
-        <div className="space-y-5 sm:space-y-6">
+        <div className="space-y-4">
           {data.map((item, index) => {
             const progressPercent = calculateDeliveryProgress(item.createdAt);
 
             return (
               <div
                 key={item._id || item.userId + index}
-                className="bg-white rounded-2xl shadow-md border overflow-hidden"
+                className="bg-white rounded-xl shadow-md border overflow-hidden text-xs sm:text-sm"
               >
                 {/* Header Section */}
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-purple-700 to-pink-600 text-white px-4 py-3">
+                <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-purple-700 to-pink-600 text-white px-3.5 py-2.5">
                   <div>
-                    <p className="text-sm sm:text-base font-bold">
+                    <p className="text-xs sm:text-sm font-bold">
                       {moment(item.createdAt).format('LLL')}
                     </p>
-                    <p className="text-xs sm:text-sm text-purple-100">
+                    <p className="text-[11px] text-purple-100">
                       Order placed successfully
                     </p>
                   </div>
 
-                  <div className="inline-flex items-center gap-2 bg-white/15 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium w-fit">
-                    <FaCheckCircle className="text-green-300" />
-                    Confirmed
+                  <div className="inline-flex items-center gap-1.5 bg-white/15 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium w-fit">
+                    <FaCheckCircle className="text-green-300 text-[10px]" />
+                    <span>Confirmed</span>
                   </div>
                 </div>
 
                 {/* Progress Bar Section */}
-                <div className="bg-slate-50 border-b p-4 sm:p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                      <FaTruck className="text-purple-600" /> Estimated Delivery
+                <div className="bg-slate-50 border-b p-3">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                      <FaTruck className="text-purple-600 text-xs" /> Estimated Delivery
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-purple-700">
+                    <span className="text-xs font-bold text-purple-700">
                       {moment(item.createdAt).add(5, 'days').format('LL')}
                     </span>
                   </div>
 
                   {/* Visual Progress Bar Line */}
-                  <div className="relative w-full bg-gray-200 h-2.5 rounded-full overflow-hidden my-3">
+                  <div className="relative w-full bg-gray-200 h-2 rounded-full overflow-hidden my-2">
                     <div
                       className="bg-gradient-to-r from-purple-600 to-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
                       style={{ width: `${progressPercent}%` }}
@@ -134,31 +134,31 @@ const OrderPage = () => {
                   </div>
 
                   {/* Step Icons & Labels */}
-                  <div className="grid grid-cols-4 text-center mt-3 text-xs sm:text-sm">
+                  <div className="grid grid-cols-4 text-center mt-2 text-[11px] sm:text-xs">
                     <div className="flex flex-col items-center text-purple-700 font-semibold">
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-purple-100 flex items-center justify-center mb-1">
-                        <FaBox className="text-purple-600 text-xs sm:text-sm" />
+                      <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center mb-0.5">
+                        <FaBox className="text-purple-600 text-[10px]" />
                       </div>
                       <span>Order Placed</span>
                     </div>
 
                     <div className={`flex flex-col items-center ${progressPercent >= 35 ? 'text-purple-700 font-semibold' : 'text-gray-400'}`}>
-                      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mb-1 ${progressPercent >= 35 ? 'bg-purple-100' : 'bg-gray-100'}`}>
-                        <FaBoxOpen className={progressPercent >= 35 ? 'text-purple-600' : 'text-gray-400'} />
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center mb-0.5 ${progressPercent >= 35 ? 'bg-purple-100' : 'bg-gray-100'}`}>
+                        <FaBoxOpen className={`text-[10px] ${progressPercent >= 35 ? 'text-purple-600' : 'text-gray-400'}`} />
                       </div>
                       <span>Packed</span>
                     </div>
 
                     <div className={`flex flex-col items-center ${progressPercent >= 70 ? 'text-purple-700 font-semibold' : 'text-gray-400'}`}>
-                      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mb-1 ${progressPercent >= 70 ? 'bg-purple-100' : 'bg-gray-100'}`}>
-                        <FaShippingFast className={progressPercent >= 70 ? 'text-purple-600' : 'text-gray-400'} />
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center mb-0.5 ${progressPercent >= 70 ? 'bg-purple-100' : 'bg-gray-100'}`}>
+                        <FaShippingFast className={`text-[10px] ${progressPercent >= 70 ? 'text-purple-600' : 'text-gray-400'}`} />
                       </div>
                       <span>Shipped</span>
                     </div>
 
                     <div className={`flex flex-col items-center ${progressPercent >= 100 ? 'text-emerald-700 font-semibold' : 'text-gray-400'}`}>
-                      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mb-1 ${progressPercent >= 100 ? 'bg-emerald-100' : 'bg-gray-100'}`}>
-                        <FaHome className={progressPercent >= 100 ? 'text-emerald-600' : 'text-gray-400'} />
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center mb-0.5 ${progressPercent >= 100 ? 'bg-emerald-100' : 'bg-gray-100'}`}>
+                        <FaHome className={`text-[10px] ${progressPercent >= 100 ? 'text-emerald-600' : 'text-gray-400'}`} />
                       </div>
                       <span>Delivered</span>
                     </div>
@@ -166,16 +166,16 @@ const OrderPage = () => {
                 </div>
 
                 {/* Main Content */}
-                <div className="p-3 sm:p-4 lg:p-5">
-                  <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6">
+                <div className="p-3">
+                  <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-3.5">
                     {/* Products List */}
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                       {item?.productDetails?.map((product, pIndex) => (
                         <div
                           key={product.productId + pIndex}
-                          className="flex flex-col xs:flex-row sm:flex-row gap-3 bg-slate-50 border rounded-xl p-3"
+                          className="flex gap-2.5 bg-slate-50 border rounded-xl p-2.5"
                         >
-                          <div className="w-full sm:w-24 h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-2">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center p-1.5 shrink-0">
                             <img
                               src={product.image?.[0]}
                               alt={product.name}
@@ -184,15 +184,15 @@ const OrderPage = () => {
                           </div>
 
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-sm sm:text-base text-gray-800 line-clamp-2">
+                            <h3 className="font-semibold text-xs sm:text-sm text-gray-800 line-clamp-2">
                               {product.name}
                             </h3>
 
-                            <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                              <p className="text-base font-bold text-red-500">
+                            <div className="mt-1.5 flex items-center gap-3">
+                              <p className="text-xs sm:text-sm font-bold text-red-500">
                                 {displayINRCurrency(product.price)}
                               </p>
-                              <p className="text-sm text-gray-600">
+                              <p className="text-xs text-gray-600">
                                 Quantity: {product.quantity}
                               </p>
                             </div>
@@ -202,17 +202,17 @@ const OrderPage = () => {
                     </div>
 
                     {/* Details Side Panel */}
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                       {/* Payment Details */}
-                      <div className="bg-purple-50 border border-purple-100 rounded-xl p-3 sm:p-4">
-                        <h3 className="text-sm sm:text-base font-bold text-gray-800 mb-2">
+                      <div className="bg-purple-50 border border-purple-100 rounded-xl p-3">
+                        <h3 className="text-xs sm:text-sm font-bold text-gray-800 mb-1.5">
                           Payment Details
                         </h3>
-                        <p className="text-sm text-gray-700">
+                        <p className="text-xs text-gray-700">
                           <span className="font-semibold">Method:</span>{' '}
                           {item.paymentDetails?.payment_method_type?.[0] || 'N/A'}
                         </p>
-                        <p className="text-sm text-gray-700 mt-1">
+                        <p className="text-xs text-gray-700 mt-0.5">
                           <span className="font-semibold">Status:</span>{' '}
                           <span className="capitalize font-medium text-green-600">
                             {item.paymentDetails?.payment_status || 'N/A'}
@@ -221,15 +221,15 @@ const OrderPage = () => {
                       </div>
 
                       {/* Shipping Details */}
-                      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 sm:p-4 space-y-2">
-                        <div className="flex items-center gap-2 mb-1">
-                          <FaTruck className="text-emerald-700 text-base" />
-                          <h3 className="text-sm sm:text-base font-bold text-gray-800">
+                      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 space-y-1.5">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <FaTruck className="text-emerald-700 text-xs" />
+                          <h3 className="text-xs sm:text-sm font-bold text-gray-800">
                             Shipping Details
                           </h3>
                         </div>
 
-                        <p className="text-sm text-gray-700">
+                        <p className="text-xs text-gray-700">
                           <span className="font-semibold">Est. Delivery:</span>{' '}
                           {moment(item.createdAt).add(5, 'days').format('LL')}
                         </p>
@@ -237,7 +237,7 @@ const OrderPage = () => {
                         {item.shipping_options?.map((shipping, sIndex) => (
                           <p
                             key={shipping.shipping_rate || sIndex}
-                            className="text-sm text-gray-700"
+                            className="text-xs text-gray-700"
                           >
                             <span className="font-semibold">Shipping Amount:</span>{' '}
                             {displayINRCurrency(shipping.shipping_amount || 0)}
@@ -245,16 +245,27 @@ const OrderPage = () => {
                         ))}
 
                         {item.shipping_address && (
-                          <div className="pt-2 border-t border-emerald-200 mt-2">
-                            <div className="flex items-start gap-1.5 text-sm text-gray-700">
-                              <FaMapMarkerAlt className="text-emerald-600 mt-1 flex-shrink-0" />
-                              <div>
-                                <p className="font-semibold">Delivery Address:</p>
-                                <p className="text-xs sm:text-sm text-gray-600">
-                                  {item.shipping_address.line1 || item.shipping_address.street},{' '}
-                                  {item.shipping_address.city}, {item.shipping_address.state} -{' '}
-                                  {item.shipping_address.postal_code}
-                                </p>
+                          <div className="pt-1.5 border-t border-emerald-200 mt-1.5">
+                            <div className="flex items-start gap-1.5 text-xs text-gray-700">
+                              <FaMapMarkerAlt className="text-emerald-600 mt-0.5 flex-shrink-0 text-xs" />
+                              <div className="w-full">
+                                <p className="font-semibold text-slate-700 mb-0.5">Delivery Address:</p>
+                                <div className="text-slate-600 text-[11px] sm:text-xs space-y-0.5">
+                                  <p className="font-bold text-slate-800">
+                                    {item.shipping_address.name || 'N/A'}
+                                  </p>
+                                  <p>
+                                    <span className="font-medium text-slate-700">Address:</span> {item.shipping_address.address || 'N/A'}
+                                  </p>
+                                  <p>
+                                    <span className="font-medium text-slate-700">Pincode:</span> {item.shipping_address.pincode || 'N/A'}
+                                  </p>
+                                  {item.shipping_address.phone && (
+                                    <p>
+                                      <span className="font-medium text-slate-700">Phone:</span> {item.shipping_address.phone}
+                                    </p>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -262,12 +273,12 @@ const OrderPage = () => {
                       </div>
 
                       {/* Total Amount */}
-                      <div className="bg-slate-50 border rounded-xl p-3 sm:p-4">
+                      <div className="bg-slate-50 border rounded-xl p-2.5">
                         <div className="flex items-center justify-between gap-3">
-                          <span className="text-sm sm:text-base font-bold text-gray-800">
+                          <span className="text-xs sm:text-sm font-bold text-gray-800">
                             Total Amount
                           </span>
-                          <span className="text-base sm:text-xl font-black text-purple-700">
+                          <span className="text-sm sm:text-base font-black text-purple-700">
                             {displayINRCurrency(item.totalAmount || 0)}
                           </span>
                         </div>
@@ -281,10 +292,10 @@ const OrderPage = () => {
         </div>
 
         {data[0] && (
-          <div className="mt-6 sm:mt-8">
+          <div className="mt-5 text-center">
             <Link
               to="/"
-              className="w-full sm:w-fit mx-auto flex items-center justify-center gap-2 bg-white border border-purple-200 text-purple-700 font-semibold py-3 px-5 rounded-xl hover:bg-purple-50 transition shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-white border border-purple-200 text-purple-700 font-semibold py-2.5 px-5 rounded-xl hover:bg-purple-50 transition shadow-sm text-xs sm:text-sm"
             >
               <FaShoppingBag />
               Continue Shopping

@@ -6,7 +6,6 @@ const cashOnDeliveryController = async (request, response) => {
         const currentUserId = request.userId
         const { cartItems, shippingDetails, totalAmount, paymentMethod } = request.body;
 
-        // Map cart items to explicitly grab image, name, and price from various possible fields
         const formattedProductDetails = cartItems.map((item) => ({
             productId: item.productId?._id || item.productId,
             name: item.productId?.productName || item.name,
@@ -15,13 +14,12 @@ const cashOnDeliveryController = async (request, response) => {
             quantity: item.quantity
         }));
 
-        // Dynamic check for UPI vs COD
         const isUpi = paymentMethod && (paymentMethod.toUpperCase() === "UPI" || paymentMethod.toUpperCase().includes("UPI"));
 
         const newOrder = new orderModel({
             userId: currentUserId,
             productDetails: formattedProductDetails,
-            shippingDetails: shippingDetails,
+            shipping_address: shippingDetails || {}, // ✅ Mapping shippingDetails to shipping_address
             totalAmount: totalAmount,
             paymentDetails: {
                 paymentId: (isUpi ? "UPI_" : "COD_") + Date.now(),
@@ -33,7 +31,6 @@ const cashOnDeliveryController = async (request, response) => {
 
         const savedOrder = await newOrder.save();
 
-        // Clear user's cart after successful order placement
         await cartModel.deleteMany({ userId: currentUserId });
 
         return response.status(200).json({

@@ -26,6 +26,14 @@ const orderSchema = new mongoose.Schema({
         }
     },
     shipping_options: [],
+    shipping_address: {
+        type: Object,
+        default: {}
+    },
+    paymentMethod: {
+        type: String,
+        default: "COD"
+    },
     totalAmount: {
         type: Number,
         default: 0

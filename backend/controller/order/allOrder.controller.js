@@ -10,14 +10,13 @@ const allOrderController = async (request, response) => {
 
         if (user && user.role === 'ADMIN') {
             orders = await orderModel.find()
-                .populate("userId", "name email")
+                .populate("userId", "name email phone") // phone bhi manga lo agar user model me hai
                 .sort({ createdAt: -1 })
         } else {
             orders = await orderModel.find()
-                .populate("userId", "name email")
+                .populate("userId", "name email phone")
                 .sort({ createdAt: -1 })
         }
-        // console.log("POPULATED ORDERS CHECK:", JSON.stringify(orders, null, 2));
 
         const formattedOrders = orders.map(order => {
             const orderObj = order.toObject();
