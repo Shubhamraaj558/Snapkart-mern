@@ -58,7 +58,8 @@ const Wishlist = () => {
 
   return (
     <div className="min-h-[calc(100vh-120px)] overflow-hidden bg-gradient-to-br from-rose-50 via-white to-pink-50">
-      <div className="container mx-auto px-4 py-12 md:py-16">
+      {/* Zoom Out Wrapper to make it compact and professional */}
+      <div className="container mx-auto px-4 py-12 md:py-16" style={{ zoom: '0.82' }}>
         {/* Premium header */}
         <div className="mx-auto mb-12 w-full max-w-4xl rounded-3xl border border-rose-100/50 bg-white/60 p-8 shadow-2xl backdrop-blur-xl md:p-12">
           <div className="mx-auto flex max-w-md flex-col items-center gap-6 md:flex-row md:justify-between">
@@ -214,12 +215,11 @@ const Wishlist = () => {
                         )}
                       </div>
 
-                      <Link
-                        to={`/product/${product?._id}`}
+                      <span
                         className="mt-6 block w-full rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-black px-6 py-3.5 text-center text-sm font-bold text-white shadow-xl hover:shadow-2xl"
                       >
                         View Details
-                      </Link>
+                      </span>
                     </div>
                   </Link>
                 </div>
