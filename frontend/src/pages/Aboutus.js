@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaUsers,
@@ -12,6 +12,11 @@ import {
 } from 'react-icons/fa'
 
 const Aboutus = () => {
+  // Page load hote hi window ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-300 px-4 py-8 sm:px-6 lg:px-8 overflow-x-hidden">
       {/* Zoom Out Wrapper to make everything compact and professional */}
@@ -30,7 +35,7 @@ const Aboutus = () => {
 
         {/* Main Card */}
         <div className="overflow-hidden rounded-[28px] border border-white/50 bg-white/70 backdrop-blur-xl shadow-[0_20px_60px_rgba(79,70,229,0.18)]">
-          
+
           {/* Top Hero */}
           <div className="relative px-6 py-10 sm:px-10 sm:py-12 text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
             <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px]" />

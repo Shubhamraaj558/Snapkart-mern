@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CategoryList from '../components/CategoryList'
 import BannerProduct from '../components/BannerProduct'
 import HorizontalCardProduct from '../components/HorizontalCardProduct'
 import VerticalCardProduct from '../components/VerticalCardProduct'
 
 const Home = () => {
+  // Page load/mount hote hi window ko smooth animation ke sath top par scroll kar dega
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div>
       <CategoryList />

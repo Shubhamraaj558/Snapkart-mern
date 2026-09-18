@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FaPhone, 
   FaEnvelope, 
@@ -10,6 +10,11 @@ import {
 } from 'react-icons/fa';
 
 const Contactus = () => {
+  // Page load hote hi screen ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',

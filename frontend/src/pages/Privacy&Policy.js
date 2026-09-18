@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaLock,
@@ -264,6 +264,11 @@ const privacySections = [
 ];
 
 const PrivacyPolicy = () => {
+  // Page load hote hi screen ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const [openSection, setOpenSection] = useState(1);
 
   const toggleSection = (id) => {

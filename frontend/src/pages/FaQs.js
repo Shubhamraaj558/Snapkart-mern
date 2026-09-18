@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaChevronUp, FaQuestionCircle, FaHeadset, FaShieldAlt, FaTruck } from 'react-icons/fa';
 
 const faqData = [
@@ -53,6 +53,11 @@ const faqData = [
 ];
 
 const FAQ = () => {
+  // Page load hote hi screen ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const [openIndex, setOpenIndex] = useState(0);
 
   const toggleIndex = (index) => {

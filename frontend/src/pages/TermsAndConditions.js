@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FaFileContract,
   FaUserShield,
@@ -130,6 +130,11 @@ const termsData = [
 ];
 
 const TermsAndConditions = () => {
+  // Page load hote hi screen ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const [openSection, setOpenSection] = useState(1);
 
   const toggleSection = (id) => {

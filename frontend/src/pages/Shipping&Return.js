@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FaTruck,
   FaUndoAlt,
@@ -102,6 +102,11 @@ const sections = [
 ];
 
 const ShippingAndReturns = () => {
+  // Page load hote hi screen ko top par scroll karne ke liye
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const [openSections, setOpenSections] = useState({ "0-0": true });
 
   const toggleSection = (parentIdx, itemIdx) => {
