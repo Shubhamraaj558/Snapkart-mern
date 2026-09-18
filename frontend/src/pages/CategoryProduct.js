@@ -115,14 +115,14 @@ const CategoryProduct = () => {
   }, [selectCategory]);
 
   const FilterPanel = () => (
-    <div className="space-y-4">
-      <div className="rounded-xl border border-slate-200 bg-white/85 p-3 shadow-sm">
-        <h3 className="border-b border-slate-200 pb-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+    <div className="space-y-3 text-xs">
+      <div className="rounded-xl border border-slate-200 bg-white/90 p-2.5 shadow-sm">
+        <h3 className="border-b border-slate-200 pb-1.5 font-bold uppercase tracking-wide text-slate-500 text-[11px]">
           Sort By
         </h3>
 
-        <form className="mt-2 space-y-2 text-sm">
-          <label className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 hover:bg-slate-50">
+        <form className="mt-1.5 space-y-1">
+          <label className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50">
             <input
               type="radio"
               name="sortBy"
@@ -130,10 +130,10 @@ const CategoryProduct = () => {
               onChange={handleOnChangeSortBy}
               value="asc"
             />
-            <span className="text-sm text-slate-700">Low to High</span>
+            <span className="text-slate-700">Low to High</span>
           </label>
 
-          <label className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 hover:bg-slate-50">
+          <label className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50">
             <input
               type="radio"
               name="sortBy"
@@ -141,25 +141,25 @@ const CategoryProduct = () => {
               onChange={handleOnChangeSortBy}
               value="dsc"
             />
-            <span className="text-sm text-slate-700">High to Low</span>
+            <span className="text-slate-700">High to Low</span>
           </label>
         </form>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white/85 p-3 shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-          <h3 className="text-xs font-bold uppercase tracking-wide text-slate-500">
+      <div className="rounded-xl border border-slate-200 bg-white/90 p-2.5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-1.5">
+          <h3 className="font-bold uppercase tracking-wide text-slate-500 text-[11px]">
             Category
           </h3>
 
           {selectedCount > 0 && (
-            <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-semibold text-rose-600">
+            <span className="rounded-full bg-rose-100 px-1.5 py-0.5 text-[9px] font-semibold text-rose-600">
               {selectedCount}
             </span>
           )}
         </div>
 
-        <form className="mt-2 space-y-2 text-sm">
+        <form className="mt-1.5 space-y-1 max-h-48 overflow-y-auto pr-1">
           {productCategory.map((categoryName) => {
             const checked = !!selectCategory[categoryName?.value];
 
@@ -167,9 +167,9 @@ const CategoryProduct = () => {
               <label
                 key={categoryName?.value}
                 htmlFor={categoryName?.value}
-                className={`flex cursor-pointer items-center justify-between rounded-lg border px-2.5 py-2 transition ${
+                className={`flex cursor-pointer items-center justify-between rounded-lg border px-2 py-1.5 transition ${
                   checked
-                    ? 'border-rose-200 bg-rose-50 text-rose-600'
+                    ? 'border-rose-200 bg-rose-50 text-rose-600 font-medium'
                     : 'border-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-50'
                 }`}
               >
@@ -182,10 +182,10 @@ const CategoryProduct = () => {
                     id={categoryName?.value}
                     onChange={handleSelectCategory}
                   />
-                  <span className="text-sm">{categoryName?.label}</span>
+                  <span>{categoryName?.label}</span>
                 </div>
 
-                {checked && <FaCheck className="text-[10px]" />}
+                {checked && <FaCheck className="text-[9px]" />}
               </label>
             );
           })}
@@ -194,118 +194,102 @@ const CategoryProduct = () => {
 
       <button
         onClick={clearAllFilters}
-        className="group relative w-full overflow-hidden rounded-2xl border border-rose-200/70 bg-gradient-to-r from-white via-rose-50 to-pink-50 py-3 text-sm font-semibold text-rose-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-rose-300 hover:shadow-md"
+        className="w-full rounded-xl border border-rose-200/70 bg-gradient-to-r from-white via-rose-50 to-pink-50 py-2 font-semibold text-rose-600 shadow-sm transition hover:border-rose-300 text-xs"
       >
-        <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-rose-500/5 to-pink-500/10 opacity-0 transition duration-300 group-hover:opacity-100" />
-        <span className="relative flex items-center justify-center gap-2">
-          🧹 Clear All ✨
-        </span>
+        🧹 Clear All ✨
       </button>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-rose-50">
-      <div className="container mx-auto px-3 py-4 md:px-4 md:py-5">
-        <div className="mb-4 rounded-2xl border border-white/60 bg-white/75 p-4 shadow-md backdrop-blur-sm md:p-5">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-rose-50 text-xs sm:text-sm">
+      <div className="container mx-auto px-3 py-3 md:px-4 md:py-4">
+        
+        {/* Top Header Card */}
+        <div className="mb-3 rounded-xl border border-white/60 bg-white/75 p-3 shadow-sm backdrop-blur-sm md:p-4">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-semibold text-rose-600">
+              <p className="mb-1 inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-semibold text-rose-600">
                 <FaArrowDownWideShort />
                 Smart Product Discovery
               </p>
-
-              <h1 className="text-xl font-bold text-slate-800 md:text-2xl">
+              <h1 className="text-lg font-bold text-slate-800 md:text-xl">
                 Explore Products
               </h1>
-
-              <p className="mt-1 text-sm text-slate-600">
-                Browse filtered collections with a cleaner shopping flow.
-              </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 md:min-w-[220px]">
-              <div className="rounded-xl bg-slate-900 px-3 py-3 text-white shadow-sm">
-                <p className="text-[11px] text-slate-300">Results</p>
-                <p className="text-xl font-bold">{data.length}</p>
+            <div className="grid grid-cols-2 gap-2 md:min-w-[180px]">
+              <div className="rounded-lg bg-slate-900 px-2.5 py-2 text-white shadow-sm">
+                <p className="text-[10px] text-slate-300">Results</p>
+                <p className="text-base font-bold">{data.length}</p>
               </div>
 
-              <div className="rounded-xl bg-white px-3 py-3 text-slate-800 shadow-sm">
-                <p className="text-[11px] text-slate-400">Filters</p>
-                <p className="text-xl font-bold">{selectedCount}</p>
+              <div className="rounded-lg bg-white px-2.5 py-2 text-slate-800 shadow-sm border border-slate-100">
+                <p className="text-[10px] text-slate-400">Filters</p>
+                <p className="text-base font-bold">{selectedCount}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mb-3 flex items-center gap-2 lg:hidden">
+        {/* Mobile Filter Button */}
+        <div className="mb-2 flex items-center gap-2 lg:hidden">
           <button
             onClick={() => setMobileFilterOpen(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm"
+            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm"
           >
             <FaFilter />
             Filter & Sort
           </button>
-
-          <div className="rounded-xl bg-white px-3 py-2.5 text-sm text-slate-600 shadow-sm">
+          <div className="rounded-xl bg-white px-3 py-2 text-xs text-slate-600 shadow-sm border border-slate-100">
             {data.length} products
           </div>
         </div>
 
+        {/* Active Filters Badges */}
         {(filterCategoryList.length > 0 || sortBy) && (
-          <div className="mb-3 flex flex-wrap items-center gap-2">
+          <div className="mb-2 flex flex-wrap items-center gap-1.5">
             {filterCategoryList.map((item) => (
               <button
                 key={item}
                 onClick={() => removeSingleFilter(item)}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:border-rose-200 hover:text-rose-600"
+                className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 shadow-sm hover:border-rose-200 hover:text-rose-600"
               >
                 {item}
-                <FaXmark className="text-[10px]" />
+                <FaXmark className="text-[9px]" />
               </button>
             ))}
 
             {sortBy && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1.5 text-xs font-medium text-rose-600">
+              <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-medium text-rose-600">
                 {sortBy === 'asc' ? 'Low to High' : 'High to Low'}
               </span>
             )}
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[240px,minmax(0,1fr)] lg:h-[calc(100vh-170px)]">
+        {/* Main Content Layout */}
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-[220px,minmax(0,1fr)]">
           <div className="hidden lg:block">
-            <div className="sticky top-20 max-h-[calc(100vh-110px)] overflow-y-auto pr-1">
+            <div className="sticky top-16 max-h-[calc(100vh-90px)] overflow-y-auto pr-1">
               <FilterPanel />
             </div>
           </div>
 
-          <div className="min-w-0 lg:h-[calc(100vh-170px)] lg:overflow-hidden">
-            <div className="mb-3 flex items-center justify-between rounded-xl border border-white/60 bg-white/75 px-4 py-2.5 shadow-sm backdrop-blur-sm">
-              <p className="text-sm font-medium text-slate-700">
-                Search Results: <span className="font-bold">{data.length}</span>
-              </p>
-
-              <p className="hidden text-sm text-slate-500 sm:block">
-                {selectedCount > 0
-                  ? `${selectedCount} filters applied`
-                  : 'All products'}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/60 bg-white/55 p-3 shadow-sm backdrop-blur-sm lg:h-[calc(100%-50px)] lg:overflow-y-auto">
+          <div className="min-w-0">
+            <div className="rounded-xl border border-white/60 bg-white/50 p-2.5 shadow-sm backdrop-blur-sm">
               {loading ? (
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-4">
                   {new Array(8).fill(null).map((_, index) => (
                     <div
                       key={index}
-                      className="overflow-hidden rounded-2xl bg-white shadow-sm"
+                      className="overflow-hidden rounded-xl bg-white shadow-sm border border-slate-100"
                     >
-                      <div className="h-36 animate-pulse bg-slate-200" />
-                      <div className="space-y-3 p-3">
-                        <div className="h-4 rounded-full bg-slate-200 animate-pulse" />
-                        <div className="h-3 w-2/3 rounded-full bg-slate-200 animate-pulse" />
-                        <div className="h-8 rounded-full bg-slate-200 animate-pulse" />
+                      <div className="h-28 animate-pulse bg-slate-200" />
+                      <div className="space-y-2 p-2.5">
+                        <div className="h-3 rounded-full bg-slate-200 animate-pulse" />
+                        <div className="h-2.5 w-2/3 rounded-full bg-slate-200 animate-pulse" />
+                        <div className="h-6 rounded-full bg-slate-200 animate-pulse" />
                       </div>
                     </div>
                   ))}
@@ -313,22 +297,19 @@ const CategoryProduct = () => {
               ) : data.length > 0 ? (
                 <VerticalCard data={data} loading={loading} />
               ) : (
-                <div className="flex min-h-[45vh] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 text-center">
-                  <div className="rounded-full bg-rose-100 px-4 py-2 text-sm font-semibold text-rose-600">
+                <div className="flex min-h-[35vh] flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white/70 px-4 text-center">
+                  <div className="rounded-full bg-rose-100 px-3 py-1 text-xs font-semibold text-rose-600">
                     No Results
                   </div>
-
-                  <h2 className="mt-4 text-xl font-bold text-slate-800">
+                  <h2 className="mt-3 text-base font-bold text-slate-800">
                     No products matched your filters
                   </h2>
-
-                  <p className="mt-2 max-w-md text-sm text-slate-500">
+                  <p className="mt-1 max-w-sm text-xs text-slate-500">
                     Try removing some filters or changing sort to explore more products.
                   </p>
-
                   <button
                     onClick={clearAllFilters}
-                    className="mt-5 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-500"
+                    className="mt-4 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-rose-500"
                   >
                     Reset Filters
                   </button>
@@ -338,33 +319,33 @@ const CategoryProduct = () => {
           </div>
         </div>
 
+        {/* Mobile Drawer */}
         {mobileFilterOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div
-              className="absolute inset-0 bg-black/40"
+              className="absolute inset-0 bg-black/40 backdrop-blur-xs"
               onClick={() => setMobileFilterOpen(false)}
             />
 
-            <div className="absolute bottom-0 left-0 right-0 max-h-[88vh] rounded-t-[24px] bg-slate-50 p-4 shadow-2xl">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-base font-bold text-slate-800">Filter & Sort</h2>
-
+            <div className="absolute bottom-0 left-0 right-0 max-h-[85vh] rounded-t-2xl bg-slate-50 p-3 shadow-2xl flex flex-col">
+              <div className="mb-3 flex items-center justify-between border-b border-slate-200 pb-2">
+                <h2 className="text-sm font-bold text-slate-800">Filter & Sort</h2>
                 <button
                   onClick={() => setMobileFilterOpen(false)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm border border-slate-200"
                 >
-                  <FaXmark />
+                  <FaXmark className="text-xs" />
                 </button>
               </div>
 
-              <div className="max-h-[65vh] overflow-y-auto pr-1">
+              <div className="flex-1 overflow-y-auto pr-1">
                 <FilterPanel />
               </div>
 
-              <div className="mt-4 bg-slate-50 pt-2">
+              <div className="mt-3 pt-2 border-t border-slate-200">
                 <button
                   onClick={() => setMobileFilterOpen(false)}
-                  className="w-full rounded-xl bg-slate-900 py-3 text-sm font-semibold text-white shadow-md"
+                  className="w-full rounded-xl bg-slate-900 py-2.5 text-xs font-semibold text-white shadow-md"
                 >
                   Show {data.length} Results
                 </button>
