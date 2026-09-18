@@ -239,11 +239,10 @@ const Header = () => {
                 <button
                   type="button"
                   onClick={handleVoiceSearch}
-                  className={`p-2.5 rounded-full transition mr-2 relative flex items-center justify-center ${
-                    isListening 
-                      ? 'bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)]' 
+                  className={`p-2.5 rounded-full transition mr-2 relative flex items-center justify-center ${isListening
+                      ? 'bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)]'
                       : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-md'
-                  }`}
+                    }`}
                   title={isListening ? "Listening..." : "Search with Voice"}
                   aria-label="Voice Search"
                 >
