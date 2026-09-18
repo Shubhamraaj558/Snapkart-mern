@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import Logo from './Logo'
-import { FaSearchengin, FaUserTie, FaCartArrowDown, FaHeart } from 'react-icons/fa'
+import { FaSearchengin, FaUserTie, FaCartArrowDown, FaHeart, FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import SummaryApi from '../common'
@@ -22,6 +22,9 @@ const Header = () => {
   const URLSearch = new URLSearchParams(location?.search)
   const searchQuery = URLSearch.get("q") || ""
   const [search, setSearch] = useState(searchQuery)
+
+  // --- Voice Search States ---
+  const [isListening, setIsListening] = useState(false)
 
   // --- Typing Placeholder Effect Logic ---
   const placeholders = [
@@ -62,6 +65,53 @@ const Header = () => {
     return () => clearTimeout(timer)
   }, [currentPlaceholder, isDeleting, loopNum, typingSpeed])
   // ----------------------------------------
+
+  // --- Voice Search Handler ---
+  const handleVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      toast.error("Speech Recognition is not supported in this browser. Try using Google Chrome.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      toast.info("Listening... Speak now!");
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setSearch(transcript);
+      setIsListening(false);
+
+      if (transcript.trim()) {
+        navigate(`/search?q=${encodeURIComponent(transcript.trim())}`);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error", event.error);
+      setIsListening(false);
+      toast.error("Voice search failed. Please try again.");
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    try {
+      recognition.start();
+    } catch (error) {
+      setIsListening(false);
+    }
+  };
+  // ----------------------------
 
   useEffect(() => {
     const handleScroll = () => {
@@ -175,9 +225,32 @@ const Header = () => {
                       handleSearch(e)
                     }
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.target.blur(); // Closes the mobile keyboard
+                      handleSearchClick();
+                    }
+                  }}
                   value={search}
                   aria-label="Search products"
                 />
+
+                {/* Voice Search Button */}
+                <button
+                  type="button"
+                  onClick={handleVoiceSearch}
+                  className={`p-2.5 rounded-full transition mr-2 relative flex items-center justify-center ${
+                    isListening 
+                      ? 'bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)]' 
+                      : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-md'
+                  }`}
+                  title={isListening ? "Listening..." : "Search with Voice"}
+                  aria-label="Voice Search"
+                >
+                  {isListening ? <FaMicrophoneSlash size={16} /> : <FaMicrophone size={16} />}
+                </button>
+
+                {/* Search Button */}
                 <button
                   className="mr-2 bg-cyan-500 hover:bg-purple-600 text-white rounded-full p-2.5 transition shadow-md"
                   aria-label="Search button"
