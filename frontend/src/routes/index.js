@@ -24,6 +24,7 @@ import FAQ from '../pages/FaQs'
 import Profile from '../pages/Profile'
 import Wishlist from '../pages/Wishlist'
 import InvoicePage from '../components/InvoicePage'
+import Dashboard from '../components/Dashboard'
 
 const router = createBrowserRouter([
     {
@@ -83,13 +84,17 @@ const router = createBrowserRouter([
                 element: <OrderPage />
             },
             {
-                path: 'invoice/:orderId', 
+                path: 'invoice/:orderId',
                 element: <InvoicePage />
             },
             {
                 path: "admin-panel",
                 element: <AdminPanel />,
                 children: [
+                    {
+                        path: "dashboard",
+                        element: <Dashboard />
+                    },
                     {
                         path: "all-users",
                         element: <AllUsers />
