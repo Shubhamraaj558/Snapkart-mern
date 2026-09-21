@@ -49,6 +49,11 @@ const AdminPanel = () => {
 
   const menuItems = useMemo(() => [
     {
+      label: "Dashboard",
+      to: "dashboard",
+      icon: <FaShieldHalved className="text-[15px]" /> 
+    },
+    {
       label: "All Users",
       to: "all-users",
       icon: <FaUsers className="text-[15px]" />
