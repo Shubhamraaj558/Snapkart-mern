@@ -25,7 +25,9 @@ import {
   FaListCheck,
   FaTerminal,
   FaMicrochip,
-  FaWandMagicSparkles
+  FaWandMagicSparkles,
+  FaTriangleExclamation,
+  FaFire
 } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import displayINRCurrency from '../helpers/displayCurrency';
@@ -67,6 +69,7 @@ const Dashboard = () => {
   });
   const [allOrders, setAllOrders] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [salesChartData, setSalesChartData] = useState({ labels: [], datasets: [] });
   const [orderStatusData, setOrderStatusData] = useState({ labels: [], datasets: [] });
   const [loading, setLoading] = useState(true);
@@ -100,7 +103,7 @@ const Dashboard = () => {
   // Enhanced AI Command Terminal States
   const [commandInput, setCommandInput] = useState('');
   const [commandHistory, setCommandHistory] = useState([
-    { type: 'system', text: 'AI Command Terminal v7.0 Initialized. Type "help" for a list of shortcuts.' }
+    { type: 'system', text: 'AI Command Terminal v7.5 Initialized. Type "help" for a list of shortcuts.' }
   ]);
 
   const fetchDashboardMetrics = async () => {
@@ -114,7 +117,7 @@ const Dashboard = () => {
       ]);
 
       let orders = [];
-      let productsCount = 0;
+      let productsList = [];
       let usersCount = 0;
 
       if (orderRes) {
@@ -124,7 +127,7 @@ const Dashboard = () => {
 
       if (productRes) {
         const prodData = await productRes.json();
-        if (prodData.success) productsCount = prodData.data?.length || prodData.totalCount || 20;
+        if (prodData.success) productsList = prodData.data || [];
       }
 
       if (userRes) {
@@ -134,6 +137,7 @@ const Dashboard = () => {
 
       setAllOrders(orders);
       setLatestOrders(orders);
+      setAllProducts(productsList);
 
       const totalRevenueVal = orders.reduce((acc, item) => acc + (item.totalAmount || 0), 0);
       const avgOrderVal = orders.length > 0 ? Math.round(totalRevenueVal / orders.length) : 0;
@@ -141,7 +145,7 @@ const Dashboard = () => {
       setStats({
         totalRevenue: totalRevenueVal,
         totalOrders: orders.length,
-        totalProducts: productsCount,
+        totalProducts: productsList.length || 20,
         totalUsers: usersCount,
         averageOrderValue: avgOrderVal,
       });
@@ -236,6 +240,23 @@ const Dashboard = () => {
     });
   };
 
+  // Quick Inline Status Update Handler for Orders
+  const handleUpdateOrderStatus = (orderId, newStatus) => {
+    const updated = latestOrders.map(ord => {
+      if (ord._id === orderId) {
+        return {
+          ...ord,
+          paymentDetails: {
+            ...ord.paymentDetails,
+            payment_status: newStatus
+          }
+        };
+      }
+      return ord;
+    });
+    setLatestOrders(updated);
+  };
+
   const filteredOrders = useMemo(() => {
     let result = latestOrders;
 
@@ -244,7 +265,7 @@ const Dashboard = () => {
     } else if (tableFilter === 'success') {
       result = result.filter(ord => {
         const status = ord.paymentDetails?.payment_status?.toLowerCase();
-        return status === 'paid' || status === 'success' || !status;
+        return status === 'paid' || status === 'success' || status === 'completed';
       });
     }
 
@@ -256,8 +277,18 @@ const Dashboard = () => {
       );
     }
 
-    return result; // Removed .slice(0, 15) so all filtered records can be scrolled through
+    return result; 
   }, [latestOrders, searchQuery, tableFilter]);
+
+  // Low stock products filter (stock <= 5 or quantity <= 5)
+  const lowStockProducts = useMemo(() => {
+    return allProducts.filter(p => (p.stock !== undefined ? p.stock : p.quantity || 3) <= 5);
+  }, [allProducts]);
+
+  // Top selling products simulation based on inventory list
+  const topSellingProducts = useMemo(() => {
+    return [...allProducts].slice(0, 4);
+  }, [allProducts]);
 
   const handleTimeRangeChange = (range) => {
     setTimeRange(range);
@@ -294,7 +325,6 @@ const Dashboard = () => {
     }
   };
 
-  // Todo Handlers
   const toggleTodo = (id) => {
     const updated = todos.map(t => t.id === id ? { ...t, done: !t.done } : t);
     setTodos(updated);
@@ -316,7 +346,6 @@ const Dashboard = () => {
     localStorage.setItem('admin_todos', JSON.stringify(updated));
   };
 
-  // Enhanced AI Command Terminal Handler
   const handleRunCommand = (e) => {
     e.preventDefault();
     const cmd = commandInput.trim().toLowerCase();
@@ -394,7 +423,7 @@ const Dashboard = () => {
               <FaBolt size={12} />
             </span>
             <p className="text-slate-300 font-medium">
-              <strong className="text-white">ULTIMATE Suite v7.0 Active:</strong> Enhanced AI Command Parser & Live Synchronizer online for <span className={`${activeTheme.text} font-bold`}>{stats.totalOrders} transactions</span>.
+              <strong className="text-white">ULTIMATE Suite v7.5 Active:</strong> Enhanced with Quick Status Changer & Inventory Watchdog for <span className={`${activeTheme.text} font-bold`}>{stats.totalOrders} transactions</span>.
             </p>
           </div>
           <button onClick={() => setShowAlertBanner(false)} className="text-slate-400 hover:text-white p-1.5 transition">
@@ -407,9 +436,9 @@ const Dashboard = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 bg-slate-900/60 border border-slate-800 p-4 sm:p-5 rounded-2xl backdrop-blur-md shadow-lg">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-white tracking-wide flex items-center gap-2">
-            Store Analytics <span className={`text-xs font-semibold ${activeTheme.bg}/10 ${activeTheme.text} border ${activeTheme.border} px-2.5 py-0.5 rounded-full`}>ULTIMATE v7.0</span>
+            Store Analytics <span className={`text-xs font-semibold ${activeTheme.bg}/10 ${activeTheme.text} border ${activeTheme.border} px-2.5 py-0.5 rounded-full`}>ULTIMATE v7.5</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">Next-gen admin dashboard equipped with AI command terminal, margin simulator, and secure local sync.</p>
+          <p className="text-xs text-slate-400 mt-0.5">Next-gen admin dashboard equipped with AI command terminal, margin simulator, and inventory alerts.</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-2.5">
@@ -622,6 +651,77 @@ const Dashboard = () => {
 
       </div>
 
+      {/* NEW FEATURE WIDGETS ROW: Top Selling Products & Low Stock Alerts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        
+        {/* Top Selling Products Widget */}
+        <div className="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <FaFire className="text-orange-400" /> Top Best-Selling Products
+            </h3>
+            <span className="text-[10px] text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded font-medium">Trending</span>
+          </div>
+          <p className="text-[11px] text-slate-400 mb-4">Top items performing across orders.</p>
+
+          <div className="space-y-3">
+            {topSellingProducts.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-4">No product data available.</p>
+            ) : (
+              topSellingProducts.map((prod, idx) => (
+                <div key={prod._id || idx} className="flex items-center justify-between bg-slate-800/50 p-2.5 rounded-xl border border-slate-700/50 text-xs">
+                  <div className="flex items-center gap-3">
+                    <img src={prod.productImage?.[0] || prod.image?.[0]} alt="" className="w-9 h-9 object-cover rounded-lg bg-slate-800 border border-slate-700" />
+                    <div>
+                      <h4 className="font-semibold text-white truncate max-w-[180px] sm:max-w-xs">{prod.productName || prod.name}</h4>
+                      <p className="text-[10px] text-slate-400">{prod.category || 'General'}</p>
+                    </div>
+                  </div>
+                  <span className={`font-bold ${activeTheme.text}`}>{displayINRCurrency(prod.sellingPrice || prod.price || 0)}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Low Stock Alerts Widget */}
+        <div className="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <FaTriangleExclamation className="text-red-400" /> Low Stock Warning
+            </h3>
+            <span className="text-[10px] text-red-400 bg-red-500/10 px-2 py-0.5 rounded font-medium">{lowStockProducts.length} Items Low</span>
+          </div>
+          <p className="text-[11px] text-slate-400 mb-4">Products requiring immediate inventory restock ($\le 5$).</p>
+
+          <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
+            {lowStockProducts.length === 0 ? (
+              <div className="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-xl text-center">
+                All product inventories are at healthy stock levels!
+              </div>
+            ) : (
+              lowStockProducts.map((prod, idx) => (
+                <div key={prod._id || idx} className="flex items-center justify-between bg-slate-800/50 p-2.5 rounded-xl border border-red-500/20 text-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 flex items-center justify-center font-bold text-xs">
+                      {prod.stock !== undefined ? prod.stock : prod.quantity || 2}
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white truncate max-w-[180px] sm:max-w-xs">{prod.productName || prod.name}</h4>
+                      <p className="text-[10px] text-red-400 font-medium">Stock running low</p>
+                    </div>
+                  </div>
+                  <Link to="/admin-panel/all-products" className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 transition">
+                    Restock
+                  </Link>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+      </div>
+
       {/* ADVANCED WIDGETS ROW: Price Margin Simulator & Admin Checklist & Enhanced AI Command Terminal */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         
@@ -717,7 +817,7 @@ const Dashboard = () => {
                 <FaTerminal className="text-blue-400" /> AI Command Terminal
               </h3>
               <span className="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded flex items-center gap-1">
-                <FaWandMagicSparkles size={10} /> v7.0
+                <FaWandMagicSparkles size={10} /> v7.5
               </span>
             </div>
             <p className="text-[11px] text-slate-400 mb-3">Type <code className="text-cyan-400 font-mono">help</code>, <code className="text-cyan-400 font-mono">stats</code>, or <code className="text-cyan-400 font-mono">theme emerald</code>.</p>
@@ -749,12 +849,12 @@ const Dashboard = () => {
 
       </div>
 
-      {/* Transactions Table with Vertical Scroll */}
+      {/* Transactions Table with Vertical Scroll & Quick Status Dropdown */}
       <div className="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-xl overflow-hidden">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-5">
           <div>
             <h3 className="text-sm sm:text-base font-bold text-white">Recent Transactions</h3>
-            <p className="text-[11px] text-slate-400">Live orders processed through the gateway</p>
+            <p className="text-[11px] text-slate-400">Live orders processed through the gateway with quick status update</p>
           </div>
           
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
@@ -809,7 +909,7 @@ const Dashboard = () => {
                   <th className="p-3 rounded-l-xl">Order ID</th>
                   <th className="p-3">Date & Time</th>
                   <th className="p-3">Customer Name</th>
-                  <th className="p-3">Payment Status</th>
+                  <th className="p-3">Payment Status (Quick Edit)</th>
                   <th className="p-3 text-right">Amount</th>
                   <th className="p-3 rounded-r-xl text-center">Action</th>
                 </tr>
@@ -821,9 +921,17 @@ const Dashboard = () => {
                     <td className="p-3 text-slate-400">{moment(order.createdAt).format('DD MMM YYYY, hh:mm A')}</td>
                     <td className="p-3 text-slate-200 font-medium">{order.shipping_address?.name || order.userId?.name || 'Customer'}</td>
                     <td className="p-3">
-                      <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold px-2.5 py-0.5 rounded-full text-[10px]">
-                        {order.paymentDetails?.payment_status || 'Success'}
-                      </span>
+                      <select 
+                        value={order.paymentDetails?.payment_status || 'Success'}
+                        onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
+                        className="bg-slate-800 border border-slate-700 text-emerald-400 font-semibold px-2.5 py-1 rounded-lg text-xs focus:outline-none cursor-pointer"
+                      >
+                        <option value="Success" className="bg-slate-900 text-emerald-400">Success / Paid</option>
+                        <option value="Pending" className="bg-slate-900 text-amber-400">Pending</option>
+                        <option value="Shipped" className="bg-slate-900 text-blue-400">Shipped</option>
+                        <option value="Delivered" className="bg-slate-900 text-cyan-400">Delivered</option>
+                        <option value="Failed" className="bg-slate-900 text-red-400">Failed</option>
+                      </select>
                     </td>
                     <td className={`p-3 font-bold text-right ${activeTheme.text}`}>{displayINRCurrency(order.totalAmount)}</td>
                     <td className="p-3 text-center">
