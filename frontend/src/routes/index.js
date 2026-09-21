@@ -23,7 +23,7 @@ import PrivacyPolicy from '../pages/Privacy&Policy'
 import FAQ from '../pages/FaQs'
 import Profile from '../pages/Profile'
 import Wishlist from '../pages/Wishlist'
-import InvoicePage from '../components/InvoicePage' // <--- Yahan import kiya
+import InvoicePage from '../components/InvoicePage'
 
 const router = createBrowserRouter([
     {
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
                 element: <OrderPage />
             },
             {
-                path: 'invoice/:orderId', // <--- Yahan route add kar diya
+                path: 'invoice/:orderId', 
                 element: <InvoicePage />
             },
             {
