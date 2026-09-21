@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SummaryApi from '../common';
 import moment from 'moment';
 import displayINRCurrency from '../helpers/displayCurrency';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   FaBoxOpen, 
   FaCheckCircle, 
@@ -12,11 +12,14 @@ import {
   FaMapMarkerAlt,
   FaBox,
   FaShippingFast,
-  FaHome
+  FaHome,
+  FaFileInvoice,
+  FaPrint
 } from 'react-icons/fa';
 
 const OrderPage = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchOrderDetails = async () => {
     try {
@@ -36,7 +39,6 @@ const OrderPage = () => {
     fetchOrderDetails();
   }, []);
 
-  // Delivery Progress Calculate karne ka function
   const calculateDeliveryProgress = (createdAt) => {
     const orderDate = moment(createdAt);
     const deliveryDate = moment(createdAt).add(5, 'days');
@@ -49,7 +51,68 @@ const OrderPage = () => {
     const elapsedDuration = today.diff(orderDate, 'hours');
     
     const progress = Math.round((elapsedDuration / totalDuration) * 100);
-    return Math.max(15, Math.min(progress, 100)); // Minimum 15% clear look ke liye
+    return Math.max(15, Math.min(progress, 100));
+  };
+
+  // Function to handle printing/generating the invoice popup window
+  const handlePrintInvoice = (order) => {
+    const printWindow = window.open('', '_blank');
+    const address = order.shipping_address || {};
+    
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Snapkart Invoice #${order._id?.slice(-8)}</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
+            .header { text-align: center; border-bottom: 2px solid #7c3aed; padding-bottom: 10px; margin-bottom: 20px; }
+            .details { margin-bottom: 20px; font-size: 14px; line-height: 1.5; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
+            th { background-color: #f8f9fa; }
+            .total { text-align: right; font-size: 18px; font-weight: bold; margin-top: 20px; color: #7c3aed; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h2 style="color: #7c3aed; margin: 0;">SNAPKART RETAIL</h2>
+            <p style="font-size: 12px; color: #666; margin: 4px 0;">Smart Shopping Platform - Tax Invoice</p>
+            <p><strong>Order ID:</strong> #${order._id}</p>
+            <p><strong>Date:</strong> ${moment(order.createdAt).format('LLL')}</p>
+          </div>
+          <div class="details">
+            <strong>Customer Name:</strong> ${address.name || 'N/A'}<br/>
+            <strong>Shipping Address:</strong> ${address.address || 'N/A'}, Pincode: ${address.pincode || 'N/A'}<br/>
+            <strong>Phone:</strong> ${address.phone || 'N/A'}<br/>
+            <strong>Payment Method:</strong> ${order.paymentDetails?.payment_method_type?.[0] || 'N/A'}<br/>
+            <strong>Payment Status:</strong> ${order.paymentDetails?.payment_status || 'N/A'}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(order.productDetails || []).map(p => `
+                <tr>
+                  <td>${p.name}</td>
+                  <td>${p.quantity}</td>
+                  <td>₹${p.price}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div class="total">
+            Total Amount: ₹${order.totalAmount || 0}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
   };
 
   return (
@@ -60,7 +123,7 @@ const OrderPage = () => {
             My Orders
           </h1>
           <p className="text-xs sm:text-sm text-gray-600 mt-1">
-            Track your orders and payment details
+            Track your orders, view invoices and payment details
           </p>
         </div>
 
@@ -98,19 +161,31 @@ const OrderPage = () => {
                 className="bg-white rounded-xl shadow-md border overflow-hidden text-xs sm:text-sm"
               >
                 {/* Header Section */}
-                <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-purple-700 to-pink-600 text-white px-3.5 py-2.5">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-gradient-to-r from-purple-700 to-pink-600 text-white px-3.5 py-2.5">
                   <div>
                     <p className="text-xs sm:text-sm font-bold">
                       {moment(item.createdAt).format('LLL')}
                     </p>
                     <p className="text-[11px] text-purple-100">
-                      Order placed successfully
+                      Order ID: <span className="font-mono">{item._id}</span>
                     </p>
                   </div>
 
-                  <div className="inline-flex items-center gap-1.5 bg-white/15 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium w-fit">
-                    <FaCheckCircle className="text-green-300 text-[10px]" />
-                    <span>Confirmed</span>
+                  <div className="flex items-center gap-2">
+                    <div className="inline-flex items-center gap-1.5 bg-white/15 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium w-fit">
+                      <FaCheckCircle className="text-green-300 text-[10px]" />
+                      <span>Confirmed</span>
+                    </div>
+
+                    {/* Print Invoice Button */}
+                    <button
+                      onClick={() => handlePrintInvoice(item)}
+                      className="inline-flex items-center gap-1.5 bg-white text-purple-700 hover:bg-purple-50 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold shadow transition"
+                      title="Print / Download Invoice"
+                    >
+                      <FaFileInvoice className="text-purple-600 text-xs" />
+                      <span>Invoice / Print</span>
+                    </button>
                   </div>
                 </div>
 
@@ -125,7 +200,6 @@ const OrderPage = () => {
                     </span>
                   </div>
 
-                  {/* Visual Progress Bar Line */}
                   <div className="relative w-full bg-gray-200 h-2 rounded-full overflow-hidden my-2">
                     <div
                       className="bg-gradient-to-r from-purple-600 to-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
@@ -133,7 +207,6 @@ const OrderPage = () => {
                     ></div>
                   </div>
 
-                  {/* Step Icons & Labels */}
                   <div className="grid grid-cols-4 text-center mt-2 text-[11px] sm:text-xs">
                     <div className="flex flex-col items-center text-purple-700 font-semibold">
                       <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center mb-0.5">

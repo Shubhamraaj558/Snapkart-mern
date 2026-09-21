@@ -22,9 +22,8 @@ import ShippingAndReturns from '../pages/Shipping&Return'
 import PrivacyPolicy from '../pages/Privacy&Policy'
 import FAQ from '../pages/FaQs'
 import Profile from '../pages/Profile'
-import Wishlist from '../pages/Wishlist';
-
-
+import Wishlist from '../pages/Wishlist'
+import InvoicePage from '../components/InvoicePage' // <--- Yahan import kiya
 
 const router = createBrowserRouter([
     {
@@ -84,6 +83,10 @@ const router = createBrowserRouter([
                 element: <OrderPage />
             },
             {
+                path: 'invoice/:orderId', // <--- Yahan route add kar diya
+                element: <InvoicePage />
+            },
+            {
                 path: "admin-panel",
                 element: <AdminPanel />,
                 children: [
@@ -127,7 +130,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "privacy-policy",
-                element: <PrivacyPolicy/>
+                element: <PrivacyPolicy />
             },
             {
                 path: "FaQs",
@@ -136,6 +139,5 @@ const router = createBrowserRouter([
         ]
     }
 ])
-
 
 export default router
