@@ -3,12 +3,12 @@ import SummaryApi from '../common';
 import moment from 'moment';
 import displayINRCurrency from '../helpers/displayCurrency';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  FaBoxOpen, 
-  FaCheckCircle, 
-  FaShoppingBag, 
-  FaArrowLeft, 
-  FaTruck, 
+import {
+  FaBoxOpen,
+  FaCheckCircle,
+  FaShoppingBag,
+  FaArrowLeft,
+  FaTruck,
   FaMapMarkerAlt,
   FaBox,
   FaShippingFast,
@@ -49,7 +49,7 @@ const OrderPage = () => {
 
     const totalDuration = deliveryDate.diff(orderDate, 'hours');
     const elapsedDuration = today.diff(orderDate, 'hours');
-    
+
     const progress = Math.round((elapsedDuration / totalDuration) * 100);
     return Math.max(15, Math.min(progress, 100));
   };
@@ -58,7 +58,7 @@ const OrderPage = () => {
   const handlePrintInvoice = (order) => {
     const printWindow = window.open('', '_blank');
     const address = order.shipping_address || {};
-    
+
     printWindow.document.write(`
       <html>
         <head>

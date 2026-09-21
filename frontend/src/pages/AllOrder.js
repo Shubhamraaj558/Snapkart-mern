@@ -106,7 +106,7 @@ const AllOrders = () => {
   // Export to CSV Function
   const exportToCSV = () => {
     if (filteredOrders.length === 0) return alert('No orders to export!');
-    
+
     const headers = ['Order ID', 'Customer Name', 'Email', 'Status', 'Total Amount (INR)', 'Date'];
     const rows = filteredOrders.map(order => [
       order._id,
@@ -117,7 +117,7 @@ const AllOrders = () => {
       moment(order.createdAt).format('YYYY-MM-DD HH:mm:ss')
     ]);
 
-    let csvContent = 'data:text/csv;charset=utf-8,' + 
+    let csvContent = 'data:text/csv;charset=utf-8,' +
       [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
 
     const encodedUri = encodeURI(csvContent);
@@ -345,11 +345,10 @@ const AllOrders = () => {
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
-                  statusFilter === status
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${statusFilter === status
                     ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-md'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                }`}
+                  }`}
               >
                 {status}
               </button>
@@ -582,11 +581,10 @@ const AllOrders = () => {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`w-10 h-10 rounded-xl text-sm font-bold transition ${
-                  currentPage === page
+                className={`w-10 h-10 rounded-xl text-sm font-bold transition ${currentPage === page
                     ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-md'
                     : 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
-                }`}
+                  }`}
               >
                 {page}
               </button>
